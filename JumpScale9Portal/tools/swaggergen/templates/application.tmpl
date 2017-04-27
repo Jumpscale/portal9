@@ -1,0 +1,17 @@
+{% from 'macro.tmpl' import handlerName %}
+local sporeClientHanlder = class("sporeClientHanlder", turbo.web.RequestHandler)
+function sporeClientHanlder:get()
+    local f = require('io').open('client.json')
+    client = f:read('*a')
+    f:close()
+    self.write(client)
+end
+
+local app = turbo.web.Application:new({
+    {% for h in handlers %}
+        {"{{h.path}}", {{handlerName(h.name)}}},
+    {% endfor %}
+        {"/spore/client", sporeClientHanlder}
+})
+app:listen({{port}},"0.0.0.0")
+turbo.ioloop.instance():start()

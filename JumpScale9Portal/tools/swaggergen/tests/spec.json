@@ -1,0 +1,153 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "version": "0.0.0",
+        "title": "<enter your title>"
+    },
+    "paths": {
+        "/persons": {
+            "get": {
+                "description": "Gets `Person` objects.\nOptional query param of **size** determines\nsize of returned array\n",
+                "parameters": [
+                    {
+                        "name": "size",
+                        "in": "query",
+                        "description": "Size of array",
+                        "required": true,
+                        "type": "number",
+                        "format": "double"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "schema": {
+                            "title": "ArrayOfPersons",
+                            "type": "array",
+                            "items": {
+                                "title": "Person",
+                                "type": "object",
+                                "properties": {
+                                    "name": {
+                                        "type": "string"
+                                    },
+                                    "single": {
+                                        "type": "boolean"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "Creates a new person object\n",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "body",
+                        "description": "Id of the person",
+                        "required": true,
+                        "type": "number",
+                        "format": "int64"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successfull creation of the person",
+                        "schema": {
+                            "title": "person",
+                            "type": "object",
+                            "properties": {
+                                "name": {
+                                    "type": "string"
+                                },
+                                "single": {
+                                    "type": "boolean"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/animals": {
+            "get": {
+                "description": "Gets `Person` objects.\nOptional query param of **size** determines\nsize of returned array\n",
+                "parameters": [
+                    {
+                        "name": "size",
+                        "in": "query",
+                        "description": "Size of array",
+                        "required": true,
+                        "type": "number",
+                        "format": "double"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "schema": {
+                            "title": "ArrayOfPersons",
+                            "type": "array",
+                            "items": {
+                                "title": "Person",
+                                "type": "object",
+                                "properties": {
+                                    "name": {
+                                        "type": "string"
+                                    },
+                                    "single": {
+                                        "type": "boolean"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "schema": {
+                            "title": "Error",
+                            "type": "object",
+                            "properties": {
+                                "error": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "Creates a new person object\n",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "body",
+                        "description": "Id of the person",
+                        "required": true,
+                        "type": "number",
+                        "format": "int64"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successfull creation of the person",
+                        "schema": {
+                            "title": "person",
+                            "type": "object",
+                            "properties": {
+                                "name": {
+                                    "type": "string"
+                                },
+                                "single": {
+                                    "type": "boolean"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

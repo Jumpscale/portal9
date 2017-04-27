@@ -1,0 +1,14 @@
+[actor]
+    """
+    """
+{% for method in methods %}
+    method:{{method.name}}
+        """
+        {{method['get'].description|indent(8)}}
+        """
+        {% for param in method['get'].parameters %}
+        var:{{param.name}} {{parammap.get(param.type)}},{{param.default}},{{param.description}} {% if not param.required %} @tags: optional {% endif %}
+
+        {% endfor %}
+        result:{{method['get'].responses['200'].type}},{{method['get'].responses['200'].description}}
+{% endfor %}

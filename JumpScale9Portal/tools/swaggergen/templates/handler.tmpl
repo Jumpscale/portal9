@@ -1,0 +1,21 @@
+{% from 'table.tmpl' import table %}
+{% from 'macro.tmpl' import handlerName %}
+{% from 'macro.tmpl' import paramsQuery %}
+{% from 'macro.tmpl' import paramsHeader %}
+{% from 'macro.tmpl' import paramsBody %}
+{% from 'macro.tmpl' import paramsPath %}
+{% from 'macro.tmpl' import responses %}
+
+local {{handlerName(handler.name)}} = class("{{handlerName(handler.name)}}", turbo.web.RequestHandler)
+{%for method in handler.methods %}
+function {{handlerName(handler.name)}}:{{method.type}}({{paramsPath(method.params)}})
+    {{ paramsQuery(method.params) }}
+    {{ paramsHeader(method.params) }}
+    {{ paramsBody(method.params) }}
+    self:write("{{handlerName(handler.name)}} ")
+    self:write("not implmented")
+    self:set_status(500)
+
+    {{ responses(method.responses) }}
+end
+{% endfor %}

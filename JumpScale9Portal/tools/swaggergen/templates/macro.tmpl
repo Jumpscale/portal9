@@ -1,0 +1,50 @@
+{% from 'table.tmpl' import table %}
+
+{% macro handlerName(name) %}{{name}}_Handler{%- endmacro %}
+
+{% macro paramsQuery(params)%}
+{% for p in params.query %}
+{%if loop.first %}
+-- query arguments
+{%endif%}
+    local q_{{p.name}} = self:get_argument("{{p.name}}" {% if not p.required %} ,"" {%endif%}) --{% if p.required %} requiered{%else%} optional{%endif%}
+
+{%endfor%}
+{% endmacro %}
+
+
+{% macro paramsHeader(params)%}
+{% for p in params.header %}
+{%if loop.first %}
+-- header arguments
+{%endif%}
+    local h_{{p.name}} = self.headers:get("{{p.name}}",false)
+{%endfor%}
+{% endmacro %}
+
+{% macro paramsBody(params)%}
+{% if 'schema' in params.body %}
+{%for name, descr in (params.body.schema.properties|default({})).iteritems()%}
+{%if loop.first %}
+--[[ body structure
+{%endif%}
+    {{name}} - {{descr.type}}
+{%endfor%}
+{%if loop.last %}
+    ]]--
+    local body = self.request.body
+{%endif%}
+{%endif%}
+{% endmacro %}
+
+{% macro paramsPath(params)%}{{params.path | map(attribute='name')|join(', ')}}{% endmacro %}
+
+{% macro responses(responses)%}
+--[[
+--responses
+    {%for resp in responses %}
+    {{ table('response', resp.schema|default([])) }}
+    self:set_status({{resp.code}})
+    {%endfor%}
+--]]
+{%endmacro%}

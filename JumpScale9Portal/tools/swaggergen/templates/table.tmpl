@@ -1,0 +1,8 @@
+{% macro table(name, attributes) %}
+local {{name}} = {
+    {% for name,detail in (attributes.properties|default({})).iteritems() %}
+        {{name}} = nil {% if not loop.last%}, -- type: {{detail.type|default("")}} description:{{detail.description|default("")}} {%endif%}
+
+    {%endfor%}
+    }
+{%- endmacro %}
