@@ -1,0 +1,6 @@
+
+h2. reset space $$space access log 
+
+{{spaceaccesslogreset: space:$$space}}
+
+DO ALSO REDIRECT BACK TO PREVIOUS PAGE

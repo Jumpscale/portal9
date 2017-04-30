@@ -1,0 +1,6 @@
+@usedefaults
+
+H3. Stat example
+
+{{stat: key:n1.processes.cloudscalers.cloudbroker.contentswitches.avg width:400 height:200}}
+

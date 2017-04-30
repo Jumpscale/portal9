@@ -1,0 +1,18 @@
+@usedefault
+
+{{title:AccessDenied}}
+
+#{{projectname:TestSpace}}
+
+@block
+@row
+
+@col 12
+
+h4. Access Denied.
+{{accessdeniedmsg}}
+
+@divend
+@divend
+
+{{login}}

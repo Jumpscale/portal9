@@ -1,0 +1,26 @@
+
+{{title:System Portal}}
+
+{{ApplyFlatTheme}}
+
+
+{{find}}
+{{PortalsHamburgerMenu}}
+
+
+{{menu:
+System Portal:/system
+}}
+
+{{menuadmin:
+}}
+
+@block
+@row
+
+@col 12 content
+{{breadcrumbs}}
+{content}
+
+@divend
+@divend

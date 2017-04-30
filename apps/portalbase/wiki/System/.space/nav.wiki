@@ -1,0 +1,14 @@
+
+Spaces:/system/spaces
+#Rest:/system/rest
+System Config:/system/Systemconfig
+System Macros:/system/systemmacros
+Users:/system/userlist
+Groups:/system/groups
+#Actors:/system/actors
+#Code:/system/code
+API:/system/actorsdocs
+#Stats:/system/stats
+Portal Logs:/system/PortalLogs
+Access Overview:/system/overviewaccess
+Server Info:/system/serverinfo

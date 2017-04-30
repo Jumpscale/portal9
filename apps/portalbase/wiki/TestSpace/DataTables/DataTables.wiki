@@ -1,0 +1,15 @@
+h2. datatables test
+
+
+{{datatables_use}}
+
+||col1||col2||col3||col4||
+|something a|yes|city|938429374|
+|something b|yes|city|938429374|
+|asomething|yes|city|938429374|
+|bsomething|no|city|4353454|
+
+
+this should produce a nice looking grid with sorting & filtering capabilities
+
+

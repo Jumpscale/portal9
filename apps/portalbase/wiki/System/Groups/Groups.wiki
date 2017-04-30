@@ -1,0 +1,19 @@
+h2. Group List
+{{actions:
+
+- display: Add Group
+  action: '/restmachine/system/usermanager/createGroup'
+  input:
+  - name: name
+    type: text
+    label: Name
+  - name: domain
+    type: text
+    label: Domain
+  - name: description
+    type: text
+    label: Description
+
+}}
+
+{{groups}}

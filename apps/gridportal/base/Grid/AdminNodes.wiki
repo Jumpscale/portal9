@@ -1,0 +1,6 @@
+@usedefault
+
+h2. Admin Nodes
+
+{{adminnodes}}
+

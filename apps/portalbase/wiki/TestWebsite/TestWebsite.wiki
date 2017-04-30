@@ -1,0 +1,33 @@
+
+@usedefault
+
+#structure of page, see the includes like [[intro]]
+
+{{html:
+<div class="hero-unit">
+  [[intro]]
+    <p><a class="btn btn-primary btn-large">Learn more &raquo;</a></p>
+</div>
+<div class="row-fluid">
+
+    <div class="span4">
+      <p>[[ProductBrief1]]</p>
+      <p><a class="btn" href="#">View details &raquo;</a></p>
+    </div><!--/span-->
+
+    <div class="span4">
+      <p>[[ProductBrief2]]</p>
+      <p><a class="btn" href="#">View details &raquo;</a></p>
+    </div><!--/span-->
+
+    <div class="span4">
+      <p>[[ProductBrief3]]</p>
+      <p><a class="btn" href="#">View details &raquo;</a></p>
+    </div><!--/span-->
+
+</div><!--/row-->
+}}
+
+!Automate.png | width:500!
+
+

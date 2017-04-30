@@ -1,0 +1,321 @@
+html, body {
+    height: 100%
+}
+#external-iframe{
+    width:100%;
+    height:100%;
+}
+#PortalsHamburgerMenu{
+    margin-bottom: 0;
+    margin-top: -5px;
+    z-index: 5;
+    left: 0;
+    background: transparent;
+}
+#PortalsHamburgerMenu.light span,
+#PortalsHamburgerMenu.light span::before,
+#PortalsHamburgerMenu.light span::after,
+.slider-container.visible #PortalsHamburgerMenu span,
+.slider-container.visible #PortalsHamburgerMenu span::before,
+.slider-container.visible #PortalsHamburgerMenu span::after{
+    background: #fff;
+}
+#PortalsHamburgerMenu.dark span,
+#PortalsHamburgerMenu.dark span::before,
+#PortalsHamburgerMenu.dark span::after{
+    background: #000;
+}
+.portals-list{
+    padding-left: 0;
+    list-style: none;
+}
+.portals-list li{
+    padding: 5px 0;
+    border-bottom: 1px solid #D3DAE0;
+    border-left: 4px solid transparent;
+    margin-left: 5px;
+}
+.portals-list li:first-child{
+    border-top: 1px solid #D3DAE0;
+}
+.portals-list li a{
+    padding-left: 4px;
+    display: block;
+    color: #34495E;
+}
+.panel-heading:hover a::before{
+  color: #fff;
+}
+.accordion .panel-heading{
+  border-radius: 0;
+}
+.accordion .panel-heading:hover a, .portals-list .panel-collapse li:hover a{
+    border-left: 4px solid #34495E;
+    background-color: #95A5A6;
+    color: #fff;
+}
+.accordion{
+  border-top: 1px solid transparent;
+  border-bottom: 1px solid transparent;
+}
+.accordion:hover{
+    border-top: 1px solid #C3C3C3;
+    border-bottom: 1px solid #C3C3C3;
+}
+.portals-list .space:hover a{
+    color: #fff;
+}
+.explore-portals{
+    background-color: #34495E;
+    color: #fff;
+    padding-bottom: 12px;
+    margin-bottom: 0;
+    margin-left: 0;
+    font-size: 15px;
+    margin-top: -5px;
+    padding-top: 5px;
+    display: block;
+    padding-left: 40px;
+    padding-right: 20px;
+    padding-top: 14px;
+}
+.fixed-slide-nav{
+    display: block;
+    top: 0;
+}
+.panel-heading .accordion-toggle::before {
+    font-family: 'Glyphicons Halflings';
+    content: "\e080";
+    float: left;
+    color: #6D7C94;
+    font-size: 12px;
+    margin-top: 2px;
+}
+.panel-heading .accordion-toggle.collapsed::before {
+    content: "\e114";
+}
+.show-on-large.portals-navigation.visible{
+  width: 210px;
+}
+.spaces-nav {
+    display: none;
+}
+.space.push-left{
+    padding-left: 30px;
+}
+.navbar-inverse .navbar-toggle{
+    padding: 0;
+    margin: 0;
+    max-height: 25px;
+    line-height: 0;
+}
+.portals-navigation {
+  display: block;
+  background: #f8f8f8;
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
+  border-radius: 3px;
+  height: 100%;
+}
+.fixed-slide-nav{
+  position: fixed;
+  left: -210px;
+  min-height: 50px;
+  z-index: 2;
+  height: 100%;
+  width: 210px;
+}
+.portals-navigation ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  display: block;
+}
+.portals-navigation li {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  display: block;
+  position: relative;
+  font-size: 17px;
+  color: #def1f0;
+}
+.portals-navigation li a {
+  padding: 3px 8px;
+  font-size: 15px;
+  display: block;
+  outline: 0;
+  font-weight: 400;
+}
+.portals-navigation li a:hover{
+  text-decoration: none;
+}
+.portals-navigation li:hover ul.dropdown {
+  display: block;
+}
+.portals-navigation li ul.dropdown {
+  position: relative;
+  display: none;
+  background: #00695b;
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
+  padding-top: 0;
+}
+.portals-navigation li ul.dropdown li {
+  display: block;
+  list-style-type: none;
+}
+.portals-navigation li ul.dropdown li a {
+  padding: 10px;
+  font-size: 15px;
+  color: #fff;
+  display: block;
+  border-bottom: 1px solid #005c4d;
+  font-weight: 400;
+}
+.arrow-down {
+  width: 0;
+  height: 0;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-top: 5px solid #def1f0;
+  position: relative;
+  top: 15px;
+  right: -5px;
+  content: '';
+}
+.side-nav-btn{
+	/*display: none;*/
+}
+.portals-navigation.visible {
+  left: 0px;
+  transition: left 0.3s linear;
+  z-index: 1;
+  display: block;
+  position: fixed;
+}
+.margin-left-xlarge{
+  margin-left: 30px !important;
+}
+/*small*/
+@media (max-width:767px) {
+	.explore-portals{
+		padding-top: 13px !important;
+    	padding-bottom: 16px !important;
+	}
+  .navbar-brand{
+    margin-left: 25px;
+  }
+  .portals-navigation {
+      width: 210px;
+      height: 100%;
+      display: block;
+      position: fixed;
+      left: -210px;
+      top: 0px;
+      transition: left 0.3s linear;
+      margin: 0;
+      border: 0;
+      border-radius: 0;
+      overflow-y: auto;
+      overflow-x: hidden;
+      height: 100%;
+      padding-top: 0;
+    }
+	.show-on-large.portals-navigation.visible{
+	  left: 0;
+	}
+	#PortalsHamburgerMenu{
+    	left: 5px;
+    	top: 12px !important;
+    }
+    .portals-navigation li:first-child:hover a { border-radius: 0; }
+
+    .portals-navigation li ul.dropdown { position: relative; }
+
+    .portals-navigation li ul.dropdown li a {
+      background: #00695b !important;
+      border-bottom: none;
+      color: #fff !important;
+    }
+
+    .portals-navigation li ul.dropdown li:hover a {
+      background: #56b5ae !important;
+      color: #fff !important;
+    }
+
+    .portals-navigation li ul.dropdown li a {
+      padding: 10px 10px 10px 30px;
+    }
+
+    .portals-navigation li:hover .arrow-down {
+      border-top: 5px solid #fff;
+    }
+
+    .arrow-down {
+      border-top: 5px solid #505050;
+      position: absolute;
+      top: 20px;
+      right: 10px;
+    }
+
+    .opacity {
+      background: rgba(197, 197, 197, 0.7);
+      position: fixed;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+    }
+  }
+/* medium */
+@media (max-width:991px) {
+	.explore-portals{
+		margin-top: -5px;
+	    padding-bottom: 7px;
+	    padding-top: 3px;
+	}
+	.navbar-brand img{
+		width: 87px;
+	}
+}
+/* medium */
+@media (max-width:1131px) {
+	form.navbar-search{
+		display: none;
+	}
+	.navbar-brand img{
+		width: 87px;
+	}
+  #PortalsHamburgerMenu{
+    top: 6px;
+  }
+}
+/* medium */
+@media (max-width:1545px) {
+    .side-nav-btn{
+    	display: block;
+    }
+	.explore-portals{
+		margin-top: -5px;
+	    padding-bottom: 7px;
+	    padding-top: 3px;
+	}
+	.portals-navigation {
+		display: block;
+		position: fixed;
+		left: -210px;
+		transition: left 0.3s linear;
+		border-radius: 0;
+		overflow-y: auto;
+		overflow-x: hidden;
+    }
+    /*.portals-navigation.visible.show-on-large{
+    	left: -210px;
+    }*/
+}
+/* medium */
+@media (min-width:767px) and (max-width:1545px) {
+	.explore-portals{
+		padding-bottom: 13px;
+    	padding-top: 13px;
+	}
+}

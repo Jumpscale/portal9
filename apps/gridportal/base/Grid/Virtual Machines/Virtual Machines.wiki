@@ -1,0 +1,4 @@
+@usedefaults
+
+h2. Virtual Machines
+{{machines: nid:$$nid id:$$id otherid:$$otherid Host Name:$$name description:$$description roles:$$roles mem:$$mem netaddr:$$netaddr ipaddr:$$ipaddr lastcheck:$$lastcheck state:$$state gid:$$gid active:$$active cpucore:$$cpucore type:$$type}}

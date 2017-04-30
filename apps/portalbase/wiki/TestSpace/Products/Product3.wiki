@@ -1,0 +1,6 @@
+
+h2. Product 2
+
+C3 allows any server workload or application to work in any cloud. We call it "virtualization of the cloud" through a unified interface, we provide end users with independent from underlying technology or chosen cloudstack.
+
+C3 also delivers a revolutionary billing mechanism including an engine that allows payments for IT capacity in a per-unit cost similar to electricity charging. This model has proven to be ideal for telecommunication and service providers as it reduces product pricing complexity and offers billing simplicity. 

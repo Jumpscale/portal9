@@ -1,0 +1,5 @@
+@usedefault
+
+h2. Grid Nodes
+
+{{nodes: gid:$$gid name:$$name roles:$$roles ipaddr:$$ipaddr active:$$active peer_stats:$$peer_stats peer_log:$$peer_log peer_backup:$$peer_backup lastcheck:$$lastcheck}}

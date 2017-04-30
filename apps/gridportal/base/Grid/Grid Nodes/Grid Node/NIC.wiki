@@ -1,0 +1,33 @@
+@usedefaults
+@@title NIC: ${name}
+{{cssstyle
+    table{
+        width: 125% !important;
+        max-width: 125%;
+    }
+}}
+{{nic: id:$$id}}
+{{breadcrumb:
+- Grid Nodes: /grid/Grid Nodes
+- 'Grid Node: ${nodename}': /grid/grid node?nid=${nid}&gid=${gid}
+- 'Nic: ${name}': /grid/nic?id=$$id&nic=$$nic&nid=$$nid
+}}
+
+h2. NIC: ${name}
+h3. Details
+|*MAC Address*|${mac}|
+|*IP Address*|${ipaddr}|
+|*Last Checked*|${lastcheck}|
+|*Node*|[${nodename}|grid node?nid=$$nid&gid=${gid}]|
+
+h3. Statistics
+
+@row
+@col 6
+{{include:graph_nic}}
+@colend
+@col 6
+{{include:graph_nicerrors}}
+@colend
+@endrow
+

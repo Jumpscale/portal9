@@ -1,0 +1,14 @@
+@usedefaults
+h1. Real Time Statistics
+
+h3. CPU
+
+{{realtimestat nid:$$nid statistic:cpupercent}}
+
+h3. Memory
+
+{{realtimestat nid:$$nid statistic:mempercent}}
+
+h3. Network
+
+{{realtimestat nid:$$nid statistic:netstat}}

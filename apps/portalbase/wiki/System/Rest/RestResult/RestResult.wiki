@@ -1,0 +1,12 @@
+h4. result of rest call
+
+
+{{restresult}}
+
+h5. how to get machine readable output?
+
+if you want to use this rest interface from a machine (so not by browser) use the following url
+
+{{urlcalled: machine:1}}
+
+

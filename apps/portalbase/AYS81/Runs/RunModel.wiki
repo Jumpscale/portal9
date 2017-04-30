@@ -1,0 +1,63 @@
+@usedefaults
+
+{{timestamp}}
+
+{{aysrun: repo:$$repo runid:$$runid}}
+
+{{breadcrumb:
+    - AYS81 : /
+    - Repo ${reponame}: /ays81/Repo?repopath=$$ayspath&repo=${reponame}
+    - Runs: /ays81/Runs?repo=$$repo
+    - Run $$runid: /ays81/Run?repo=$$repo&runid=$$runid
+}}
+
+{{cssstyle
+    .table {
+        position: relative;
+        left: 7%;
+    }
+}}
+
+h3. Run $$runid:
+
+*Repo*: [${reponame}|/ays81/repo?repopath=$$repo&repo=${reponame}]
+{% if data['state'] in ['error'] %}
+    *State*: {{html: <red style='color:red'>ERROR</red> }}
+{% elif data['state'] in 'ok' %}
+    *State*: {{html: <green style='color:green'>OK</green> }}
+{% else %}
+    *State*: ${data['state']}
+{% endif -%}
+
+*Time*: ${data['lastModDate']}
+
+{{html:
+      <script  src='/jslib/codemirror/autorefresh.js' type='text/javascript'></script>
+}}
+
+{% if run.dbobj.steps -%}
+h4. Steps:
+{% for step in run.dbobj.steps -%}
+    {{html:
+        <div>
+           <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#step${step.number}">+</button> <b> Step ${step.number} (${step.state})</b>
+          <div id="step${step.number}" class="collapse">
+     }}
+        ** Services:
+        {% if step.services -%}
+            {% for service in step.services -%}
+                *** [${service.model.dbobj.name}| /ays81/service?aysname=${service.model.dbobj.name}&aysrole=${service.model.role}&ayspath=${service.aysrepo.path}]
+            {% endfor -%}
+        {% endif %}
+        ** Jobs:
+            || Actor name || Service Name || Action name ||
+            {% for job in step.jobs -%}
+            |[${job.actorName}| /ays81/job?jobid=${job.key}&runid=$$runid&reponame=${reponame}&ayspath=$$repo]| ${job.serviceName}| ${job.actionName}|
+            {% endfor %}
+    {{html:
+        </div>
+        </div>
+        <br>
+    }}
+{% endfor -%}
+{% endif %}

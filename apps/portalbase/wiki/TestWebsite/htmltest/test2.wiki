@@ -1,0 +1,67 @@
+@nodefault
+
+{{html:
+<head>
+    <title>QWiki</title>
+    <script  src='/jslib/old/jquery-latest.js' type='text/javascript'></script>
+    <script  src='/jslib/old/bootstrap/js/bootstrap.js' type='text/javascript'></script>
+    <script  src='/jslib/old/jquery.cookie.js' type='text/javascript'></script>
+    <link  href='/jslib/old/bootstrap/css/bootstrap.min.css' type='text/css' rel='Stylesheet'/>
+    <style type='text/css'> body {padding-top: 60px; padding-bottom: 40px;}</style> 
+    <style type='text/css'> body.sidebar-nav {padding: 9px 0;} </style> 
+</head>
+<body>
+<div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="navbar-inner">
+        <div class="container">
+            <a class="brand" href="#">TestSpace</a>
+            <div class="nav-collapse collapse">
+                <ul class="nav">
+                    <li><a href="/System">System</a></li>
+                    <li><a href="/rest">RestInterface</a></li>
+                    <li><a href="/System/Explorer">Explorer</a></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                          <li><a href="#">Action</a></li>
+                          <li><a href="#">Another action</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            
+            <div class="dropdown">
+                <!-- Link or button to toggle dropdown -->
+                <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                    <li><a tabindex="-1" href="#">Action</a></li>
+                    <li><a tabindex="-1" href="#">Another action</a></li>
+                    <li><a tabindex="-1" href="#">Something else here</a></li>
+                    <li class="divider"></li>
+                    <li><a tabindex="-1" href="#">Separated link</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div> 
+
+<div class="hero-unit">
+<h1>Hello, world!</h1>
+<p>This is a template for a simple marketing or informational website. It includes a large callout called the hero unit and three supporting pieces of content. Use it as a starting point to create something more unique.</p>
+<p><a class="btn btn-primary btn-large">Learn more &raquo;</a></p>
+</div>
+<div class="row-fluid">
+<div class="span4">
+  <p>[[ProductBrief1]]</p>
+  <p><a class="btn" href="#">View details &raquo;</a></p>
+</div><!--/span-->
+<div class="span4">
+  <p>[[ProductBrief2]]</p>
+  <p><a class="btn" href="#">View details &raquo;</a></p>
+</div><!--/span-->
+<div class="span4">
+  <p>[[ProductBrief3]]</p>
+  <p><a class="btn" href="#">View details &raquo;</a></p>
+</div><!--/span-->
+</div><!--/row-->
+</div>
+}}

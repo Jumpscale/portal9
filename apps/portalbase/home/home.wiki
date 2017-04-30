@@ -1,0 +1,6 @@
+@usedefaults
+{{ApplyFlatTheme}}
+
+h3. User spaces
+
+{{spaces: table : filterbyuser}}

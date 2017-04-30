@@ -1,0 +1,1 @@
+C3 allows any server workload or application to work in any cloud. We call it "virtualization of the cloud" through a unified interface, we provide end users with independent from underlying technology or chosen cloudstack. 

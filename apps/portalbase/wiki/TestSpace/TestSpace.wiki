@@ -1,0 +1,6 @@
+h2. test scripts
+
+* please play around with test scripts to learn how to use this wiki
+
+test
+

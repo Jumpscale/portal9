@@ -1,0 +1,25 @@
+@usedefaults
+
+@@title Virtual Machine: ${name}
+
+{{machine: id:$$id}}
+
+h2. Virtual Machine: ${name}
+|*Machine ID*|${id}|
+|*Other ID*|${otherid}|
+|*Description*|${description}|
+|*Roles*|${roles}|
+|*Memory*|${mem}|
+|*Net Address*|${netaddr}|
+|*IP Adress*|${ipaddr}|
+|*Node ID*|[${nid}|grid node?nid=${nid}&gid=${gid}]|
+|*Last Checked*|${lastcheck}|
+|*State*|${state}|
+|*Grid ID*|[${gid}|grid?id=${gid}]|
+|*Active*|${active}|
+|*CPU Core*|${cpucore}|
+|*Type*|${type}|
+
+
+h3. Virtual Disks
+{{vdisks: machineid:$$id}}

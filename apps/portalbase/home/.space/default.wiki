@@ -1,0 +1,22 @@
+
+{{title:Home}}
+
+{{projectname:JumpScale Portal}}
+{{find}}
+{{PortalsHamburgerMenu}}
+
+{{menu:
+Help:https://github.com/Jumpscale/jumpscale_core8/wiki:target=_blank
+}}
+
+{{menuadmin:}}
+
+@block
+@row
+
+@col 12
+
+{content}
+
+@divend
+@divend

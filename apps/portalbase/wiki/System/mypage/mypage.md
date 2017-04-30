@@ -1,0 +1,1 @@
+{{ capitalize 'hello world' }}

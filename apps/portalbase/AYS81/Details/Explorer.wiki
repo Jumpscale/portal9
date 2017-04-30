@@ -1,0 +1,14 @@
+@usedefaults
+
+{{timestamp}}
+
+
+h2. Explorer
+{{aysrepo repo:$$repo}}
+{{explorer: ppath:${repo.path}}}
+
+{{breadcrumb:
+    - AYS81 : /
+    - Repo ${repo.name}: /ays81/Repo?repopath=$$repo&repo=${repo.name}
+    - Explorer:
+}}

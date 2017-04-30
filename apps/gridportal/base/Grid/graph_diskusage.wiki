@@ -1,0 +1,28 @@
+{{drawgraph:
+
+target.1 =
+    function:mean,
+    value:value,
+    series:{gid}_{nid}_disk_{bpath}_space_used_mb.gauge,
+    alias:Used,
+    interval:5m,
+
+target.2 =
+    function:difference,
+    value:value,
+    series:{gid}_{nid}_disk_{bpath}_space_free_mb.gauge,
+    alias:Free,
+    interval:5m,
+
+
+cfg.title = Disk Usage
+cfg.dashboardtitle = 'Disk {bpath} ({gid}:{nid}) Disk Usage'
+cfg.height = 275px
+cfg.width = 1000px
+cfg.stack = true
+cfg.stack = true
+cfg.fill = 20
+cfg.y_format = mbytes
+
+
+}}

@@ -1,0 +1,3 @@
+h2. info for rest webservices 
+
+{{actorinfo: actorname:$actorname appname:$appname}}

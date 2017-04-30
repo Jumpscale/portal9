@@ -1,0 +1,13 @@
+@usedefaults
+{{timestamp}}
+
+h3. Repository: [$$reponame|/ays81/repo?repopath=$$repo&repo=$$reponame]
+
+{{ayssimulatorresult}}
+
+{{breadcrumb:
+    - AYS81 : /
+    - Repo $$reponame: /ays81/Repo?repopath=$$repo&repo=$$reponame
+    - Simulate:  /ays81/simulate?repopath=$$repo&repo=$$reponame
+
+}}

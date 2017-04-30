@@ -1,0 +1,25 @@
+{{title:System Portal}}
+{{ApplyFlatTheme}}
+
+{{projectname:System Portal}}
+{{find}}
+{{menu:
+Help:https://gig.gitbooks.io/jumpscale-portal8/content/:target=_blank
+}}
+
+{{menuadmin}}
+
+@block
+@row
+
+@col 12
+h1. Edit Page
+
+
+@colend
+@rowend
+
+@col 11
+{{edit: app:$$app actor:$$actor space:$$edit_space bucket:$$bucket path:$$path page:$$edit_page}}
+@colend
+@blockend

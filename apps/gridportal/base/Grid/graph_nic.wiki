@@ -1,0 +1,26 @@
+{{drawgraph:
+
+target.1 =
+    function:derivative,
+    value:value,
+    series:{gid}_{nid}_nic_{nic}_kbytes_recv.gauge,
+    alias:Received,
+    interval:2m,
+
+target.2 =
+    function:derivative,
+    value:value,
+    series:{gid}_{nid}_nic_{nic}_kbytes_sent.gauge,
+    alias:Sent,
+    interval:2m,
+
+
+cfg.title = Network Traffic
+cfg.dashboardtitle = 'NIC {nic} ({gid}:{nid}) Network Traffic'
+cfg.height = 275px
+cfg.width = 500px
+cfg.stack = false
+cfg.fill = 0
+cfg.y_format = kbytes
+
+}}

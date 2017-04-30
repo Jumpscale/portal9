@@ -1,0 +1,29 @@
+
+{{title:TestSpace}}
+{{ApplyFlatTheme}}
+
+{{projectname:TestSpace}}
+
+{{find}}
+
+{{menu:
+Documentation:/Help
+Incubaid:http://www.incubaid.com
+}}
+
+{{menuadmin}}
+
+@block
+@row
+
+@col 2 well sidebar-nav
+{{navigation}}
+@divend
+
+@col 10
+
+{content}
+
+@divend
+@divend
+

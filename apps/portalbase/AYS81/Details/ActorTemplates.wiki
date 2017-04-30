@@ -1,0 +1,39 @@
+@usedefaults
+h3. Actor Templates
+
+{{datatables_use}}
+{{actortemplates ayspath:$$ayspath}}
+
+{{breadcrumb:
+    - AYS81 : /
+    {% if aysrepo %}
+    - Repo ${reponame}: /ays81/Repo?repopath=$$ayspath&repo=${reponame}
+    {% endif %}
+    - Actor Templates: /ays81/Actortemplates
+
+}}
+{{actions:
+{% if  aysrepo %}
+- display: Update Templates
+  action: /restmachine/system/atyourservice/templatesUpdate
+  hide: false
+  showresponse: true
+  input:
+    - name: repo
+      value: ${reponame}
+      type: hidden
+{%else%}
+- display: Update Templates
+  action: /restmachine/system/atyourservice/templatesUpdate
+  hide: false
+  showresponse: true
+{% endif %}
+}}
+{% if error is defined %}
+    Error : ${error}
+{%else%}
+    ||Role||Name||Path||
+    {% for template in templates -%}
+    | ${template.role} | [${template.name}|ays81/ActorTemplate?aysname=${template.name}&ayspath=$$ayspath] | ${template.path} |
+    {% endfor %}
+{%endif%}

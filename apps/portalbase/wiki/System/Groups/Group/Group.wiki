@@ -1,0 +1,31 @@
+@usedefaults
+
+@@title Group: ${name}
+
+h1. Group ${name}
+
+{{actions:
+
+- display: Edit
+  action: '#group_edit'
+
+- display: Delete
+  action: '/restmachine/system/usermanager/deleteGroup'
+  navigateback: true
+  input:
+  - name: id
+    type: hidden
+    value: $$id
+
+}}
+
+{{group_info: id:$$id}}
+{{group_edit: id:$$id}}
+
+* *Name*: ${name}
+* *Domain*: ${domain}
+* *Description*: ${description}
+
+h2. Users:
+
+{{users groups:${name}}}

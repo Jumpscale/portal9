@@ -1,0 +1,9 @@
+h2. validation failed for rest call
+
+h4. error was:
+
+$$error
+
+h4. info for rest method
+
+{{actormethodinfo: actorname:$$actorname appname:$$appname method:$$method}}

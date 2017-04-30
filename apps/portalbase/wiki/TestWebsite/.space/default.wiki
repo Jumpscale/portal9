@@ -1,0 +1,24 @@
+
+{{title:QWiki}}
+
+{{projectname:TestSpace}}
+
+{{find}}
+
+{{menu:
+Incubaid:http://www.incubaid.com
+}}
+
+{{menudropdown: name:Admin
+Pages:/system/Pages?space=$$space
+Edit:/system/edit?space=$$space&page=$$page
+Logout:/system/login?user_logoff_=1
+--------------
+Access:/system/OverviewAccess?space=$$space
+}}
+
+@block
+{content}
+@divend 
+
+

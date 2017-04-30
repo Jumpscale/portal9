@@ -1,0 +1,45 @@
+
+<html>
+
+<head>
+<script src="/lib/codemirror/lib/codemirror.js"></script>
+<link rel="stylesheet" href="/lib/codemirror/lib/codemirror.css">
+<script src="/lib/codemirror/mode/javascript/javascript.js"></script>
+<link rel="stylesheet" href="/lib/codemirror/theme/elegant.css">
+<link rel="stylesheet" href="/lib/codemirror/doc/docs.css">
+<script src="/lib/codemirror/mode/javascript/javascript.js"></script>
+<script src="/lib/codemirror/mode/{template}/{template}.js"></script>
+
+<style type="text/css">
+      .CodeMirror {border-top: 1px solid black; border-bottom: 1px solid black}
+      .CodeMirror-scroll { height: 100% }
+</style>
+
+</head>
+
+<body>
+    
+<textarea id="code" name="code" rows="5">    
+
+{code}
+        
+</textarea>    
+
+ <script>
+    var editor = CodeMirror.fromTextArea(document.getElementById("code"), 
+        {
+        lineNumbers: true,
+        theme: "elegant",
+        mode: "{template}",
+        onCursorActivity: function() {
+            editor.setLineClass(hlLine, null, null);
+            hlLine = editor.setLineClass(editor.getCursor().line, null, "activeline");
+            }
+        }
+    );
+var hlLine = editor.setLineClass(0, "activeline");
+</script>
+    
+
+</body>
+</html>

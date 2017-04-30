@@ -1,0 +1,32 @@
+<div class='slider-container visible'>
+	<nav class='fixed-slide-nav'>
+		<div class='portals-navigation'>
+      <p class='explore-portals'>Explore other Portals</p>
+      <ul class='portals-list'>
+        {% for portal in menulinks %}
+            <li class='accordion'>
+				<ul class='panel-heading clearfix'>
+					{% if portal.children %}
+						<a class='accordion-toggle margin-right-medium left padding-right-none' data-toggle='collapse' data-parent='.accordion' href='#collapse-{{loop.index}}'></a>
+						<a class='space openIframe' href='{{portal.url}}' data-theme='{{portal.theme}}' data-external='{{portal.external}}'>{{portal.name}}</a>
+					{% else %}
+						<a class='space openIframe push-left' href='{{portal.url}}' data-theme='{{portal.theme}}' data-external='{{portal.external}}'>{{portal.name}}</a>
+					{% endif %}
+				</ul>
+				{% if portal.children %}
+	                <ul class='topics margin-left-xlarge'>
+						<div id='collapse-{{loop.index}}' class='panel-collapse collapse'>
+		                  	{% for child in portal.children %}
+		                    	<li>
+		                        	<a href='{{child.url}}'>{{child.name}}</a>
+		                    	</li>
+		                  	{% endfor %}
+						</div>
+	                </ul>
+				{% endif %}
+            </li>
+        {% endfor %}
+      </ul>
+    </div>
+  </nav>
+</div>

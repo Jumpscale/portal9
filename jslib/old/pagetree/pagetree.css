@@ -1,0 +1,19 @@
+.tree li {
+    cursor: pointer;
+}
+
+.expanded {
+    background-image: url(tree_minus.gif);
+    background-repeat: no-repeat;
+}
+
+.collapsed {
+    background-image: url(tree_plus.gif);
+    background-repeat: no-repeat;
+}
+
+.nav.tree > li a {
+    display: inline;
+    margin-left: 17px; 
+    padding-left: 0;
+}

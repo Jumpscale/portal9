@@ -1,0 +1,10 @@
+@usedefaults
+
+h2. Statistics $$gid
+
+{{html:
+
+<iframe height="865px" frameborder="0" width="1000px" src="/jslib/grafana/iframe2.html#/dashboard/script/NodeStats.js?gid=$$gid"></iframe>
+
+}}
+

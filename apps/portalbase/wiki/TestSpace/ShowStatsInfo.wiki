@@ -1,0 +1,8 @@
+@usedefaults
+
+h3. Pump Statistics Example
+
+{{multistatsmonth id:pumps.water.level.sb6 title:'Pump Port Side' width:800 height:400}}
+
+
+

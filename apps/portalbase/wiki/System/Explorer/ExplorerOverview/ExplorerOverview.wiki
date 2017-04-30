@@ -1,0 +1,27 @@
+
+h2. spaces (write your wiki content)
+
+confluence style
+{{explorespaces}}
+do not forget to reload
+
+h2. macro's
+
+executed at load of appserver (loading of wiki pages)
+* [Preprocess Macros|/system/Explorer/?path=wikimacros/preprocess/]
+execute always, so dynamic output can be created, output of these macro's is confluence format
+* [Wiki Macros|/system/Explorer/?path=wikimacros/wiki/]
+the last step, executes after the wiki macro's ,these macros manipulate a page object (default an html page object)
+* [Page Macros|/system/Explorer/?path=wikimacros/page/]
+
+h2. specs
+
+{{explorespecs}}
+
+h2. actors
+
+{{exploreactors}}
+
+h2. root
+
+* [Explorer|/system/Explorer/]

@@ -1,0 +1,2 @@
+h5. [Portal Access Logs|/system/ShowSpaceAccessLog?space=system]
+h5. [Reset Portal Logs|/system/ResetAccessLog?space=system]

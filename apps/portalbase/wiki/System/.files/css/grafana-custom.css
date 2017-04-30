@@ -1,0 +1,21 @@
+.grafana-push-left{
+  margin-left: 205px;
+}
+.sidemenu-top-btn{
+  padding-left: 40px;
+}
+.top-nav{
+  padding-left: 33px;
+}
+@media (max-width:788px) {
+  .top-nav{
+    padding-left: 50px;
+    padding-top: 3px;
+  }
+}
+@media (max-width:767px) {
+  #PortalsHamburgerMenu {
+    top: 6px !important;
+        background: red;
+  }
+}

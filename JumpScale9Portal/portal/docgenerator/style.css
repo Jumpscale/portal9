@@ -1,0 +1,32 @@
+
+body {font-family: Helvetica,Arial,sans-serif;background: none repeat scroll 0 0 transparent;color: #333333;font-size: 11pt;line-height: 13pt;}
+h1,  h2,  h3, h4,  h5,  h6 {font-weight: bold;line-height: normal;padding: 0;}
+p, table, tr, td, th, ol,  ul,  li, a {font-size: 11pt;line-height: 10pt;color: #333333;}
+p {   margin: 10px 0;padding: 0;}
+span.marked{background:yellow; padding:0px 3px;}
+h1 {border-bottom: 1px solid #919699;color: #000000;font-size:  21pt;margin-bottom: 0.5em;margin-top: 2em;padding-bottom:5px;}
+h2 {border-bottom: 1px solid #919699;color: #000000;font-size: 18pt;margin-bottom: 0.5em;margin-top: 2em;padding-bottom: 2px;}
+h3 {color: #000000;font-size: 15pt;margin-bottom: 0.5em;margin-top: 1.5em;}
+h4 {color: #000000;font-size: 13pt;margin-bottom: 0.3em;margin-top: 1.2em;}
+a:link, a:visited, a:active, a:hover {color: #006DAF;}
+a:link, a:visited, a:active {text-decoration: none;}
+a:hover {text-decoration:underline;}
+table{margin: 5px 0;padding: 0;border-collapse: collapse;}
+td, table td, th {border-color: #DDDDDD;border-style: solid;border-width: 1px;min-width: 0.6em;padding: 5px;text-align: left;vertical-align: top;}
+th { background-color: #F0F0F0;font-weight:bold;}
+tfoot td  { background-color: #f9f9f9;font-weight:bold;font-size: 10pt;}
+ul {} 
+ul, ol 
+{ padding-left: 15px;}     
+ol.list-roman-l { list-style-type:lower-roman;}   
+ol.list-roman-u { list-style-type:  upper-roman;}     
+li, ul p, ol p {margin: 0;margin-bottom:2px;padding: 0;}
+
+pre {background-color: #FFFCC5;border: 1px dashed #E2E1D5;border-radius: 2px 2px 2px 2px;margin: 0;overflow-x: auto;padding: 10px;-moz-border-radius: 5px;border-radius: 5px;}
+/*--------------------------------------sexy part--------------------------------------*/
+body { padding:0px 30px; }
+.heading { margin-bottom:40px;}
+.heading h1 { font-family:Sans-Serif; font-size:50px; text-align:center;    border-bottom: 1px dotted #919699;  margin:10px 0px; margin-top:30px;}
+.heading p { font-family:Sans-Serif; font-size:18px; text-align:center;  margin:0px; }
+.error-msg { background:#fffcab; border:1px dashed #ffe169; padding:10px; text-align:center; color:red;}
+.varify-msg { background:#dfffb5; border:1px dashed #acd479; padding:10px; text-align:center; color:#599013;}

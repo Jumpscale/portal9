@@ -1,0 +1,55 @@
+@usedefaults
+@@title Grid Node: ${name}
+@@requiredargs: nid gid
+
+{{node_getdata: gid:$$gid id:$$id nid:$$nid}}
+
+h2. Grid Node: ${name} (Reference ID: $$id)
+h2. Grid ID: $$gid 
+
+{{toc: start=3}}
+
+#h3. CPU Statistics
+
+# @row
+# @col 6
+# {{include:graph_cpustats}}
+# @colend
+# @col 6
+# {{include:graph_systemload}}
+# @colend
+# @endrow
+
+h3. Info
+
+|*GID:NID*|$$gid:$$gid|
+|*Name*|${name}|
+|*Active*|${active}|
+|*Roles*|${roles}|
+|*Description*|${description}|
+|*IP Address*|${ipaddr}|
+
+h3. Statistics
+
+* [*Statistics*|Node Stats?nid=$$nid&gid=$$gid]
+#* [*Real Time Statistics*|RealTimeStatsNode?nid=$$nid]
+
+h3. NICs
+{{nics: nid:$$nid}}
+
+h3. Jobs
+{{jobs: nid:$$nid}}
+
+h3. Machines
+{{machines nid:$$nid}}
+
+
+h3. Logs
+{{logs: nid:$$nid}}
+
+h3. ECOs
+{{ecos: nid:$$nid}}
+
+
+h3. Disks
+{{disks: nid:$$nid gid:$$gid}}

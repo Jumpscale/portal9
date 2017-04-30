@@ -1,0 +1,49 @@
+body{
+	margin-top: -15px;
+}
+@-moz-document url-prefix() { 
+  body {
+	transform: scale(0.8, 0.8);
+	transform-origin: 0px 0px 0px;
+	margin-left: 15%;
+  }
+}
+.navbar{
+	border-radius: 0;
+	border-bottom-right-radius: 6px;
+	border-bottom-left-radius: 6px;
+}
+h1, .h1{
+	font-size: 40px;
+}
+h2, .h2{
+	font-size: 35px;
+}
+h3, .h3{
+	font-size: 30px;
+}
+h4, .h4{
+	font-size: 25px;
+}
+h5, .h5{
+	font-size: 23px;
+}
+h6, .h6{
+	font-size: 20px;
+}
+.navbar-collapse .navbar-nav.navbar-left:first-child{
+	margin-left: 0;
+}
+.navigation a{
+	font-size: 14px;
+}
+.navigation{
+	padding-top: 1%;
+}
+.navbar-nav > li > a{
+	padding: 15px 21px !important;
+}
+table thead{
+	background: #1abc9c;
+	color: #fff;
+}

@@ -1,0 +1,3 @@
+h2. reloading application $$name
+
+{{reloadapplication: name:$$name}}

@@ -1,0 +1,6 @@
+h2. Reset access logs
+
+
+Resetting the log files will create a new empty log file and backup the old log files.
+
+{{accesslogoverview}}

@@ -1,0 +1,15 @@
+
+@usedefault
+
+h2. usage of links
+
+[Home]  [another name|/Home]
+[another name|Home]
+[test:Links]
+[link to links|test:Links]
+
+|[another name|Home]|[another name|Home]|
+
+h3. this page was
+
+{{pagecontent}}

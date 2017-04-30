@@ -1,0 +1,10 @@
+
+Alerts:/grid/Alerts
+Audits:/grid/Audits
+Error Conditions:/grid/Error Conditions
+Jobs:/grid/Jobs
+JumpScript:/grid/Jumpscripts
+Logs:/grid/Logs
+Grid Nodes:/grid/Grid Nodes
+Status Overview:/grid/Status Overview
+Virtual Machines:/grid/Virtual Machines

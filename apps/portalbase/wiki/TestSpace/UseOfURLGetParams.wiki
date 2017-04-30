@@ -1,0 +1,15 @@
+
+@usedefault
+
+h2. show how to use params
+
+in get statement set param name=something 
+this should be print on next line
+$$name
+
+how to use this
+http://localhost/wiki/testspace/UseOfURLGetParams?name=myname&reload=True
+
+h3. this page was
+
+{{pagecontent}}

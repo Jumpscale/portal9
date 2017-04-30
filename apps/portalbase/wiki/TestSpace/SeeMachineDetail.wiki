@@ -1,0 +1,23 @@
+@usedefault
+
+h2. show how to include data from a machine object
+
+if you don't see anything make sure a model exists
+e.g. use
+
+rest call to populate local db with an object, there should be a machine with id =1
+[http://localhost/rest/system/machinemanager/initSelf?authkey=1234&organization=myorg2&name=mymachine&format=text]
+
+to call this page & see result do
+
+
+{{getmodeldata: application:system actor:machinemanager model:machine id:$$machineid}}
+
+h2. content to be replaced
+
+| name | $(machine.name) |
+| hostname | $(machine.hostname) |
+
+h2. showdata
+
+{{showmodeldata: application:system actor:machinemanager model:machine id:$$machineid}}

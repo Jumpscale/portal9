@@ -1,0 +1,15 @@
+
+@usedefault
+
+h2. how to force a refresh of a page
+
+use url param reload
+
+e.g. how to use this
+* http://localhost/wiki/test/ForceRefreshOfPage?name=myname&reload=True
+or
+* http://localhost/wiki/test/ForceRefreshOfPage?reload=True
+
+h3. this page was
+
+{{pagecontent}}

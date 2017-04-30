@@ -1,0 +1,16 @@
+@usedefaults
+{{processstat: id:$$id}}
+
+{{processstat: id:$$id}}
+h2. Process Statistics
+
+h3. Memory Stats
+{{stat key:$$prockey.mem_rss,$$prockey.mem_vms width:800 height:500}}
+
+
+h5. CPU Stats
+{{stat key:$$prockey.cpu_percent&areaMode=stacked&yMax=100 width:800 height:500}}
+
+
+h5. IO Stats
+{{stat key:$$prockey.io_read_mbytes,$$prockey.io_write_mbytes width:800 height:500}}

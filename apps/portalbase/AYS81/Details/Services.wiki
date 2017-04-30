@@ -1,0 +1,32 @@
+@usedefaults
+h3. AYS Services
+
+
+{{datatables_use}}
+{{aysservices ayspath:$$ayspath}}
+
+{{breadcrumb:
+    - AYS81 : /
+    - Repo ${reponame}: /ays81/Repo?repopath=$$ayspath&repo=${reponame}
+    - Services: /ays81/Services
+}}
+
+{{actions:
+- display: Delete Service
+  action: /restmachine/system/atyourservice/deleteService
+  showresponse: True
+  hide: True
+}}
+
+{% if error is defined %}
+    Error : ${error}
+{%else%}
+    ||Actor Name||Name||State||Actions||
+    {% for service in services -%}
+        {% set role = service.model.dbobj.actorName -%}
+        {% set role = role.split('.')[0] -%}
+        | ${service.model.dbobj.actorName} | [${service.model.dbobj.name}|ays81/Service?aysrole=${role}&aysname=${service.model.dbobj.name}&ayspath=$$ayspath] | ${service.model.dbobj.state} | {{action label:'Delete' deleterow:true id:'action-DeleteService' class:'glyphicon glyphicon-trash' data-repositorypath:'$$ayspath' data-role:'${service.model.role}' data-instance:'${service.model.name}'}} |
+    {% else %}
+    This repository doesn't contain any service instance yet.
+    {% endfor %}
+{%endif%}

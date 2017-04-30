@@ -1,0 +1,5 @@
+
+h2. actor
+
+{{form_contentmanager_actor}}
+

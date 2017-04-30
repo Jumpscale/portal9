@@ -1,0 +1,4 @@
+@usedefault
+
+h2. Virtual Disks
+{{vdisks id:$$id name:$$name otherid:$$otherid type:$$type description:$$description roles:$$roles mem:$$mem netaddr:$$netaddr ipaddr:$$ipaddr nid:$$nid lastcheck:$$lastcheck state:$$state gid:$$gid active:$$active cpucore:$$cpucore}}

@@ -1,0 +1,106 @@
+html {
+    color: #fff;
+} 
+
+
+.page img {
+    width: 100%;
+}
+  
+
+#steller-story {
+    display: none;
+}
+
+section {
+    width: 100%;
+    height: 100%;
+}
+
+
+.full-image {
+    position: relative;
+
+    width: 100%;
+    height: 100%;
+
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    background-size: cover;
+
+    background-position: top center;
+}
+
+.overlay-content {
+
+    height: 50%;
+    width: 80%;
+    padding: 0 10%;
+    text-align: center;
+
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+
+    margin: auto;
+
+}
+
+.overlay-content h1 {
+    font-family: helvetica, arial;
+    text-transform: uppercase;
+    font-size: 2.3em;
+    margin: 0;
+    letter-spacing: .2em;
+}
+
+
+.overlay-content h2 {
+    font-family: helvetica, arial;
+    text-transform: uppercase;
+    font-size: 2.3em;
+    font-weight: normal;
+    margin: 0;
+    letter-spacing: .2em;
+}
+
+.overlay-content h3 {
+    font-family: times, serif;
+    font-style: italic;
+    margin: 0;
+    font-size: 1.2em;
+}
+
+.overlay-content.light-bg {
+    color: #fff;
+}
+
+.overlay-content.normal-font h3 {
+    font-style: normal;
+    font-family: helvetica, sans-serif;
+}
+#famous-container {
+    width: auto;
+    height: 600px;
+    margin: 0 auto;
+    position: relative;
+}
+.famous-surface.header{
+    width: 50px;
+    height: 50px;
+}
+
+.clearfix:after {
+    content: ".";
+    display: block;
+    clear: both;
+    visibility: hidden;
+    line-height: 0;
+    height: 0;
+}
+ 
+.clearfix {
+    display: inline-block;
+}

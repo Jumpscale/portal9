@@ -1,0 +1,15 @@
+@usedefaults
+
+{{testrun_getdata: id:$$id}}
+
+h2. TestRun $$name $$state 
+
+* gid: $$gid nid: $$nid
+* Categories: $$categories
+* Description: $$descr
+* Start: $$starttime
+* EndTime: $$endtime
+
+h3. TestRun details
+
+{{testrun_details: cache:$$cachekey}}

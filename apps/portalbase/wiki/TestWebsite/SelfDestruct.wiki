@@ -1,0 +1,21 @@
+@DESTRUCTED@
+
+@usedefault
+
+{{selfdestruct}}
+{{refresh: time:10}}
+
+
+@show doc.destructed==False
+
+this message will self destruct in 10 seconds
+to test this page you have to remove ...DESTRUCTED... from top of file on disk.
+
+@end
+
+
+@show doc.destructed
+
+this is message after refresh
+
+@end

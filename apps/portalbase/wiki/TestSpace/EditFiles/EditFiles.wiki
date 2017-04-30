@@ -1,0 +1,15 @@
+@usedefault
+
+{{edit: app:system actor:usermanager path:'specs/actors.spec' edit:true}}
+
+not to be edited
+
+{{edit: app:system actor:usermanager path:'specs/actors.spec'}}
+
+
+
+h2. content of this page:
+
+{{pagecontent}}
+
+#{{pageexplorer}}

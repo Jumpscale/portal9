@@ -1,0 +1,3 @@
+@usedefault
+
+{{explorer: ppath:$cfgDir/portals/main/}}

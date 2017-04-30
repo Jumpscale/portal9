@@ -1,0 +1,8 @@
+h2. explorer for bucket
+
+{{explorer: bucket:testbucket}}
+
+
+h2. list buckets macro
+
+{{listbuckets}}

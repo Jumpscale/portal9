@@ -1,0 +1,69 @@
+
+{{html:
+    <title>DocPortal</title>
+}}
+
+{{projectname:DocPortal}}
+{{css:/jslib/bootstrap/css/bootstrap.css}}
+{{find}}
+
+{{menu:
+#System:/System
+}}
+
+{{menuloggedin:
+Home:/System
+}}
+
+{{menuadmin_jdoc}}
+
+@block
+@row
+
+@col 3
+{{navigation}}
+@divend
+
+@col 9
+
+{content}
+
+@divend
+@divend
+
+
+{{cssstyle
+td{
+    max-width:500px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.navbar.navbar-inverse.navbar-fixed-top{
+    min-height: inherit;
+}
+.navbar.navbar-inverse.navbar-fixed-top .collapse{
+    display: block;
+}
+
+.navbar.navbar-inverse.navbar-fixed-top .search-query{
+    height: 30px;
+}
+.nav > li > a{
+    padding: 3px 15px;
+}
+.nav.nav-list{
+    margin-left: 17px;
+}
+.navbar .nav .dropdown-toggle .caret{
+    margin-top: 0;
+}
+.navbar .brand{
+    padding-top: 5px;
+}
+
+}}
+
+
+

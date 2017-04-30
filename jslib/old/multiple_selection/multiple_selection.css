@@ -1,0 +1,7 @@
+.multiple_selection li {
+    list-style-type: none;
+}
+
+.multiple_selection label {
+    display: inline;
+}
