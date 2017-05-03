@@ -7,7 +7,7 @@
 {{actions:
 
 - display: Delete
-  action: /restmachine/system/errorconditionhandler/delete
+  action: /restmachine/system/errorhandler/delete
   navigateback: true
   reload: false
   data:

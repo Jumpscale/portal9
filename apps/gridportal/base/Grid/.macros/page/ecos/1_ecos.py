@@ -33,7 +33,7 @@ def main(j, args, params, tags, tasklet):
 
     def level(row, field):
         value = row[field]
-        return "%s (%s)" % (j.errorconditionhandler.getLevelName(value), value)
+        return "%s (%s)" % (j.errorhandler.getLevelName(value), value)
 
     def appName(row, field):
         return row[field].split(':')[-1]

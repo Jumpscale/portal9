@@ -352,7 +352,7 @@ class PageProcessor():
         """
         if not ctx.checkFormat():
             # error in format
-            eco = j.errorconditionhandler.getErrorConditionObject()
+            eco = j.errorhandler.getErrorConditionObject()
             eco.errormessage = "only format supported = human or json, format is put with param &format=..."
             eco.type = "INPUT"
             print("WRONG FORMAT")
@@ -360,7 +360,7 @@ class PageProcessor():
             if errorObject is not None:
                 eco = errorObject
             else:
-                eco = j.errorconditionhandler.getErrorConditionObject()
+                eco = j.errorhandler.getErrorConditionObject()
 
         method = ctx.env["PATH_INFO"]
         remoteAddress = ctx.env["REMOTE_ADDR"]

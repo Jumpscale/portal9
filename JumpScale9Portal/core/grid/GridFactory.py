@@ -29,11 +29,11 @@ class GridFactory:
 
         if test:
             if self.id == 0:
-                j.errorconditionhandler.raiseInputError(
+                j.errorhandler.raiseInputError(
                     msgpub="Grid needs grid id to be filled in in grid config file", message="", category="", die=True)
 
             if self.nid == 0:
-                j.errorconditionhandler.raiseInputError(
+                j.errorhandler.raiseInputError(
                     msgpub="Grid needs grid node id (grid.nid) to be filled in in grid config file",
                     message="",
                     category="",

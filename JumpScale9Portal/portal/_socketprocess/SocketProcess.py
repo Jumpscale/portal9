@@ -31,7 +31,7 @@ class PortalProcess():
         self.epoch = time.time()
         self.lock = {}
 
-        # j.errorconditionhandler.setExceptHook() #@does not do much?
+        # j.errorhandler.setExceptHook() #@does not do much?
 
         # Trigger the key value store extension so the enum is loaded
         self.cfgdir = cfgdir
@@ -184,7 +184,7 @@ class PortalProcess():
         self.actorsloader._generateLoadActor("system", "usermanager", actorpath="system/system__usermanager/")
         self.actorsloader.scan("system")
         self.actorsloader.getActor("system", "usermanager")
-        # self.actorsloader.getActor("system", "errorconditionhandler")
+        # self.actorsloader.getActor("system", "errorhandler")
 
         # self.actorsloader._getSystemLoaderForUsersGroups()
 

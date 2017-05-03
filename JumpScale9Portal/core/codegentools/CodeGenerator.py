@@ -272,7 +272,7 @@ class CodeGenerator:
         except Exception as e:
             print(e)
             #emsg="could not import code for name:%s " % (name)
-            j.errorconditionhandler.raiseBug("", "spec.import", e)
+            j.errorhandler.raiseBug("", "spec.import", e)
 
         # if getclass:
         try:

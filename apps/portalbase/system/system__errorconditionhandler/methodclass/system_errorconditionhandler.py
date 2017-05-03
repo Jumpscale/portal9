@@ -1,7 +1,7 @@
 from js9 import j
 
 
-class system_errorconditionhandler(j.tools.code.classGetBase()):
+class system_errorhandler(j.tools.code.classGetBase()):
 
     """
     errorcondition handling
@@ -11,7 +11,7 @@ class system_errorconditionhandler(j.tools.code.classGetBase()):
     def __init__(self):
 
         self._te = {}
-        self.actorname = "errorconditionhandler"
+        self.actorname = "errorhandler"
         self.appname = "system"
 
     def describeCategory(self, category, language, description, resolution_user, resolution_ops, **args):
