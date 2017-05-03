@@ -273,7 +273,7 @@ class PageProcessor():
 
     def process_elfinder(self, path, ctx):
         from JumpScale.portal.html import elFinder
-        db = j.servers.kvs.getRedisCacheLocal()
+        db = j.data.kvs.getRedisCacheLocal()
         rootpath = db.get(path)
         options = {'root': rootpath, 'dotFiles': True}
         con = elFinder.connector(options)

@@ -5,7 +5,7 @@ def main(j, args, params, tags, tasklet):
 
     params.result = page = args.page
     userid = args.getTag('id')
-    user = j.data.models.system.User.get(userid)
+    user = j.data.models_system.User.get(userid)
     if not user:
         params.result = ('User with id %s not found' % userid, args.doc)
         return params
@@ -16,7 +16,7 @@ def main(j, args, params, tags, tasklet):
     popup.addText('Enter emails (comma seperated)', 'emails', value=', '.join(user.emails))
     popup.addHiddenField('domain', user.domain)
     popup.addText('Enter Password (leave empty to unchange)', 'password', type='password')
-    for group in j.data.models.system.Group.find({}):
+    for group in j.data.models_system.Group.find({}):
         available = group['name'] in user.groups
         options.append((group['name'], group['name'], available))
 

@@ -6,7 +6,7 @@ def main(j, args, params, tags, tasklet):
         params.result = (out, args.doc)
         return params
 
-    group = j.data.models.system.Group.get(id)
+    group = j.data.models_system.Group.get(id)
     if not group:
         out = 'Could not find Group: %s' % id
         params.result = (out, args.doc)

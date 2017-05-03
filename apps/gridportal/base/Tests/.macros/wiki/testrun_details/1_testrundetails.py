@@ -5,7 +5,7 @@ def main(j, args, params, tags, tasklet):
     # tags = params.tags
     cachekey = args.getTag('cache')
 
-    db = j.servers.kvs.getMemoryStore('cache')
+    db = j.data.kvs.getMemoryStore('cache')
     try:
         obj = db.cacheGet(cachekey)
     except:

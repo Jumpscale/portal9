@@ -102,7 +102,7 @@ class system_oauth(j.tools.code.classGetBase()):
         except AuthError as e:
             return authfailure(str(e))
 
-        user_model = j.data.models.system.User
+        user_model = j.data.models_system.User
         user_obj = user_model.find({'name': userinfo.username})
 
         if not user_obj:

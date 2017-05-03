@@ -16,7 +16,7 @@ class system_contentmanager(j.tools.code.classGetBase()):
         self._te = {}
         self.actorname = "contentmanager"
         self.appname = "system"
-        self.dbmem = j.servers.kvs.getRedisStore('contentmanager')
+        self.dbmem = j.data.kvs.getRedisStore('contentmanager')
 
     def getActors(self, **args):
         """

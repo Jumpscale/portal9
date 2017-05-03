@@ -1013,7 +1013,7 @@ function copyText$id() {
         if dockey is None:
             dockey = j.data.hash.md5_string(path)
         C = C.replace("$dockey", dockey)
-        db = j.servers.kvs.getRedisCacheLocal()
+        db = j.data.kvs.getRedisCacheLocal()
         db.set(key=dockey, value=path)
 
         self.head += C

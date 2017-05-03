@@ -36,7 +36,7 @@ def main(j, args, params, tags, tasklet):
             except:
                 continue
             if group is not None:
-                for membername in [user.name for user in j.data.models.system.User.find({"groups": group.name})]:
+                for membername in [user.name for user in j.data.models_system.User.find({"groups": group.name})]:
                     if membername not in memberace:
                         memberace[membername] = []
                     right = space.model.acl[groupname]

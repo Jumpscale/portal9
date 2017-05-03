@@ -104,7 +104,7 @@ class PortalServer:
             if self.authentication_method == 'gitlab':
                 self.auth = PortalAuthenticatorGitlab(instance=self.gitlabinstance)
             else:
-                j.data.models.system.connect2mongo(connection['host'], port=int(connection['port']))
+                j.data.models_system.connect2mongo(connection['host'], port=int(connection['port']))
 
                 mongoenginesession = {
                     'session.type': 'MongoEngineBeaker',

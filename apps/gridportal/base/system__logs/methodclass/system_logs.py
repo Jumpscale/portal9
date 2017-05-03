@@ -18,7 +18,7 @@ class system_logs(j.tools.code.classGetBase()):
             params[p] = args.get(p)
 
         if not any(params.values()):
-            commands = j.data.models.system.Command.find({})
+            commands = j.data.models_system.Command.find({})
         else:
             if params['ffrom']:
                 ffrom = params.pop('ffrom')
@@ -38,7 +38,7 @@ class system_logs(j.tools.code.classGetBase()):
                 if v:
                     query[k] = v
 
-            commands = j.data.models.system.Command.find(query)
+            commands = j.data.models_system.Command.find(query)
 
         aaData = list()
         fields = ('cmd', 'args', 'roles', 'jobs')
@@ -55,7 +55,7 @@ class system_logs(j.tools.code.classGetBase()):
         return {'aaData': aaData}
 
     def listNodes(self, **args):
-        nodes = j.data.models.system.Node.find({})
+        nodes = j.data.models_system.Node.find({})
 
         aaData = list()
         fields = ('name', 'roles', 'ipaddr', 'machineguid')
@@ -97,7 +97,7 @@ class system_logs(j.tools.code.classGetBase()):
             nid = args.get('nid')
             query = {"nid": nid}
 
-        logs = j.data.models.system.Log.find(query)
+        logs = j.data.models_system.Log.find(query)
 
         aaData = list()
         fields = ('appname', 'category', 'epoch', 'message', 'level', 'pid')

@@ -10,7 +10,7 @@ class DataTables():
     def __init__(self):
         self.__jslocation__ = "j.portal.tools.datatables"
         self.inited = False
-        self.cache = j.servers.kvs.getMemoryStore('datatables')
+        self.cache = j.data.kvs.getMemoryStore('datatables')
 
     def getClient(self, namespace, category):
         client = getattr(j.data.models, namespace)

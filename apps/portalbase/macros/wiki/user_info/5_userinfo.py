@@ -5,7 +5,7 @@ def main(j, args, params, tags, tasklet):
         params.result = (out, args.doc)
         return params
 
-    user = j.data.models.system.User.get(id)
+    user = j.data.models_system.User.get(id)
     if not user:
         out = 'Could not find user with ID: %s' % id
         params.result = (out, args.doc)

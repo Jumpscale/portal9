@@ -95,7 +95,7 @@ class system_gridmanager(j.tools.code.classGetBase()):
         result:list(list)
         """
         if id:
-            results = j.data.models.system.Node.get(id)
+            results = j.data.models_system.Node.get(id)
         else:
             lastcheckFrom = self._getEpoch(lastcheckFrom)
             lastcheckTo = self._getEpoch(lastcheckTo)
@@ -110,7 +110,7 @@ class system_gridmanager(j.tools.code.classGetBase()):
                       'peer_backup': peer_backup,
                       }
             params = self.getQuery(params)
-            results = j.data.models.system.Node.find(params)
+            results = j.data.models_system.Node.find(params)
 
         def myfilter(node):
             self._nodeMap[node['id']] = node
@@ -224,7 +224,7 @@ class system_gridmanager(j.tools.code.classGetBase()):
         param:includechildren if true look for jobs which are children & return that info as well
         """
         # TODO include loginfo
-        jobs = j.data.models.system.Job.get(id)
+        jobs = j.data.models_system.Job.get(id)
         job = jobs[0]
         return {'result': job}
 
@@ -245,7 +245,7 @@ class system_gridmanager(j.tools.code.classGetBase()):
         param:tags comma separted list of tags/labels
         """
         if id:
-            return j.data.models.system.Logs.get(id)
+            return j.data.models_system.Logs.get(id)
         from_ = self._getEpoch(from_)
         to = self._getEpoch(to)
         params = {'level': {'$lte': level},
@@ -260,7 +260,7 @@ class system_gridmanager(j.tools.code.classGetBase()):
                   'tags': tags,
                   }
         params = self.getQuery(params)
-        return j.data.models.system.Log.find(params)
+        return j.data.models_system.Log.find(params)
 
     def getJobs(self, id=None, from_=None, to=None, nid=None, gid=None, parent=None, roles=None, state=None,
                 organization=None, name=None, description=None, category=None, source=None, **kwargs):
@@ -295,7 +295,7 @@ class system_gridmanager(j.tools.code.classGetBase()):
                   'category': organization,
                   'cmd': name}
         return
-        # return j.data.models.system.Job.find(params)
+        # return j.data.models_system.Job.find(params)
 
     def getErrorconditions(self, id=None, level=None, descr=None, descrpub=None, from_=None, to=None,
                            nid=None, gid=None, category=None, tags=None, type=None, jid=None, **kwargs):
@@ -315,7 +315,7 @@ class system_gridmanager(j.tools.code.classGetBase()):
         param:jid find ecos for specified job
         """
         if id:
-            return j.data.models.system.Errorcondition.get(id)
+            return j.data.models_system.Errorcondition.get(id)
 
         from_ = self._getEpoch(from_)
         to = self._getEpoch(to)
@@ -331,7 +331,7 @@ class system_gridmanager(j.tools.code.classGetBase()):
                   'gid': getInt(gid),
                   'jid': jid}
         params = self.getQuery(params)
-        return j.data.models.system.Errorcondition.find(params)
+        return j.data.models_system.Errorcondition.find(params)
 
     def getProcesses(self, id=None, name=None, nid=None, gid=None, from_=None, to=None, active=None, aysdomain=None,
                      aysname=None, instance=None, systempid=None, lastcheckFrom=None, lastcheckTo=None, **kwargs):
@@ -354,7 +354,7 @@ class system_gridmanager(j.tools.code.classGetBase()):
         result list(list)
         """
         if id:
-            return j.data.models.system.Process.get(id)
+            return j.data.models_system.Process.get(id)
         from_ = self._getEpoch(from_)
         to = self._getEpoch(to)
         lastcheckFrom = self._getEpoch(lastcheckFrom)
@@ -372,14 +372,14 @@ class system_gridmanager(j.tools.code.classGetBase()):
                   'instance': instance
                   }
         params = self.getQuery(params)
-        return j.data.models.system.Process.find(params)
+        return j.data.models_system.Process.find(params)
 
     def getGrids(self, **kwargs):
         """
         list grids
         result list(list)
         """
-        return j.data.models.system.Grid.find({})
+        return j.data.models_system.Grid.find({})
 
     def getJumpscript(self, organization, name, **kwargs):
         """
@@ -388,7 +388,7 @@ class system_gridmanager(j.tools.code.classGetBase()):
         param:name
         """
         # TODO: when categories are supported
-        return j.data.models.system.Jumpscript.find({'organization': organization, 'name': name})[0]
+        return j.data.models_system.Jumpscript.find({'organization': organization, 'name': name})[0]
 
     def getJumpscripts(self, organization=None, **kwargs):
         """
@@ -398,7 +398,7 @@ class system_gridmanager(j.tools.code.classGetBase()):
         """
         res = {}
         # TODO: when catigories are supported
-        for js in j.data.models.system.Jumpscript.find({'organization': organization}):
+        for js in j.data.models_system.Jumpscript.find({'organization': organization}):
             key = "%s:%s" % (js["organization"], js["name"])
             if key not in res:
                 res[key] = js
@@ -460,7 +460,7 @@ class system_gridmanager(j.tools.code.classGetBase()):
         param:to_time find audits to date specified when they happened first
         """
         if id:
-            return j.data.models.system.Audit.get(id)
+            return j.data.models_system.Audit.get(id)
         from_time = self._getEpoch(from_time)
         to_time = self._getEpoch(to_time)
         params = {'timestamp': {'$lte': from_time},
@@ -471,7 +471,7 @@ class system_gridmanager(j.tools.code.classGetBase()):
                   'gid': getInt(gid)
                   }
         params = self.getQuery(params)
-        return j.data.models.system.Audit.find(params)
+        return j.data.models_system.Audit.find(params)
 
     def getAlerts(self, id=None, level=None, descr=None, descrpub=None, nid=None, gid=None, category=None, tags=None, state=None, from_inittime=None,
                   to_inittime=None, from_lasttime=None, to_lasttime=None, from_closetime=None, to_closetime=None, nrerrorconditions=None, errorcondition=None, **kwargs):
@@ -495,7 +495,7 @@ class system_gridmanager(j.tools.code.classGetBase()):
         param:errorcondition errorcondition(s) which caused this alert
         """
         if id:
-            return j.data.models.system.Alert.get(id)
+            return j.data.models_system.Alert.get(id)
         from_inittime = self._getEpoch(from_inittime)
         to_inittime = self._getEpoch(to_inittime)
         from_lasttime = self._getEpoch(from_lasttime)
@@ -520,7 +520,7 @@ class system_gridmanager(j.tools.code.classGetBase()):
                   'errorconditions': errorcondition,
                   }
         params = self.getQuery(params)
-        return j.data.models.system.Alert.find(params)
+        return j.data.models_system.Alert.find(params)
 
     def getVDisks(self, machineid=None, id=None, gid=None, nid=None, disk_id=None, fs=None, sizeFrom=None, sizeTo=None, freeFrom=None, freeTo=None, sizeondiskFrom=None, sizeondiskTo=None, mounted=None, path=None,
                   description=None, mountpoint=None, role=None, type=None, order=None, devicename=None, backup=None, backuplocation=None, backuptime=None, backupexpiration=None, active=None, lastcheckFrom=None, lastcheckTo=None, **kwargs):
@@ -556,7 +556,7 @@ class system_gridmanager(j.tools.code.classGetBase()):
         result list(list)
         """
         if id:
-            return j.data.models.system.VDisk.get(id)
+            return j.data.models_system.VDisk.get(id)
         lastcheckFrom = self._getEpoch(lastcheckFrom)
         lastcheckTo = self._getEpoch(lastcheckTo)
         params = {'machineguid': machineid,
@@ -587,7 +587,7 @@ class system_gridmanager(j.tools.code.classGetBase()):
                   'active': active,
                   }
         params = self.getQuery(params)
-        return j.data.models.system.VDisk.find(params)
+        return j.data.models_system.VDisk.find(params)
 
     def getMachines(self, id=None, otherid=None, gid=None, nid=None, name=None, description=None, state=None, roles=None,
                     ipaddr=None, macaddr=None, active=None, cpucore=None, mem=None, type=None, lastcheckFrom=None, lastcheckTo=None, **kwargs):
@@ -612,7 +612,7 @@ class system_gridmanager(j.tools.code.classGetBase()):
         result list(list)
         """
         if id:
-            return j.data.models.system.Machine.get(id)
+            return j.data.models_system.Machine.get(id)
         lastcheckFrom = self._getEpoch(lastcheckFrom)
         lastcheckTo = self._getEpoch(lastcheckTo)
         params = {'otherid': otherid,
@@ -636,7 +636,7 @@ class system_gridmanager(j.tools.code.classGetBase()):
             if macaddr and macaddr not in machine['netaddr']:
                 return False
             return True
-        results = j.data.models.system.Machine.find(params)
+        results = j.data.models_system.Machine.find(params)
         return list(filter(myfilter, results))
 
     def getDisks(self, id=None, gid=None, nid=None, fs=None, sizeFrom=None, sizeTo=None, freeFrom=None,
@@ -665,7 +665,7 @@ class system_gridmanager(j.tools.code.classGetBase()):
         result list(list)
         """
         if id:
-            return j.data.models.system.Disk.get(id)
+            return j.data.models_system.Disk.get(id)
         lastcheckFrom = self._getEpoch(lastcheckFrom)
         lastcheckTo = self._getEpoch(lastcheckTo)
         params = {'gid': getInt(gid),
@@ -687,7 +687,7 @@ class system_gridmanager(j.tools.code.classGetBase()):
                   'active': active,
                   }
         params = self.getQuery(params)
-        return j.data.models.system.Disk.find(params)
+        return j.data.models_system.Disk.find(params)
 
     def getNics(self, id=None, gid=None, nid=None, active=None,
                 ipaddr=None, lastcheck=None, mac=None, name=None, **kwargs):
@@ -704,7 +704,7 @@ class system_gridmanager(j.tools.code.classGetBase()):
         result list(list)
         """
         if id:
-            return j.data.models.system.Nic.get(id)
+            return j.data.models_system.Nic.get(id)
         params = {'gid': getInt(gid),
                   'nid': getInt(nid),
                   'lastcheck': lastcheck,
@@ -714,4 +714,4 @@ class system_gridmanager(j.tools.code.classGetBase()):
                   'active': active
                   }
         params = self.getQuery(params)
-        return j.data.models.system.Nic.find(params)
+        return j.data.models_system.Nic.find(params)

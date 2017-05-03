@@ -83,7 +83,7 @@ class PortalProcess():
                 "could not find appropriate core db, supported are: fs,mem,redis,arakoon, used here'%s'" %
                 dbtype)
 
-        # self.systemdb=j.servers.kvs.getFSStore("appserversystem",baseDir=self._replaceVar(ini.getValue("systemdb","dbdpath")))
+        # self.systemdb=j.data.kvs.getFSStore("appserversystem",baseDir=self._replaceVar(ini.getValue("systemdb","dbdpath")))
 
         self.wsport = int(ini.getValue("main", "webserverport"))
 
