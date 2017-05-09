@@ -1,8 +1,8 @@
 
 from js9 import j
-from JumpScale.portal.docgenerator.Page import Page
+from . import Page
 import copy
-import ExtraTools
+#import ExtraTools
 import inspect
 
 

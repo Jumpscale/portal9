@@ -1,5 +1,5 @@
 from js9 import j
-from JumpScale.portal.docgenerator.Page import Page
+from JumpScale9Portal.portal.docgenerator.Page import Page
 import traceback
 import re
 

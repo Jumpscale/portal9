@@ -1,5 +1,5 @@
 from js9 import j
-from JumpScale.portal.docpreprocessor.DocPreprocessor import *
+from .DocPreprocessor import *
 
 
 class DocPreprocessorFactory():

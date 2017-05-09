@@ -6,7 +6,7 @@ import mimetypes
 import types
 import os
 import pprint
-from JumpScale.portal.portal import exceptions
+from . import exceptions
 import urllib.request
 import urllib.parse
 import urllib.error

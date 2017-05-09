@@ -5,16 +5,16 @@ import sys
 import redis
 
 from beaker.middleware import SessionMiddleware
-from JumpScale.portal.portal.MacroExecutor import MacroExecutorPage, MacroExecutorWiki, MacroExecutorPreprocess, MacroexecutorMarkDown
-from JumpScale.portal.portal.RequestContext import RequestContext
-from JumpScale.portal.portal.PortalRest import PortalRest
-from JumpScale.portal.portal.MongoEngineBeaker import MongoEngineBeaker
-from JumpScale.portal.portal.MinimalBeaker import MinimalBeaker
-from JumpScale.portal.portal import exceptions
-from JumpScale.portal.portal.auth import AuditMiddleWare
+from .MacroExecutor import MacroExecutorPage, MacroExecutorWiki, MacroExecutorPreprocess, MacroexecutorMarkDown
+from .RequestContext import RequestContext
+from .PortalRest import PortalRest
+from .MongoEngineBeaker import MongoEngineBeaker
+from .MinimalBeaker import MinimalBeaker
+from . import exceptions
+from .auth import AuditMiddleWare
 
-from JumpScale.portal.portalloaders.SpaceWatcher import SpaceWatcher
-from JumpScale.portal.html import multipart
+from JumpScale9Portal.portal.portalloaders.SpaceWatcher import SpaceWatcher
+from JumpScale9Portal.portal.html import multipart
 
 from js9 import j
 from gevent.pywsgi import WSGIServer
@@ -25,11 +25,11 @@ import urllib.request
 import urllib.parse
 import urllib.error
 import cgi
-from JumpScale.portal.portal.PortalAuthenticatorGitlab import PortalAuthenticatorGitlab
-from JumpScale.portal.portal.PortalAuthenticatorMinimal import PortalAuthenticatorMinimal
-from JumpScale.portal.portal.PortalAuthenticatorMongoEngine import PortalAuthenticatorMongoEngine
-from JumpScale.portal.portal.PortalTemplate import PortalTemplate
-from JumpScale.portal.portal.PageProcessor import PageProcessor
+from .PortalAuthenticatorGitlab import PortalAuthenticatorGitlab
+from .PortalAuthenticatorMinimal import PortalAuthenticatorMinimal
+from .PortalAuthenticatorMongoEngine import PortalAuthenticatorMongoEngine
+from .PortalTemplate import PortalTemplate
+from .PageProcessor import PageProcessor
 
 
 from flask.ext.bootstrap import Bootstrap

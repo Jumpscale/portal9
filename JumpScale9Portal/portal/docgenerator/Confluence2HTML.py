@@ -1,7 +1,7 @@
 import re
 from js9 import j
-from JumpScale.portal.macrolib import div_base
-from JumpScale.portal.docgenerator.PageHTML import PageHTML
+from JumpScale9Portal.portal.macrolib import div_base
+#from .PageHTML import PageHTML
 
 
 class Confluence2HTML():
@@ -85,7 +85,7 @@ class Confluence2HTML():
                     link = "/%s/%s" % (space.strip().strip("/"), pagename.strip().strip("/"))
                 # print "match:%s"%match.founditem
                 # print "getlink:%s" %page.getLink(descr,link)
-                line = line.replace(match.founditem, PageHTML.getLink(descr, link, link_id, link_class, htmlelements))
+                line = line.replace(match.founditem, j.core.pagehtml.get().getLink(descr, link, link_id, link_class, htmlelements))
         return line
 
     # This is copied from PageHTML.py

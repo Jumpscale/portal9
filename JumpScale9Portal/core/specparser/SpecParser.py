@@ -1,8 +1,9 @@
 from js9 import j
-# from SpecModelactorsGenerator import SpecModelactorsGenerator
+
+from JumpScale9Lib.tools.codetools.ClassBase import ClassBase
 
 
-class Specbase(j.tools.code.classGetBase()):
+class Specbase(ClassBase):
 
     def __init__(self, linenr):
         self.name = ""
@@ -565,7 +566,7 @@ class SpecFileParser:
             self.path, linenr, line, msg), "specparser.input")
 
 
-class Role(j.tools.code.classGetBase()):
+class Role(ClassBase):
 
     def __init__(self, name, actors=[]):
         self.actors = actors

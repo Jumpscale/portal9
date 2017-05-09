@@ -1,5 +1,5 @@
 from js9 import j
-from JumpScale.portal.docgenerator.Confluence2HTML import Confluence2HTML
+from JumpScale9Portal.portal.docgenerator.Confluence2HTML import Confluence2HTML
 import copy
 import mongoengine
 from mongoengine.queryset import Q

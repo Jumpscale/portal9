@@ -1,4 +1,4 @@
-from JumpScale.portal.portal import PortalServer
+from . import PortalServer
 
 import time
 

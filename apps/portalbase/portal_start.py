@@ -1,13 +1,12 @@
 # this must be in the beginning so things are patched before ever imported by other libraries
 from gevent import monkey
-monkey.patch_all()
 monkey.patch_socket()
 monkey.patch_ssl()
 monkey.patch_thread()
 monkey.patch_time()
 
 from js9 import j
-import JumpScale.portal
+import JumpScale9Portal.portal
 import click
 
 @click.group(invoke_without_command=True)
@@ -23,8 +22,8 @@ def cli(ctx, instance):
 @click.option('--instance', default='main', help='instance of portal')
 def start(ctx, instance):
     instance = instance or ctx.obj.get('INSTANCE')
-    hrd = j.data.hrd.get('%s/portals/%s/config.hrd' % (j.dirs.cfgDir, instance))
-    j.application.instanceconfig = hrd
+    cfg = j.data.serializer.yaml.load('%s/portals/%s/config.yaml' % (j.dirs.CFGDIR, instance))
+    j.application.instanceconfig = cfg
 
     j.application.start("portal")
 

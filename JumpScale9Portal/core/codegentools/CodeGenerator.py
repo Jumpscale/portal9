@@ -1,11 +1,10 @@
 from js9 import j
-from CodeGeneratorModel import CodeGeneratorModel
-from CodeGeneratorActorLocal import CodeGeneratoractorLocal
+from .CodeGeneratorActorLocal import CodeGeneratoractorLocal
 # from CodeGeneratoractorMethodGreenlet import CodeGeneratoractorMethodGreenlet
 # from CodeGeneratorWhoosh import CodeGeneratorWhoosh
-from CodeGeneratorActorTasklets import CodeGeneratoractorTasklets
-from CodeGeneratorActorClass import CodeGeneratoractorClass
-from CodeGeneratorEveModel import CodeGeneratorEveModel
+from .CodeGeneratorActorTasklets import CodeGeneratoractorTasklets
+from .CodeGeneratorActorClass import CodeGeneratoractorClass
+from .CodeGeneratorEveModel import CodeGeneratorEveModel
 import imp
 import sys
 
@@ -123,7 +122,7 @@ class CodeGenerator:
         spectype = "model"
         type = "JSModel"
         spec = j.core.specparser.getModelSpec(appname, actor, modelname)
-        cg = CodeGeneratorModel(spec, typecheck=True,
+        cg = j.core.codegeneratormodel.get(spec, typecheck=True,
                                 dieInGenCode=dieInGenCode)
         code = cg.generate()
         return code

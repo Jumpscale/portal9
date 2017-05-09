@@ -1,6 +1,6 @@
 from js9 import j
 
-from CodeGeneratorBase import CodeGeneratorBase
+from . import CodeGeneratorBase
 
 
 class CodeGeneratorModel(CodeGeneratorBase):

@@ -1,6 +1,6 @@
 from js9 import j
 
-from GeventLoop import GeventLoop
+from .GeventLoop import GeventLoop
 import time
 
 import gevent

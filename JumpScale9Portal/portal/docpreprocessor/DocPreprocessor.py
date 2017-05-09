@@ -3,7 +3,7 @@ import os
 
 fs = j.sal.fs
 
-from JumpScale.portal.docpreprocessor.Doc import *
+from .Doc import *
 
 
 class DocPreprocessor():

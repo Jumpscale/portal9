@@ -1,8 +1,8 @@
 
 from js9 import j
-from JumpScale.portal.docgenerator.Confluence2HTML import Confluence2HTML
-from JumpScale.portal.docgenerator.Confluence2RST import Confluence2RST
-from JumpScale.portal.docgenerator.MD2Confluence import MD2Confluence
+from .Confluence2HTML import Confluence2HTML
+from .Confluence2RST import Confluence2RST
+from .MD2Confluence import MD2Confluence
 
 
 class DocgeneratorFactory:
