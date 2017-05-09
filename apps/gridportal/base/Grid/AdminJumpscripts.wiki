@@ -1,6 +1,0 @@
-@usedefault
-
-h2. Admin Jumpscripts
-
-{{adminjumpscripts}}
-

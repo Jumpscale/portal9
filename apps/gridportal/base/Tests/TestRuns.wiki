@@ -1,5 +1,0 @@
-@usedefaults
-
-h2. List of test results
-
-{{testruns: nid:$$nid from:-2d }}

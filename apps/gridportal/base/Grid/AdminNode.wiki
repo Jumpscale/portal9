@@ -1,5 +1,0 @@
-@usedefault
-
-h2. Admin Node
-
-{{adminnode gridname:$$gridname name:$$name}}

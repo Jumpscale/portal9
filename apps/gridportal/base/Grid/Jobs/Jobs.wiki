@@ -1,3 +1,0 @@
-@usedefaults
-h2. Jobs
-{{jobs id:$$id lock:$$lock timeStop:$$timeStop lockduration:$$lockduration result:$$result category:$$category jsname:$$jsname children:$$children source:$$source state:$$state gid:$$gid childrenActive:$$childrenActive jscriptid:$$jscriptid description:$$description parent:$$parent args:$$args sessionid:$$sessionid jsorganization:$$jsorganization roles:$$roles timeStart:$$timeStart timeout:$$timeout resultcode:$$resultcode}}

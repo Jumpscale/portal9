@@ -1,5 +1,0 @@
-@usedefault
-
-h2. Admin Watchdog
-
-{{adminwatchdog name:$$name}}

@@ -1,5 +1,0 @@
-@usedefaults
-
-h2. Redis Jobs
-
-{{redis_jobs}}

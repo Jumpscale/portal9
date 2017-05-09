@@ -1,4 +1,0 @@
-@usedefaults
-
-h2. Logs
-{{logs id:$$id appname:$$appname category:$$category message:$$message jid:$$jid level:$$level pid:$$pid nid:$$nid masterjid:$$masterjid epoch:$$epoch gid:$$gid aid:$$aid tags:$$tags}}

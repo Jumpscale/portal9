@@ -1,6 +1,0 @@
-@usedefault
-@@title Agent Controller Queued Jobs
-
-h2. AgentController Jobs
-
-{{acjobs}}
