@@ -1,0 +1,15 @@
+@usedefault
+
+
+# this makes sure bootstrap datatables functionality is used
+{{datatables_use}}
+
+h3. Users
+{{users}}
+
+
+{{cssstyle
+ td{
+    white-space: normal !important;
+ }
+}}

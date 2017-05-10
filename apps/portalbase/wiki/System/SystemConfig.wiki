@@ -1,3 +1,4 @@
+
 @usedefault
 
-{{explorer: ppath:$cfgDir/portals/main/}}
+{{explorer: ppath:$JSCFGDIR/portals/main/}}

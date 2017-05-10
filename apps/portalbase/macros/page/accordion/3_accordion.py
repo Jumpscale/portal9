@@ -1,6 +1,5 @@
 def main(j, args, params, tags, tasklet):
     page = args.page
-
     macrostr = args.macrostr.strip()
     content = "\n".join(macrostr.split("\n")[1:-1])
 
@@ -17,8 +16,12 @@ def main(j, args, params, tags, tasklet):
         # the content is json serializer passed to the macro then deserialize here
         if panel_data is None:
             continue
+
         try:
-            panel_data['content'] = j.data.serializer.json.loads(panel_data['content'])
+            if panel_data.get('yaml', False):
+                panel_data['content'] = panel_data['content'].replace('\?', "\n").replace("''", "'").replace('""', '"')
+            else:
+                panel_data['content'] = j.data.serializer.json.loads(panel_data['content'])
         except:
             pass
 

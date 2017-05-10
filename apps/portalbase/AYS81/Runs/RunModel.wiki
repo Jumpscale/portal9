@@ -1,13 +1,12 @@
 @usedefaults
-
 {{timestamp}}
 
-{{aysrun: repo:$$repo runid:$$runid}}
+{{aysrun: repo:$$repo runid:$$runid reponame:$$reponame}}
 
 {{breadcrumb:
-    - AYS81 : /
-    - Repo ${reponame}: /ays81/Repo?repopath=$$ayspath&repo=${reponame}
-    - Runs: /ays81/Runs?repo=$$repo
+    - Repositories : /ays81/repos
+    - Repo ${reponame}: /ays81/Repo?reponame=${reponame}
+    - Runs: /ays81/Runs?reponame=$$reponame
     - Run $$runid: /ays81/Run?repo=$$repo&runid=$$runid
 }}
 
@@ -17,42 +16,39 @@
         left: 7%;
     }
 }}
-
+{% if error is defined %}
+Error : ${error}
+{% else %}
 h3. Run $$runid:
 
-*Repo*: [${reponame}|/ays81/repo?repopath=$$repo&repo=${reponame}]
-{% if data['state'] in ['error'] %}
+*Repo*: [${reponame}|/ays81/Repo?reponame=${reponame}]
+{% if run['state'] in ['error'] %}
     *State*: {{html: <red style='color:red'>ERROR</red> }}
-{% elif data['state'] in 'ok' %}
+{% elif run['state'] in 'ok' %}
     *State*: {{html: <green style='color:green'>OK</green> }}
 {% else %}
-    *State*: ${data['state']}
+    *State*: ${run['state']}
 {% endif -%}
 
-*Time*: ${data['lastModDate']}
+*Time*: ${run.epoch}
 
 {{html:
       <script  src='/jslib/codemirror/autorefresh.js' type='text/javascript'></script>
 }}
 
-{% if run.dbobj.steps -%}
+{% if run.steps -%}
 h4. Steps:
-{% for step in run.dbobj.steps -%}
+{% for step in run.steps -%}
+
     {{html:
         <div>
            <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#step${step.number}">+</button> <b> Step ${step.number} (${step.state})</b>
           <div id="step${step.number}" class="collapse">
      }}
-        ** Services:
-        {% if step.services -%}
-            {% for service in step.services -%}
-                *** [${service.model.dbobj.name}| /ays81/service?aysname=${service.model.dbobj.name}&aysrole=${service.model.role}&ayspath=${service.aysrepo.path}]
-            {% endfor -%}
-        {% endif %}
         ** Jobs:
             || Actor name || Service Name || Action name ||
             {% for job in step.jobs -%}
-            |[${job.actorName}| /ays81/job?jobid=${job.key}&runid=$$runid&reponame=${reponame}&ayspath=$$repo]| ${job.serviceName}| ${job.actionName}|
+            |[${job.actor_name}| /ays81/job?jobid=${job.key}&runid=$$runid&reponame=${reponame}]| [${job.service_name}| /ays81/service?aysname=${job.service_name}&aysrole=${job.actor_name}&reponame=${reponame}]| ${job.action_name}|
             {% endfor %}
     {{html:
         </div>
@@ -60,4 +56,5 @@ h4. Steps:
         <br>
     }}
 {% endfor -%}
+{% endif %}
 {% endif %}

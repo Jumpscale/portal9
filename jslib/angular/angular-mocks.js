@@ -125,9 +125,9 @@ angular.mock.$Browser = function() {
     }
   };
 
-  self.$$baseHref = '';
+  self.$$JSBASEDIRHref = '';
   self.baseHref = function() {
-    return this.$$baseHref;
+    return this.$$JSBASEDIRHref;
   };
 };
 angular.mock.$Browser.prototype = {

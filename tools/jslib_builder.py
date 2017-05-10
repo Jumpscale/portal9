@@ -7,7 +7,7 @@ class builder():
 
     # @property
     # def buildDir(self):
-    #     return j.sal.fs.joinPaths(j.dirs.tmpDir, "jsbuilder")
+    #     return j.sal.fs.joinPaths(j.dirs.TMPDIR, "jsbuilder")
 
     @property
     def cuisine(self):
@@ -60,17 +60,17 @@ class builder():
     # @property
     # def npm(self):
     #     if self._npm == False:
-    #         if j.sal.fs.exists("%s/npm" % j.dirs.binDir, followlinks=True) == False:
+    #         if j.sal.fs.exists("%s/npm" % j.dirs.BINDIR, followlinks=True) == False:
     #             self.cuisine.apps.nodejs.install()
-    #         self._npm = "%snpm" % j.dirs.binDir
+    #         self._npm = "%snpm" % j.dirs.BINDIR
     #     return self._npm
 
     # @property
     # def bower(self):
     #     if self._bower == False:
-    #         if j.sal.fs.exists("%s/bower" % j.dirs.binDir, followlinks=True) == False:
+    #         if j.sal.fs.exists("%s/bower" % j.dirs.BINDIR, followlinks=True) == False:
     #             self.cuisine.apps.nodejs.install()
-    #         self._bower = "%sbower" % j.dirs.binDir
+    #         self._bower = "%sbower" % j.dirs.BINDIR
     #     return self._bower
     # def famous(self):
     #     url = "https://github.com/Famous/engine-seed"
@@ -84,7 +84,7 @@ class builder():
     #     res = j.sal.process.executeWithoutPipe("cd %s;%s install;%s install" % (cdest, self.npm, self.bower))
     #
     # def do1(self):
-    #     j.sal.fs.createDir(j.sal.fs.joinPaths(j.dirs.tmpDir, "jsbuilder"))
+    #     j.sal.fs.createDir(j.sal.fs.joinPaths(j.dirs.TMPDIR, "jsbuilder"))
     #     if self.checkIPFS == False:
     #         self.getIPFS()
     #     # self.angular()
@@ -101,7 +101,7 @@ class builder():
         # self.cuisine.apps.nodejs.bowerInstall(["jquery", "flatui", "bootstrap", "famous", "codemirror", "font-awesome", "jqplot",
         #                                        "underscore", "spin", "moment", "http://DlhSoft.com/Packages/DlhSoft.KanbanLibrary.zip", "jqwidgets", "d3", "angular-latest"])
 
-        cmd = "cd $tmpDir/bower;ipfs -c $cfgDir/ipfs/main/ add -r bower_components"
+        cmd = "cd $TMPDIR/bower;ipfs -c $JSCFGDIR/ipfs/main/ add -r bower_components"
         print("IPFS upload, can take couple of minutes")
 
         res = self.cuisine.core.run(cmd)

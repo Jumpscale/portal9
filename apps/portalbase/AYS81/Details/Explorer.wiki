@@ -2,13 +2,18 @@
 
 {{timestamp}}
 
-
-h2. Explorer
-{{aysrepo repo:$$repo}}
-{{explorer: ppath:${repo.path}}}
-
+{{aysrepo reponame:$$reponame}}
 {{breadcrumb:
-    - AYS81 : /
-    - Repo ${repo.name}: /ays81/Repo?repopath=$$repo&repo=${repo.name}
-    - Explorer:
+    {% if repo %}
+    - Repositories: /ays81/repos
+    - Repo $$reponame: /ays81/Repo?reponame=$$reponame
+    {% endif %}
+    - Explorer: /ays81/Actortemplates
+
 }}
+{% if error is defined %}
+Error : ${error}
+{% else %}
+h2. Explorer
+{{explorer: ppath:${repo.path}}}
+{% endif %}

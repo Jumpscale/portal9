@@ -1,7 +1,6 @@
 # Portal
 
-* [ActorsDocs](ActorsDocs.html)
-* [ActorsMacro](ActorsMacro.html)
-* [IncludeDocs](IncludeDocs.html)
-* [Include](Include.html)
-* [[Macros](Macros.html)]
+* [ActorsDocs](ActorsDocs.md)
+* [ActorsMacro](ActorsMacro.md)
+* [IncludeDocs](IncludeDocs.md)
+* [Include](Include.md)

@@ -22,8 +22,9 @@ def main(j, args, params, tags, tasklet):
             page.addMessage("ERROR:could not find file %s" % path)
         apppath = j.portal.server.active.basepath
         codepath = os.getcwd()
-        if path.startswith('/') and not (path.startswith(apppath) or path.startswith(codepath) or origpath != path):
-            path = ''
+        if path.startswith("/") and (apppath in path or codepath in path):
+            page.addMessage('Requested path is not allowed')
+            return params
 
     if args.tags.tagExists("bucket"):
         bucket = args.tags.tagGet("bucket").lower()

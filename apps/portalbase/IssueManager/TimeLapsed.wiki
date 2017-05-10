@@ -1,0 +1,6 @@
+@usedefaults
+
+
+# use "groupon" to group the issues to form any report
+# use extra tags to filter. eg: "priority:critical" or "assignees:despiegk"
+{{issue_time_reports groupon:creationTime ranges:4h,2d,4d}}

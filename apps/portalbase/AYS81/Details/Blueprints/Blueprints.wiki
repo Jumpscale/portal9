@@ -2,12 +2,12 @@
 
 {{timestamp}}
 
-{{aysblueprints ayspath:$$ayspath}}
+{{aysblueprints ayspath:$$ayspath reponame:$$reponame}}
 
 {{breadcrumb:
-    - AYS81 : /
-    - Repo ${reponame}: /ays81/Repo?repopath=$$ayspath&repo=${reponame}
-    - Blueprints: /ays81/Blueprints?ayspath=$$ayspath
+    - Repositories : /ays81/repos
+    - Repo $$reponame: /ays81/Repo?reponame=$$reponame
+    - Blueprints: /ays81/Blueprints?reponame=$$reponame
 }}
 
 {% if error is defined %}
@@ -19,6 +19,7 @@ This repository does not have any blueprints defined yet
 
 
 {{html:
+<script src='/jslib/codemirror/codemirror.js'></script>
 <script src='/jslib/codemirror/autorefresh.js'></script>
 }}
 {{jscript
@@ -29,7 +30,7 @@ $(function() {
       console.log("SIBLING:" +bp)
       //reponame
       parts = document.URL.split("/")
-      var repo=parts[parts.length-1]
+      var repo=parts[parts.length-1].split("=")[1]
 
       var that = this
 
@@ -84,6 +85,7 @@ a.label-archive{
                   ${bp.content}
               label_content: ${bp.label_content}
               code: True
+              yaml: True
         }}
     {% endfor %}
 {% endfor %}

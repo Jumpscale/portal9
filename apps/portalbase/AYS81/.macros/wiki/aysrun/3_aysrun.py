@@ -1,18 +1,21 @@
 
 
 def main(j, args, params, tags, tasklet):
-    arg_repo = args.getTag('repo')
-    arg_runid = args.getTag('runid')
+    try:
+        reponame = args.getTag('reponame')
+        runid = args.getTag('runid')
 
-    repo = j.core.atyourservice.repoGet(arg_repo)
-    runmodel = repo.runGet(runkey=arg_runid)
-    if runmodel:
-        import datetime
-        data = runmodel.dictFiltered
-        data['lastModDate'] = datetime.datetime.fromtimestamp(data['lastModDate']).strftime('%Y-%m-%d %H:%M:%S.%f')
-        args.doc.applyTemplate({'run': runmodel, 'data': data, 'reponame': repo.name})
-    else:
-        args.doc.applyTemplate({'error': 'No run found'})
+        ctx = args.requestContext
+        aysactor = j.apps.actorsloader.getActor('system', 'atyourservice')
+        client = aysactor.get_client(ctx=ctx)
+
+        run = client.getRun(runid, reponame).json()
+        if run:
+            args.doc.applyTemplate({'run': run, 'reponame': reponame})
+        else:
+            args.doc.applyTemplate({'error': 'No run found'})
+    except Exception as e:
+        args.doc.applyTemplate({'error': e.__str__()})
 
     params.result = (args.doc, args.doc)
     return params

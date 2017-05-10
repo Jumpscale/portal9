@@ -1,0 +1,4 @@
+@usedefault
+
+#repo:org_support assignees:despiegk
+{{kanbandata:issue assignees:$$assignees}}

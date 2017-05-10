@@ -1,7 +1,7 @@
 from js9 import j
 
 
-class system_errorhandler(j.tools.code.classGetBase()):
+class system_errorconditionhandler(j.tools.code.classGetBase()):
 
     """
     errorcondition handling
@@ -11,7 +11,7 @@ class system_errorhandler(j.tools.code.classGetBase()):
     def __init__(self):
 
         self._te = {}
-        self.actorname = "errorhandler"
+        self.actorname = "errorconditionhandler"
         self.appname = "system"
 
     def describeCategory(self, category, language, description, resolution_user, resolution_ops, **args):
@@ -34,8 +34,8 @@ class system_errorhandler(j.tools.code.classGetBase()):
         """
        delete alert
         """
-        if j.data.models_system.Errorcondition.exists(eco):
-            eco_obj = j.data.models_system.Errorcondition.get(eco)
+        if j.data.models.system.Errorcondition.exists(eco):
+            eco_obj = j.data.models.system.Errorcondition.get(eco)
             eco_obj.delete()
             return True
         return False

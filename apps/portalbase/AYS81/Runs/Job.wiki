@@ -1,6 +1,6 @@
 @usedefaults
 
-{{aysjob: jobid:$$jobid runid:$$runid reponame:$$reponame ayspath:$$ayspath}}
+{{aysjob: jobid:$$jobid runid:$$runid reponame:$$reponame}}
 
 {{cssstyle
     .CodeMirror {
@@ -10,29 +10,32 @@
 }}
 
 {{breadcrumb:
-    - AYS81 : /
-    - Repo $$reponame: /ays81/Repo?repopath=$$ayspath&repo=$$reponame
-    - Runs: /ays81/Runs?repo=$$ayspath
-    - Run $$runid: /ays81/RunModel?repo=$$ayspath&runid=$$runid
+    - Repositories: /ays81/repos
+    - Repo $$reponame: /ays81/Repo?reponame=$$reponame
+    - Runs: /ays81/Runs?repo=$$reponame
+    - Run $$runid: /ays81/RunModel?reponame=$$reponame&runid=$$runid
     - Job $$jobid:
 }}
-
+{% if error is defined %}
+Error : ${error}
+{% else %}
 h3. Job $$jobid:
 
 * *Action*:
-    ** Actor name: ${action.dbobj.actorName}
-    ** Action name: ${action.dbobj.name}
+    ** Actor name: ${job.actor_name}
+    ** Action name: ${job.action_name}
     ** code:
     {{code:
-${action.dbobj.code}
+${job.code}
     }}
-** args: ${job.dbobj.args}
-** debug: ${job.dbobj.debug}
-** lastModDate: ${job.dbobj.lastModDate}
+** args: ${job.args}
+** debug: ${job.debug}
+** lastModDate: ${job.lastModDate}
 * *Logs*:
 {{code:
 ${job.printLogs}
 }}
-{% if job.dbobj.profileData -%}
+{% if job.profileData -%}
     * [See job cProfile|/ays81/jobprofile?jobid=${job.key}]
+{% endif %}
 {% endif %}

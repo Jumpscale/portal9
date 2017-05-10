@@ -135,7 +135,7 @@ CodeMirror.defineMode("perl",function(){
                 '$^P'                           :    5,
                 '$SIG'                          :    5,
                 '%SIG'                          :    5,
-                '$BASETIME'                     :    5,
+                '$JSBASEDIRTIME'                     :    5,
                 '$^T'                           :    5,
                 '${^TAINT}'                     :    5,
                 '${^UNICODE}'                   :    5,

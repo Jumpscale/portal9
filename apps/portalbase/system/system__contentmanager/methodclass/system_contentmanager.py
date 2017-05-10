@@ -1,6 +1,6 @@
 from js9 import j
-from JumpScale.portal.portal.auth import auth
-from JumpScale.portal.portal import exceptions
+from JumpScale9Portal.portal.auth import auth
+from JumpScale9Portal.portal import exceptions
 
 
 class system_contentmanager(j.tools.code.classGetBase()):
@@ -315,7 +315,7 @@ class system_contentmanager(j.tools.code.classGetBase()):
             owner = payload["repository"]["owner"]
             name = payload["repository"]["name"]
 
-            cmd = "cd %s/%s/%s;hg pull;hg update -C" % (j.dirs.codeDir, owner, name)
+            cmd = "cd %s/%s/%s;hg pull;hg update -C" % (j.dirs.CODEDIR, owner, name)
             print(("execute %s" % cmd))
             j.system.process.execute(cmd)
 
@@ -403,9 +403,19 @@ class system_contentmanager(j.tools.code.classGetBase()):
         result bool
 
         """
+        def decode(value):
+            if isinstance(value, bytes):
+                return value.decode()
+            return value
         contents = j.apps.system.contentmanager.dbmem.get(cachekey)
-        contents = {k.decode():v.decode() for k, v in contents.items()}
+        contents = {decode(k):decode(v) for k, v in contents.items()}
         j.sal.fs.writeFile(contents['path'], text)
+        # after writing the conent, we need to make sure that the doc is marked dirty so that it will be reloaded from the disk
+        # there is already a watchdog that monitor all the docs but there is no guarantee that it will mark the doc on time before the redirect is executed
+        space = j.portal.server.active.spacesloader.getLoaderFromId(contents['space'])
+        if contents['page'] in space.docprocessor.name2doc:
+            doc = space.docprocessor.name2doc[contents['page']]
+            doc.dirty = True
         returnpath = "/%s/%s" % (contents['space'], contents['page'])
         if contents['querystr']:
             returnpath += "?%s" % contents['querystr']

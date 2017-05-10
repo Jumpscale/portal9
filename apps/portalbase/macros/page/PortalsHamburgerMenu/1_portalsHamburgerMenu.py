@@ -3,9 +3,9 @@ from itertools import count
 
 def main(j, args, params, tags, tasklet):
     page = args.page
-    hrd = j.application.instanceconfig
+    cfg = j.application.instanceconfig
 
-    menulinks = hrd.getListFromPrefix('instance.navigationlinks')
+    menulinks = cfg.get('instance.navigationlinks', [])
     if not menulinks:
         spacelinks = j.portal.server.active.getSpaceLinks(args.requestContext)
         menulinks = []

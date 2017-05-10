@@ -1,20 +1,22 @@
-
+import requests
 
 def main(j, args, params, tags, tasklet):
-    arg_repo = args.getTag('repo')
-    reponame = j.sal.fs.getBaseName(arg_repo)
-    repos = j.core.atyourservice.reposList()
-    repo = None
-    for r in repos:
-        if reponame == r.name:
-            repo = r
-            break
+    try:
+        ctx = args.requestContext
+        aysactor = j.apps.actorsloader.getActor('system', 'atyourservice')
+        client = aysactor.get_client(ctx=ctx)
 
-    if repo is not None:
-        repo.path = repo.path.replace(j.dirs.codeDir, '$codedir')
-        repo.path = repo.path.replace(j.dirs.varDir, '$varDir')
+        reponame = args.getTag('reponame')
+        repo = client.getRepository(reponame).json()
         args.doc.applyTemplate({'repo': repo})
         params.result = (args.doc, args.doc)
-    else:
-        params.result = ("Cant find repository %s" % repo, args.doc)
+
+    except requests.exceptions.HTTPError as e:
+        err = "%s" % e.response.json()['error']
+        args.doc.applyTemplate({'error': err})
+        params.result = (args.doc, args.doc)
+
+    except Exception as e:
+        args.doc.applyTemplate({'error': str(e)})
+        params.result = (args.doc, args.doc)
     return params

@@ -162,7 +162,7 @@ spacename
 
 Links
 -----
-
+§
 Links are surrounded by square brackets
 
 ```
@@ -211,5 +211,3 @@ Header cells are enclosed with double bars
 | Cell 1.1 | Cell 1.2 |
 | Cell 2.1 | Cell 2.2 |
 ```
-
-

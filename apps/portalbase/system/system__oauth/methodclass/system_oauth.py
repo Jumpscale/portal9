@@ -20,9 +20,9 @@ class system_oauth(j.tools.code.classGetBase()):
     @property
     def client(self):
         if not self._client:
-            self._client = j.clients.oauth.get(addr=self.cfg.get('client_url'), accesstokenaddr=self.cfg.get('token_url'), id=self.cfg.get('client_id'),
-                                               secret=self.cfg.get('client_secret'), scope=self.cfg.get('client_scope'), redirect_url=self.cfg.get('redirect_url'),
-                                               user_info_url=self.cfg.get('client_user_info_url'), logout_url='', instance=self.cfg.get('force_oauth_instance'))
+            self._client = j.clients.oauth.get(addr=self.cfg.get('oauth.client_url'), accesstokenaddr=self.cfg.get('oauth.token_url'), id=self.cfg.get('oauth.client_id'),
+                                               secret=self.cfg.get('oauth.client_secret'), scope=self.cfg.get('oauth.client_scope'), redirect_url=self.cfg.get('oauth.redirect_url'),
+                                               user_info_url=self.cfg.get('oauth.client_user_info_url'), logout_url='', instance=self.cfg.get('oauth.force_oauth_instance'))
         return self._client
 
     def authenticate(self, type='', **kwargs):
@@ -102,7 +102,7 @@ class system_oauth(j.tools.code.classGetBase()):
         except AuthError as e:
             return authfailure(str(e))
 
-        user_model = j.data.models_system.User
+        user_model = j.data.models.system.User
         user_obj = user_model.find({'name': userinfo.username})
 
         if not user_obj:

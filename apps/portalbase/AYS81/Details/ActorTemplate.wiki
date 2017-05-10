@@ -1,18 +1,20 @@
 @usedefaults
 
+{{aysactortemplate reponame:$$reponame aysname:$$aysname}}
 
-
-{{aysactortemplate ayspath:$$ayspath aysname:$$aysname}}
 
 {{breadcrumb:
-    - AYS81 : /
-    {% if aysrepo %}
-    - Repo ${reponame}: /ays81/Repo?repopath=$$ayspath&repo=${reponame}
+    {% if reponame %}
+    - Repositories : /ays81/repos
+    - Repo $$reponame: /ays81/Repo?reponame=$$reponame
+    - Actor Templates: /ays81/Actortemplates?reponame=$$reponame
+    - Actor Template $$aysname: /ays81/actortemplate?reponame=$$reponame&aysname=$$aysname
+    {% else %}
+    - Actor Templates: /ays81/Actortemplates
+    - Actor Template $$aysname: /ays81/actortemplate?&aysname=$$aysname
     {% endif %}
-    - Actor Templates: /ays81/Actortemplates?ayspath=$$ayspath&aysname=$$aysname
-    - Actor Template $$aysname: /ays81/actortemplate?ayspath=$$ayspath&aysname=$$aysname
-
 }}
+
 
 {% if aysrepo %}
 {{actions:
@@ -50,17 +52,16 @@ h3. Actor Template Info:
     {% if value %}
     h5. ${key} :
     {{code:
-${value}
-    }}
+${value} }}
     {% endif %}
     {% endfor %}
 
     h3. Services of this template:
     || Service ||
     {% for service in services -%}
-        {% set role = service.model.dbobj.actorName -%}
+        {% set role = service.role -%}
         {% set role = role.split('.')[0] -%}
-        | [${service.model.dbobj.name}|ays81/Service?aysrole=${service.model.role}&aysname=${service.model.dbobj.name}&ayspath=$$ayspath]|
+        | [${service.name}|ays81/Service?aysrole=${service.role}&aysname=${service.name}&reponame=$$reponame]|
     {% else %}
     No services for this template
     {% endfor %}

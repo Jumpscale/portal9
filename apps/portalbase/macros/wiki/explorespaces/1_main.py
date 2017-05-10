@@ -19,6 +19,8 @@ def main(j, args, params, tags, tasklet):
     for spacename in sorted(spaces.keys()):
         model = spaces[spacename].model  # TODO: security breach
         path = os.path.abspath(model.path)
+        path = path.replace(j.dirs.CODEDIR, '$codedir')
+        path = path.replace(j.dirs.VARDIR, '$varDir')
         querystr = urllib.parse.urlencode({'ppath': path})
 
         out += "| [%s | /system/Explorer?%s] | [Reload | /system/ReloadSpace?name=%s] | [Delete | /system/DeleteSpace?spacename=%s]|\n" % \

@@ -43,7 +43,7 @@ eg:
     if not content:
         return _showexample()
 
-    actions = yaml.load(content)
+    actions = yaml.load(content, Loader=yaml.loader.BaseLoader)
     if actions == content:
         return _showexample()
 
@@ -54,11 +54,11 @@ eg:
         submit_url = actiondata['action']
         display = actiondata['display']
         inputs = actiondata.get('input', '')
-        navigateback = actiondata.get('navigateback', False)
-        reload = actiondata.get('reload', True)
-        hide = actiondata.get('hide', False)
+        navigateback = j.data.text.getBool(actiondata.get('navigateback', False))
+        reload = j.data.text.getBool(actiondata.get('reload', True))
+        hide = j.data.text.getBool(actiondata.get('hide', False))
         data = actiondata.get('data', {})
-        showresponse = actiondata.get('showresponse', False)
+        showresponse = j.data.text.getBool(actiondata.get('showresponse', False))
         hideon = actiondata.get('hideon', [])
         if hideon:
             hideon_input = actiondata.get('hideonInput', '')
@@ -76,6 +76,7 @@ eg:
 
     if inputs:
         for var in inputs:
+
             if isinstance(var, str):
                 form.addText(var, var)
             else:

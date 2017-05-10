@@ -4,7 +4,7 @@ from collections import OrderedDict
 
 def main(j, args, params, tags, tasklet):
     jinja = jinja2.Environment(variable_start_string="${", variable_end_string="}")
-    hrd = j.application.instanceconfig
+    cfg = j.application.instanceconfig
     params.merge(args)
     doc = params.doc
 

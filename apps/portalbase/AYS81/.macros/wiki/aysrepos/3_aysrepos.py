@@ -2,8 +2,11 @@
 
 def main(j, args, params, tags, tasklet):
     try:
-        repos = j.core.atyourservice.reposList()
-        # repos = j.apps.ays81.atyourservice.listRepos(ctx=args.requestContext)
+        ctx = args.requestContext
+        aysactor = j.apps.actorsloader.getActor('system', 'atyourservice')
+        client = aysactor.get_client(ctx=ctx)
+        res = client.listRepositories()
+        repos = res.json()
         args.doc.applyTemplate({'repos': repos})
     except Exception as e:
         args.doc.applyTemplate({'error': str(e)})

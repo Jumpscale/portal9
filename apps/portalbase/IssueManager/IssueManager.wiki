@@ -1,0 +1,16 @@
+
+h2. Issue Manager
+
+To get started on syncing gogs issues, please see [our docs|https://docs.greenitglobe.com/gig/cockpit_gogs_mattermost]
+
+h5. Useful pages:
+     * Overview of issues can be found [here|/IssueManager/Issues]
+     * Overview of issues assigned to you are [here|/IssueManager/IssuesAssigned]
+     * Overview of users are [here|/IssueManager/Users]
+     * [Kanban|/IssueManager/Kanban]
+
+h5. Reports:
+     * Reports per [user|/IssueManager/UserReports]
+     * Reports per [time period|/IssueManager/TimeLapsed]
+     * Reports per [milestone|/IssueManager/Milestones]
+     * Reports per [state|IssueManager/State]

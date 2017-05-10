@@ -1,7 +1,6 @@
 # Experimental
 
-* [Hostbasedcontent](Hostbasedcontent.html)
-* [ListDocs](ListDocs.html)
-* [Stats](Stats.html)
-* [Toggle](Toggle.html)
-* [[Macros](../Macros.html)]
+* [Hostbasedcontent](Hostbasedcontent.md)
+* [ListDocs](ListDocs.md)
+* [Stats](Stats.md)
+* [Toggle](Toggle.md)

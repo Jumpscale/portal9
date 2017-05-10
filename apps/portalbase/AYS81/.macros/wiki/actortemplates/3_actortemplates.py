@@ -2,17 +2,18 @@
 
 def main(j, args, params, tags, tasklet):
     doc = args.doc
-    ayspath = args.getTag('ayspath') or ''
-    if ayspath:
-        repo = j.core.atyourservice.repoGet(ayspath)
-        templates = repo.templates
-    else:
-        templates = j.core.atyourservice.actorTemplates
+    reponame = args.getTag('reponame') or None
 
-    out = []
+    ctx = args.requestContext
+    aysactor = j.apps.actorsloader.getActor('system', 'atyourservice')
+    client = aysactor.get_client(ctx=ctx)
     try:
-        reponame = j.sal.fs.getBaseName(ayspath)
-        args.doc.applyTemplate({'templates': list(templates.values()), 'aysrepo': ayspath, 'reponame': reponame})
+        if reponame:
+            templates = client.listTemplates(repository=reponame).json()
+            args.doc.applyTemplate({'templates': templates, 'reponame': reponame})
+        else:
+            templates = client.listAYSTemplates().json()
+            args.doc.applyTemplate({'templates': templates})
     except Exception as e:
         args.doc.applyTemplate({'error': str(e)})
 

@@ -40,7 +40,8 @@ eg:
         return _showexample()
 
     actionoptions = [('Choose Action', '#')]
-    actions = yaml.load(content)
+    actions = yaml.load(content, Loader=yaml.loader.BaseLoader)
+
     if actions == content:
         return _showexample()
 
@@ -51,11 +52,11 @@ eg:
         actionurl = actiondata['action']
         display = actiondata['display']
         inputs = actiondata.get('input', '')
-        navigateback = actiondata.get('navigateback', False)
-        reload = actiondata.get('reload', True)
-        hide = actiondata.get('hide', False)
+        navigateback = j.data.text.getBool(actiondata.get('navigateback', False))
+        reload = j.data.text.getBool(actiondata.get('reload', True))
+        hide = j.data.text.getBool(actiondata.get('hide', False))
         data = actiondata.get('data', {})
-        showresponse = actiondata.get('showresponse', False)
+        showresponse = j.data.text.getBool(actiondata.get('showresponse', False))
         hideon = actiondata.get('hideon', [])
         if hideon:
             hideon_input = actiondata.get('hideonInput', '')
@@ -104,7 +105,6 @@ eg:
 
         for name, value in list(data.items()):
             popup.addHiddenField(name, value)
-
         popup.write_html(page)
 
     if len(actionoptions) > 1:

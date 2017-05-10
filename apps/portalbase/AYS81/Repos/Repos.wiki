@@ -1,5 +1,9 @@
 @usedefaults
 
+{{breadcrumb:
+    - Repositories :
+}}
+
 {{timestamp}}
 
 h2. Repositories
@@ -62,7 +66,7 @@ Error : ${error}
 {{aysrepos}}
 ||Name||Actions||
 {% for repo in repos -%}
-  |[${repo.name}|/ays81/repo?repo=${repo.name}&repopath=${repo.path}]| {{action label:'Destroy' deleterow:true id:'action-Destroythisrepository' data-repositorypath:'${repo.path}' class:'glyphicon glyphicon-trash'}} |
+  |[${repo.name}|/ays81/Repo?reponame=${repo.name}]| {{action label:'Delete' deleterow:true id:'action-Destroythisrepository' data-repository:'${repo.name}' class:'glyphicon glyphicon-trash'}} |
 {% else %}
   The is no AYS repository yet.
   Create one by clicking 'Create Repository'

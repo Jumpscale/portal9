@@ -9,7 +9,7 @@ CodeMirror.defineMode("mirc", function() {
   var specials = parseWords("$! $$ $& $? $+ $abook $abs $active $activecid " +
                             "$activewid $address $addtok $agent $agentname $agentstat $agentver " +
                             "$alias $and $anick $ansi2mirc $aop $appactive $appstate $asc $asctime " +
-                            "$asin $atan $avoice $away $awaymsg $awaytime $banmask $base $bfind " +
+                            "$asin $atan $avoice $away $awaymsg $awaytime $banmask $JSBASEDIR $bfind " +
                             "$binoff $biton $bnick $bvar $bytes $calc $cb $cd $ceil $chan $chanmodes " +
                             "$chantypes $chat $chr $cid $clevel $click $cmdbox $cmdline $cnick $color " +
                             "$com $comcall $comchan $comerr $compact $compress $comval $cos $count " +

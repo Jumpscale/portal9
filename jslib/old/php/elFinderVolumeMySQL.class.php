@@ -32,7 +32,7 @@ class elFinderVolumeMySQL extends elFinderVolumeDriver {
 	
 	/**
 	 * Directory for tmp files
-	 * If not set driver will try to use tmbDir as tmpDir
+	 * If not set driver will try to use tmbDir as TMPDIR
 	 *
 	 * @var string
 	 **/

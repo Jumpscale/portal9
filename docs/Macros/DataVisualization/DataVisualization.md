@@ -1,8 +1,7 @@
 # DataVisualization
 
-* [BarChart](BarChart.html)
-* [DataTables](DataTables.html)
-* [EveGrid](EveGrid.html)
-* [Graphs](Graphs.html)
-* [JGauge](JGauge.html)
-* [[Macros](../Macros.html)]
+* [BarChart](BarChart.md)
+* [DataTables](DataTables.md)
+* [EveGrid](EveGrid.md)
+* [Graphs](Graphs.md)
+* [JGauge](JGauge.md)

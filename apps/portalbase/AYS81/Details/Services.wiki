@@ -1,15 +1,20 @@
 @usedefaults
 h3. AYS Services
-
+h2. test
 
 {{datatables_use}}
-{{aysservices ayspath:$$ayspath}}
-
+{{aysservices reponame:$$reponame}}
 {{breadcrumb:
-    - AYS81 : /
-    - Repo ${reponame}: /ays81/Repo?repopath=$$ayspath&repo=${reponame}
-    - Services: /ays81/Services
+    {% if reponame or error %}
+    - Repositories: /ays81/repos
+    - Repo $$reponame: /ays81/Repo?&reponame=$$reponame
+    {% endif %}
+    - Services: /ays81/services
 }}
+{% if error is defined %}
+Error : ${error}
+
+{% else %}
 
 {{actions:
 - display: Delete Service
@@ -17,16 +22,11 @@ h3. AYS Services
   showresponse: True
   hide: True
 }}
-
-{% if error is defined %}
-    Error : ${error}
-{%else%}
-    ||Actor Name||Name||State||Actions||
+|| Actor Name || Name || State || Actions ||
     {% for service in services -%}
-        {% set role = service.model.dbobj.actorName -%}
-        {% set role = role.split('.')[0] -%}
-        | ${service.model.dbobj.actorName} | [${service.model.dbobj.name}|ays81/Service?aysrole=${role}&aysname=${service.model.dbobj.name}&ayspath=$$ayspath] | ${service.model.dbobj.state} | {{action label:'Delete' deleterow:true id:'action-DeleteService' class:'glyphicon glyphicon-trash' data-repositorypath:'$$ayspath' data-role:'${service.model.role}' data-instance:'${service.model.name}'}} |
+      | ${service.role} | [${service.name}|ays81/Service?aysrole=${service.role}&aysname=${service.name}&reponame=${reponame}] | ${service.state} | {{action label:'Delete' deleterow:true id:'action-DeleteService' class:'glyphicon glyphicon-trash' data-repository:'$$reponame' data-role:'${service.role}' data-instance:'${service.name}'}} |
     {% else %}
     This repository doesn't contain any service instance yet.
     {% endfor %}
+
 {%endif%}

@@ -3,29 +3,36 @@ from collections import OrderedDict
 
 def main(j, args, params, tags, tasklet):
     name = args.getTag('aysname')
-    ayspath = args.getTag('ayspath') or None
+    reponame = args.getTag('reponame') or None
+    ctx = args.requestContext
 
-    if not ayspath:
-        template = j.core.atyourservice.actorTemplates[name]
-        services = []
-    else:
-        repo = j.core.atyourservice.repoGet(ayspath)
-        template = repo.templates.get(name, None) if repo else None
-        services = repo.servicesFind(actor=template.name)
+    try:
+        aysactor = j.apps.actorsloader.getActor('system', 'atyourservice')
+        client = aysactor.get_client(ctx=ctx)
+        if not reponame:
+            # FIXME: migrate to ays_api calls if not reponame.
+            # template = j.atyourservice.actorTemplates[name]
+            template = client.getAYSTemplate(name).json()
+            services = []
+        else:
+            template = client.getTemplate(name, reponame).json()
+            services = client.listServices(reponame).json()
+        if template:
+            info = {}
+            code_bloks = {
+                'action': template['action'],
+                'config.yaml': '\n'+j.data.serializer.yaml.dumps(template['config']),
+                'schema.capnp': template['schema']
+            }
+            info = OrderedDict(sorted(info.items()))
+            args.doc.applyTemplate({'data': info, 'services': services, 'code_bloks': code_bloks,
+                                    'template_name': name, 'reponame': reponame if reponame else '',
+                                    })
+        else:
+            args.doc.applyTemplate({'error': 'template does not exist'})
+    except:
+        args.doc.applyTemplate({'error': e.__str__()})
 
-    if template:
-        info = {}
-        code_bloks = {
-            'schema.hrd': template.schemaHrd.content,
-            'schema.capnp': template.schemaCapnpText
-        }
-
-        info = OrderedDict(sorted(info.items()))
-        args.doc.applyTemplate({'data': info, 'services': services, 'code_bloks': code_bloks,
-                                'template_name': name, 'reponame': j.sal.fs.getBaseName(ayspath) if ayspath else '',
-                                'aysrepo': ayspath})
-    else:
-        args.doc.applyTemplate({'error': 'template does not exist'})
 
     params.result = (args.doc, args.doc)
     return params

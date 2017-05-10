@@ -1,14 +1,16 @@
 @usedefaults
 
-{{aysservice: aysrole:$$aysrole aysname:$$aysname ayspath:$$ayspath}}
-
+{{aysservice: aysrole:$$aysrole aysname:$$aysname reponame:$$reponame}}
 {{breadcrumb:
-    - AYS81 : /
-    - Repo ${reponame}: /ays81/Repo?repopath=$$ayspath&repo=${reponame}
-    - Services: /ays81/Services
-    - Service $$aysname: /ays81/Service?aysrole=$$aysrole&aysname=$$aysname&ayspath=$$ayspath
+    - Repositories : /ays81/repos
+    - Repo $$reponame: /ays81/Repo?reponame=$$reponame
+    - Services: /ays81/Services?reponame=$$reponame
+    - Service $$aysname: /ays81/Service?aysrole=$$aysrole&aysname=$$aysname
 }}
 
+{% if error is defined %}
+Error : ${error}
+{% else %}
 {{cssstyle
     .CodeMirror {
         position: relative;
@@ -78,7 +80,7 @@
 #          value: False
 #    }}
 #
-    h4. Repository: [${service.aysrepo.name}| /ays81/repo?repo=${service.aysrepo.name}&repopath=$$ayspath]
+    h4. Repository: [${reponame}| /ays81/repo?reponame=${reponame}]
 
     h4. Service values
     || Parameter || Value||
@@ -87,21 +89,20 @@
         |${k}|${v}|
     {% endfor %}
 
-    {% if parent.link is defined %}
+    {% if data.parent %}
     h4. Parent:
     || Role || Instance ||
-    | ${parent['role']} | ${parent['link']} |
+    | ${data.parent['role']} | ${data.parent['name']} |
     {% endif %}
 
-    {% if producers|length > 0 %}
+    {% if data.producers|length > 0 %}
     h4. Producers:
     || Role || Name ||
-    {% for role, prods in producers.items() -%}
-      {% for prod in prods -%}
-         |${role}|${prod}|
-      {% endfor -%}
+    {% for producer in data.producers -%}
+         |${producer.role}|${producer.name}|
     {% endfor %}
     {% endif %}
+
 
 
     {{html:
@@ -109,19 +110,21 @@
           <h4>Service Actions <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#actions">+</button></h4>
           <div id="actions" class="collapse">
      }}
-          {% for actionname, action in actions.items() -%}
-              * *${actionname}*:
-                  ** state: ${service.model.actionsState[actionname]}
-                  ** code:
-      {{code:
-${service.model.actionsCode[actionname]}
-      }}
 
-          {% endfor %}
+     {% for action in data['actions'] -%}
+         * *${action.name}*:
+             ** state: ${action.state}
+             ** code:
+ {{code:
+ ${action['code']}
+ }}
+           {% endfor %}
+
     {{html:
       </div>
     </div>
     }}
 
 
+{% endif %}
 {% endif %}

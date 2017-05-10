@@ -5,7 +5,7 @@ def main(j, args, params, tags, tasklet):
     space = params.paramsExtra['space']
     out = ""
     nroflines = int(tags.get('nroflines', 0))
-    logdir = j.dirs.logDir
+    logdir = j.dirs.LOGDIR
     if 'filename' in list(tags.keys()):
         filename = tags['filename']
         logs = j.sal.fs.joinPaths(logdir, filename)

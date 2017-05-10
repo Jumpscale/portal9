@@ -96,3 +96,10 @@ class myspace_test(object):
     def echo(self, input, *args, **kwargs):
         raise exceptions.NotFound("Could not find console to echo to")
 ```
+
+```toml
+!!!
+title = "How To Create Your First Actor"
+date = "2017-03-02"
+categories= ["howto"]
+```
