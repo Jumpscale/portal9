@@ -573,10 +573,10 @@ class Role(ClassBase):
         self.name = name
 
 
-class SpecParserFactory:
+class PortalSpecParserFactory:
 
     def __init__(self):
-        self.__jslocation__ = "j.core.specparser"
+        # self.__jslocation__ = "j.core.specparser"
         self.specs = {}
         self.childspecs = {}
         self.appnames = []

@@ -9,8 +9,8 @@ import gevent.subprocess
 
 class GeventLoopFactory:
 
-    def __init__(self):
-        self.__jslocation__ = "j.core.gevent"
+    # def __init__(self):
+    #     self.__jslocation__ = "j.core.gevent"
 
     def getGeventLoopClass(self):
         return GeventLoop

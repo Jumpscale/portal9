@@ -1,7 +1,7 @@
 from js9 import j
 
-
-class CodeGeneratorBase:
+# base = j.portal.tools._getBaseClassLoader()
+class CodeGeneratorBase():
 
     def __init__(self, spec, typecheck=True, dieInGenCode=True):
         self.content = ""

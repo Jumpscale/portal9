@@ -1,7 +1,6 @@
 from js9 import j
 
-import JumpScale9Lib.data.models.Models as Models
-import JumpScale9Lib.data.models.CockpitEventModels as CockpitEventModels
+from . import Models
 import inspect
 
 try:
@@ -41,17 +40,3 @@ class NameSpaceLoader:
         mongoengine.connect(db=db, alias=db, host=host, port=port)
 
 
-class System(NameSpaceLoader):
-
-    def __init__(self):
-        self.__jslocation__ = "j.data.models_system"
-        self.__imports__ = "mongoengine"
-        super(System, self).__init__(Models)
-
-
-class CockpitEvent(NameSpaceLoader):
-
-    def __init__(self):
-        self.__jslocation__ = "j.data.models_cockpit_event"
-        self.__imports__ = "mongoengine"
-        super(CockpitEvent, self).__init__(CockpitEventModels)

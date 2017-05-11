@@ -5,10 +5,10 @@ import mongoengine
 from mongoengine.queryset import Q
 
 
-class DataTables():
+class PortalDataTables():
 
     def __init__(self):
-        self.__jslocation__ = "j.portal.tools.datatables"
+        # self.__jslocation__ = "j.portal.tools.datatables"
         self.inited = False
         self.cache = j.data.kvs.getMemoryStore('datatables')
 
