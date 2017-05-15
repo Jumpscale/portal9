@@ -20,8 +20,8 @@ class InvalidTaskletFunction(RuntimeError):
 
 class TaskletEngineFactory:
 
-    def __init__(self):
-        self.__jslocation__ = "j.tools.taskletengine"
+    # def __init__(self):
+    #     self.__jslocation__ = "j.tools.taskletengine"
 
     def get(self, path):
         """
@@ -132,6 +132,7 @@ class TaskletEngine:
         """
         @param path from which tasklets will be loaded
         """
+        self.logger = j.logger.get('TaskletEngine')
         self.tasklets = []
         self.path = path
         self._loadTasklets(path)
@@ -140,7 +141,7 @@ class TaskletEngine:
         """
         load tasklet steps & _init.py for 1 specific group of tasklets
         """
-        j.logger.log("load tasklets in %s" % (path), 6)
+        self.logger.debug("load tasklets in %s" % (path))
         # now load tasklet steps
         items = self._getDirItemsNaturalSorted(path, "_", True, True)
         if items == []:
@@ -200,8 +201,8 @@ class TaskletEngine:
         items = self._getDirItemsNaturalSorted(path)
         for prio, name, item in items:
             ppath = j.sal.fs.joinPaths(path, item)
-            j.logger.log("Load tasklet %s" % ppath)
-            if j.sal.fs.parsePath(ppath)[2].lower() == "py":
+            self.logger.debug("Load tasklet %s" % ppath)
+            if j.sal.fs.pathParse(ppath)[2].lower() == "py":
                 tasklet = Tasklet()
                 tasklet.name = name.replace(".py", "")
                 tasklet.taskletsStepname = taskletstepname
@@ -289,7 +290,7 @@ class TaskletEngine:
 
     def _loadModule(self, path):
         '''Load the Python module from disk using a random name'''
-        j.logger.log('Loading tasklet module %s' % path, 7)
+        self.logger.debug('Loading tasklet module %s' % path)
         # Random name -> name in sys.modules
 
         def generate_module_name():

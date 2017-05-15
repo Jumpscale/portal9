@@ -9,12 +9,12 @@ class ActorsInfo():
         """
         url = "/rest/%s/%s/%s?" % (appname, actor, method)
 
-        auth = j.portal.server.active.ws.routes["%s_%s_%s" % (appname, actor, method)]['auth']
+        auth = j.portal.tools.server.active.ws.routes["%s_%s_%s" % (appname, actor, method)]['auth']
         if auth:
             params = ["authkey"]
         else:
             params = []
-        params.extend(list(j.portal.server.active.ws.routes["%s_%s_%s" % (appname, actor, method)]['params'].keys()))
+        params.extend(list(j.portal.tools.server.active.ws.routes["%s_%s_%s" % (appname, actor, method)]['params'].keys()))
 
         for param in params:
             url += "%s=&" % param
@@ -35,15 +35,15 @@ class ActorsInfo():
                 appname, actorname, methodname)
             return txt
         if page is None:
-            page = j.portal.server.active.pageprocessor.getpage()
+            page = j.portal.tools.server.active.pageprocessor.getpage()
         page.addHeading("%s.%s.%s" % (appname, actorname, methodname), 5)
 
         url = getActorMethodCall(appname, actorname, methodname)
 
         routekey = "%s_%s_%s" % (appname, actorname, methodname)
-        if routekey not in j.portal.server.active.routes:
-            j.portal.server.active.activateActor(appname, actorname)
-        routeData = j.portal.server.active.routes[routekey]
+        if routekey not in j.portal.tools.server.active.routes:
+            j.portal.tools.server.active.activateActor(appname, actorname)
+        routeData = j.portal.tools.server.active.routes[routekey]
         # routedata: function,paramvalidation,paramdescription,paramoptional,description
 
         description = routeData[4]
@@ -66,17 +66,17 @@ class ActorsInfo():
         return page
 
     def getActorsInfoPage(appname="", actor="", page=None, extraParams={}):
-        actorsloader = j.portal.server.active.actorsloader
+        actorsloader = j.portal.tools.server.active.actorsloader
         if appname != "" and actor != "":
-            result = j.portal.server.active.activateActor(appname, actor)
+            result = j.portal.tools.server.active.activateActor(appname, actor)
             if result is False:
                 # actor was not there
-                page = j.portal.server.active.pageprocessor.getpage()
+                page = j.portal.tools.server.active.pageprocessor.getpage()
                 page.addHeading("Could not find actor %s %s." % (appname, actor), 4)
                 return page
 
         if page is None:
-            page = j.portal.server.active.pageprocessor.getpage()
+            page = j.portal.tools.server.active.pageprocessor.getpage()
         if appname == "":
             page.addHeading("Applications in appserver.", 4)
             appnames = {}
@@ -104,7 +104,7 @@ class ActorsInfo():
                 page.addBullet(link)
             return page
 
-        keys = sorted(j.portal.server.active.routes.keys())
+        keys = sorted(j.portal.tools.server.active.routes.keys())
         page.addHeading("list", 2)
         for item in keys:
             app2, actor2, method = item.split("_")

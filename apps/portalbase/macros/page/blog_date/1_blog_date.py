@@ -1,4 +1,4 @@
-from JumpScale.portal.macrolib.blog import BlogPost
+from JumpScale9Portal.portal.macrolib.blog import BlogPost
 
 
 def main(j, args, params, *other_args):

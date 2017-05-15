@@ -17,7 +17,7 @@ def main(j, args, params, tags, tasklet):
 
     pages = macrostr[1:-1]
 
-    if j.portal.server.active.isAdminFromCTX(params.requestContext):
+    if j.portal.tools.server.active.isAdminFromCTX(params.requestContext):
         adminmenu = """
 {{menudropdown: name:Administration
 New Page:/system/create?page_space=$$space

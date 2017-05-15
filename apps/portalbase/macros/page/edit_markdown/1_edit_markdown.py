@@ -33,7 +33,7 @@ def main(j, args, params, tags, tasklet):
         page_name = page_match.group(1)
 
     args = args.tags.getValues(path="", page="", space="")
-    space = j.portal.server.active.getSpace(spaceName)
+    space = j.portal.tools.server.active.getSpace(spaceName)
     doc = space.docprocessor.docGet(page_name)
     path = doc.path
 

@@ -9,7 +9,7 @@ class CodeGeneratoractorLocal(CodeGeneratorBase):
         CodeGeneratorBase.__init__(self, spec, typecheck, dieInGenCode)
 
         self.actorpath = j.sal.fs.joinPaths(
-            j.core.codegenerator.codepath, spec.appname, spec.actorname)
+            j.portal.tools.codegentools.portalcodegenerator.codepath, spec.appname, spec.actorname)
         j.sal.fs.createDir(self.actorpath)
         self.type = "actorlocal"
 
@@ -60,7 +60,7 @@ class CodeGeneratoractorLocal(CodeGeneratorBase):
         key = "%s_%s_%s" % (spec.appname, spec.actorname, method.name)
 
         s += """
-te=j.portal.server.active.taskletengines["{key}"]
+te=j.portal.tools.server.active.taskletengines["{key}"]
 params=te.execute(params)
 if params.has_key("result"):
     return params.result

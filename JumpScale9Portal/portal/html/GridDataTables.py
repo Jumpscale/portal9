@@ -29,7 +29,7 @@ class GridDataTables:
         @param fieldnames: list of str showed in the table header if ommited fieldids will be used
         @param fieldvalues: list of items resprenting the value of the data can be a callback
         """
-        key = j.portal.tools.datatables.storInCache(
+        key = j.portal.tools.datatables.portaldatatables.storInCache(
             fieldids=fieldids,
             fieldname=fieldnames,
             fieldvalues=fieldvalues,

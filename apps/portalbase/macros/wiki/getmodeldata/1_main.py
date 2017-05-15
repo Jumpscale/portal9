@@ -34,7 +34,7 @@ def main(j, args, params, tags, tasklet):
         params.result = (result, params.doc)
         return params
 
-    actor2 = j.portal.server.active.actorsloader.getActor(application, actor)
+    actor2 = j.portal.tools.server.active.actorsloader.getActor(application, actor)
 
     try:
         model = actor2.models.__dict__[model].get(id=id)

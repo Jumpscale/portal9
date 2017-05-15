@@ -56,8 +56,8 @@ def main(j, args, params, tags, tasklet):
     if not json.loads(issues):
         page.addMessage('No issues to show in kanban')
 
-    script = j.portal.server.active.templates.render('system/kanban/script.js', issues=issues, users=users)
-    css = j.portal.server.active.templates.render('system/kanban/style.css')
+    script = j.portal.tools.server.active.templates.render('system/kanban/script.js', issues=issues, users=users)
+    css = j.portal.tools.server.active.templates.render('system/kanban/style.css')
     page.addCSS(cssContent=css)
 
     kanban = """

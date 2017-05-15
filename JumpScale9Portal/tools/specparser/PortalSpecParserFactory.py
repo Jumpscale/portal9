@@ -232,20 +232,20 @@ class SpecBlock:
         if self.type == "actor":
             ttypeId = "method"
             spec = None
-            if len(list(j.core.specparser.specs.keys())) > 0 and self.type == "actor":
+            if len(list(j.portal.tools.specparser.specparserfactory.specs.keys())) > 0 and self.type == "actor":
                 key = "%s_%s" % (self.appname, self.actorname)
-                if key in j.core.specparser.actornames:
-                    spec = j.core.specparser.getactorSpec(
+                if key in j.portal.tools.specparser.specparserfactory.actornames:
+                    spec = j.portal.tools.specparser.specparserfactory.getactorSpec(
                         self.appname, self.actorname, False)
             if spec is None:
                 spec = Specactor(self.name, self.descr, self.tags,
                                  self.parser.path, self.startline)
                 spec.actorname = self.actorname
                 spec.appname = self.appname
-            if spec.appname not in j.core.specparser.app_actornames:
-                j.core.specparser.app_actornames[self.appname] = []
-            if spec.actorname not in j.core.specparser.app_actornames[self.appname]:
-                j.core.specparser.app_actornames[
+            if spec.appname not in j.portal.tools.specparser.specparserfactory.app_actornames:
+                j.portal.tools.specparser.specparserfactory.app_actornames[self.appname] = []
+            if spec.actorname not in j.portal.tools.specparser.specparserfactory.app_actornames[self.appname]:
+                j.portal.tools.specparser.specparserfactory.app_actornames[
                     self.appname].append(spec.actorname)
             currentitemClass = SpecactorMethod
 
@@ -345,7 +345,7 @@ class SpecBlock:
         spec.type = self.type
         spec.addDefaults()
 
-        j.core.specparser.addSpec(spec)
+        j.portal.tools.specparser.specparserfactory.addSpec(spec)
 
     def __str__(self):
         s = "name:%s\n" % self.name
@@ -392,7 +392,7 @@ class SpecDirParser:
         for path in files:
             if j.sal.fs.getBaseName(path).find("example__") == 0:
                 continue
-            parser = j.core.specparser._getSpecFileParser(
+            parser = j.portal.tools.specparser.specparserfactory._getSpecFileParser(
                 path, self.appname, self.actorname)
 
             for key in list(parser.specblocks.keys()):
@@ -576,7 +576,6 @@ class Role(ClassBase):
 class PortalSpecParserFactory:
 
     def __init__(self):
-        # self.__jslocation__ = "j.core.specparser"
         self.specs = {}
         self.childspecs = {}
         self.appnames = []
@@ -640,7 +639,7 @@ class PortalSpecParserFactory:
 
     def getModelNames(self, appname, actorname):
         key = "%s_%s" % (appname, actorname)
-        if key in j.core.specparser.modelnames:
+        if key in j.portal.tools.specparser.specparserfactory.modelnames:
             return self.modelnames[key]
         else:
             return []
@@ -715,7 +714,7 @@ class PortalSpecParserFactory:
             appname = ""
             if len(splitted) > 1:
                 possibleappname = splitted[0]
-                if possibleappname in j.core.specparser.appnames:
+                if possibleappname in j.portal.tools.specparser.specparserfactory.appnames:
                     appname = possibleappname
                     splitted = splitted[1:]  # remove the already matched item
 
@@ -723,7 +722,7 @@ class PortalSpecParserFactory:
             actorname = ""
             if len(splitted) > 1:
                 possibleactor = splitted[0]
-                if possibleactor in j.core.specparser.actornames:
+                if possibleactor in j.portal.tools.specparser.specparserfactory.actornames:
                     actorname = possibleactor
                     splitted = splitted[1:]  # remove the already matched item
 
@@ -750,12 +749,12 @@ class PortalSpecParserFactory:
 
         if actorname != "" and appname != "" and specname != "" and type != "":
             key = "%s_%s_%s_%s" % (type, appname, actorname, specname)
-            if key in j.core.specparser.specs:
-                result = [j.core.specparser.specs[key]]
+            if key in j.portal.tools.specparser.specparserfactory.specs:
+                result = [j.portal.tools.specparser.specparserfactory.specs[key]]
         else:
             # not enough specified need to walk over all
-            for key in list(j.core.specparser.specs.keys()):
-                spec = j.core.specparser.specs[key]
+            for key in list(j.portal.tools.specparser.specparserfactory.specs.keys()):
+                spec = j.portal.tools.specparser.specparserfactory.specs[key]
                 found = True
                 if actorname != "" and spec.actorname != actorname:
                     found = False

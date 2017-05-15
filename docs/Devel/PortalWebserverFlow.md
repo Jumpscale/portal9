@@ -6,7 +6,7 @@ startup
 
 -   PortalProcess()
     -   loads all info from portal.cfg
-    -   starts PortalServer () : use factory j.portal.server.get()
+    -   starts PortalServer () : use factory j.portal.tools.server.get()
     -   passes secret, cfgdir & port to the PortalServer
 -   PortalServer
     -   ...

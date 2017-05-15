@@ -62,7 +62,7 @@ def main(j, args, params, tags, tasklet):
     </li>
 </ul>"""
 
-    loggedin = j.portal.server.active.isLoggedInFromCTX(params.requestContext)
+    loggedin = j.portal.tools.server.active.isLoggedInFromCTX(params.requestContext)
 
     if loggedin:
         username = params.requestContext.env['beaker.session']['user']
@@ -123,7 +123,7 @@ def main(j, args, params, tags, tasklet):
                 line2 = "<li><a href=\"%s\">%s</a></li>" % (target, name)
             items += "%s\n" % line2
     T = T.replace("{items}", items)
-    user = j.portal.server.active.getUserFromCTX(args.requestContext)
+    user = j.portal.tools.server.active.getUserFromCTX(args.requestContext)
     if user == "guest" and noguest:
         T = T.replace("{hide-menu}", "style=\"display:none;\"")
     else:

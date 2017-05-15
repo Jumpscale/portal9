@@ -33,15 +33,15 @@ if not isinstance(value, %(type)s) and value is not None:
         if type in defaultmap:
             init = "self._P_%s=%s" % (name, defaultmap.get(type))
         else:
-            specfound = j.core.specparser.findSpec(
+            specfound = j.portal.tools.specparser.portalspecparserfactory.findSpec(
                 query=type, findFromSpec=self.spec)
 
             if specfound.type == "enumeration":
                 init = "self._P_%s=0" % name  # is the unknown type
-                j.core.codegenerator.generate(specfound, type="enumerator")
-                name, path = j.core.codegenerator.getCodeId(
+                j.portal.tools.codegentools.portalcodegenerator.generate(specfound, type="enumerator")
+                name, path = j.portal.tools.codegentools.portalcodegenerator.getCodeId(
                     specfound, type="enumerator")
-                if name not in j.core.codegenerator.classes:
+                if name not in j.portal.tools.codegentools.portalcodegenerator.classes:
                     raise j.exceptions.RuntimeError(
                         "generation was not successfull for %s, there should be a classes populated" % name)
                 enumerationcheck = "j.enumerators.%s" % name.split("enumeration_")[
@@ -170,7 +170,7 @@ return self._P_{name}[-1]\n
 
         for prop in self.spec.properties:
 
-            rtype, spec = j.core.specparser.getSpecFromTypeStr(
+            rtype, spec = j.portal.tools.specparser.portalspecparserfactory.getSpecFromTypeStr(
                 self.spec.appname, self.spec.actorname, prop.type)
             # print str(rtype)+" : "+str(spec)
             if rtype is not None and rtype != "object" and rtype != "enum":

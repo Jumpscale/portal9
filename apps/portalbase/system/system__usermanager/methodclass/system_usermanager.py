@@ -1,6 +1,6 @@
 from js9 import j
-from JumpScale.portal.portal import exceptions
-from JumpScale.portal.portal.auth import auth
+from JumpScale9Portal.portal import exceptions
+from JumpScale9Portal.portal.auth import auth
 import re
 
 
@@ -28,7 +28,7 @@ class system_usermanager(j.tools.code.classGetBase()):
         """
 
         ctx = kwargs['ctx']
-        if j.portal.server.active.auth.authenticate(name, secret):
+        if j.portal.tools.server.active.auth.authenticate(name, secret):
             session = ctx.env['beaker.get_session']()  # create new session
             session['user'] = name
             session._redis = True
@@ -213,7 +213,7 @@ class system_usermanager(j.tools.code.classGetBase()):
             ctx.start_response('409', headers)
             return "Username %s already exists" % username
         groups = groups or []
-        return j.portal.server.active.auth.createUser(username, password, emails, groups, None)
+        return j.portal.tools.server.active.auth.createUser(username, password, emails, groups, None)
 
     def _checkUser(self, username):
 

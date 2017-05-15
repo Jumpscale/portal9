@@ -1,4 +1,4 @@
-from JumpScale.portal.macrolib.plantuml import run_plant_uml, GraphVizNotInstalled
+from JumpScale9Portal.portal.macrolib.plantuml import run_plant_uml, GraphVizNotInstalled
 
 
 def main(j, args, params, tags, tasklet):

@@ -23,7 +23,7 @@ class system_contentmanager(j.tools.code.classGetBase()):
         result list(str)
 
         """
-        return list(j.portal.server.active.actorsloader.actors.keys())
+        return list(j.portal.tools.server.active.actorsloader.actors.keys())
 
     def getActorsWithPaths(self, **args):
         """
@@ -31,8 +31,8 @@ class system_contentmanager(j.tools.code.classGetBase()):
 
         """
         actors = []
-        for actor in list(j.portal.server.active.actorsloader.id2object.keys()):
-            actor = j.portal.server.active.actorsloader.id2object[actor]
+        for actor in list(j.portal.tools.server.active.actorsloader.id2object.keys()):
+            actor = j.portal.tools.server.active.actorsloader.id2object[actor]
             actors.append([actor.model.id, actor.model.path])
         return actors
 
@@ -41,7 +41,7 @@ class system_contentmanager(j.tools.code.classGetBase()):
         result list(str)
 
         """
-        return list(j.portal.server.active.bucketsloader.buckets.keys())
+        return list(j.portal.tools.server.active.bucketsloader.buckets.keys())
 
     def getBucketsWithPaths(self, **args):
         """
@@ -49,8 +49,8 @@ class system_contentmanager(j.tools.code.classGetBase()):
 
         """
         buckets = []
-        for bucket in list(j.portal.server.active.bucketsloader.id2object.keys()):
-            bucket = j.portal.server.active.bucketsloader.id2object[bucket]
+        for bucket in list(j.portal.tools.server.active.bucketsloader.id2object.keys()):
+            bucket = j.portal.tools.server.active.bucketsloader.id2object[bucket]
             buckets.append([bucket.model.id, bucket.model.path])
         return buckets
 
@@ -61,8 +61,8 @@ class system_contentmanager(j.tools.code.classGetBase()):
 
         """
         objects = []
-        for objectname in list(j.portal.server.active.contentdirs.keys()):
-            objectpath = j.portal.server.active.contentdirs[objectname]
+        for objectname in list(j.portal.tools.server.active.contentdirs.keys()):
+            objectpath = j.portal.tools.server.active.contentdirs[objectname]
             objects.append([objectname, objectpath])
         return objects
 
@@ -71,7 +71,7 @@ class system_contentmanager(j.tools.code.classGetBase()):
         result list(str)
 
         """
-        return list(j.portal.server.active.spacesloader.spaces.keys())
+        return list(j.portal.tools.server.active.spacesloader.spaces.keys())
 
     def getSpacesWithPaths(self, **args):
         """
@@ -79,8 +79,8 @@ class system_contentmanager(j.tools.code.classGetBase()):
 
         """
         spaces = []
-        for space in list(j.portal.server.active.spacesloader.spaces.keys()):
-            space = j.portal.server.active.spacesloader.spaces[space]
+        for space in list(j.portal.tools.server.active.spacesloader.spaces.keys()):
+            space = j.portal.tools.server.active.spacesloader.spaces[space]
             spaces.append([space.model.id, space.model.path])
         return spaces
 
@@ -92,7 +92,7 @@ class system_contentmanager(j.tools.code.classGetBase()):
         param:modelname
         param:key
         """
-        dtext = j.portal.tools.datatables
+        dtext = j.portal.tools.datatables.portaldatatables
         data = dtext.getData(namespace, category, key, **args)
         return data
 
@@ -136,20 +136,20 @@ class system_contentmanager(j.tools.code.classGetBase()):
         mc = j.clients.mercurial.getClient(path)
         mc.pullupdate()
         if spacename != 'None':
-            j.portal.server.active.loadSpace(spacename)
+            j.portal.tools.server.active.loadSpace(spacename)
         else:
-            j.portal.server.active.loadSpace(self.appname)
+            j.portal.tools.server.active.loadSpace(self.appname)
         return []
 
     def reloadAll(self, id):
         def reloadApp():
             print("RELOAD APP FOR ACTORS Delete")
-            j.portal.server.active.reset()
+            j.portal.tools.server.active.reset()
 
-        j.portal.server.active.actorsloader.id2object.pop(id)
+        j.portal.tools.server.active.actorsloader.id2object.pop(id)
 
-        j.portal.server.active.scheduler.scheduleFromNow(2, 9, reloadApp)
-        j.portal.server.active.scheduler.scheduleFromNow(10, 9, reloadApp)
+        j.portal.tools.server.active.scheduler.scheduleFromNow(2, 9, reloadApp)
+        j.portal.tools.server.active.scheduler.scheduleFromNow(10, 9, reloadApp)
 
     def notifyActorModification(self, id, **args):
         """
@@ -157,7 +157,7 @@ class system_contentmanager(j.tools.code.classGetBase()):
         result bool
 
         """
-        loaders = j.portal.server.active.actorsloader
+        loaders = j.portal.tools.server.active.actorsloader
         loader = loaders.getLoaderFromId(id)
         loader.reset()
 
@@ -178,10 +178,10 @@ class system_contentmanager(j.tools.code.classGetBase()):
         appname, actorname = name.split("__")
         path = path
 
-        if key not in j.portal.server.active.actorsloader.actors:
+        if key not in j.portal.tools.server.active.actorsloader.actors:
             # actor does not exist yet, create required dirs in basedir
             if path == "":
-                path = j.sal.fs.joinPaths(j.portal.server.active.basepath, "actors", key)
+                path = j.sal.fs.joinPaths(j.portal.tools.server.active.basepath, "actors", key)
                 j.sal.fs.createDir(path)
                 j.sal.fs.createDir(j.sal.fs.joinPaths(path, ".actor"))
             else:
@@ -189,7 +189,7 @@ class system_contentmanager(j.tools.code.classGetBase()):
                 j.sal.fs.createDir(j.sal.fs.joinPaths(path, ".actor"))
 
             print(("scan path:%s" % path))
-            j.portal.server.active.actorsloader.scan(path)
+            j.portal.tools.server.active.actorsloader.scan(path)
             result = True
         else:
             result = False
@@ -214,15 +214,15 @@ class system_contentmanager(j.tools.code.classGetBase()):
         result = None
 
         # immediate remove
-        loaders = j.portal.server.active.bucketsloader
+        loaders = j.portal.tools.server.active.bucketsloader
         loaders.removeLoader(id)
 
         def reloadApp(id=None):
-            j.portal.server.active.loadSpaces(reset=True)
+            j.portal.tools.server.active.loadSpaces(reset=True)
 
         # loader.pop(id)
-        # j.portal.server.active.scheduler.scheduleFromNow(1,9,reloadApp,id=id)
-        j.portal.server.active.scheduler.scheduleFromNow(10, 9, reloadApp, id=id)
+        # j.portal.tools.server.active.scheduler.scheduleFromNow(1,9,reloadApp,id=id)
+        j.portal.tools.server.active.scheduler.scheduleFromNow(10, 9, reloadApp, id=id)
         return result
 
     def notifyBucketModification(self, id, **args):
@@ -231,7 +231,7 @@ class system_contentmanager(j.tools.code.classGetBase()):
         result bool
 
         """
-        loaders = j.portal.server.active.bucketsloader
+        loaders = j.portal.tools.server.active.bucketsloader
         loader = loaders.getLoaderFromId(id)
         loader.reset()
 
@@ -247,12 +247,12 @@ class system_contentmanager(j.tools.code.classGetBase()):
         key = name.strip().lower()
         path = path
 
-        loader = j.portal.server.active.bucketsloader
+        loader = j.portal.tools.server.active.bucketsloader
 
         if key not in loader.id2object:
             # does not exist yet, create required dirs in basedir
             if path == "":
-                path = j.sal.fs.joinPaths(j.portal.server.active.basepath, "buckets", key)
+                path = j.sal.fs.joinPaths(j.portal.tools.server.active.basepath, "buckets", key)
                 j.sal.fs.createDir(path)
                 j.sal.fs.createDir(j.sal.fs.joinPaths(path, ".bucket"))
             else:
@@ -283,17 +283,17 @@ class system_contentmanager(j.tools.code.classGetBase()):
         """
 
         # immediate remove
-        loaders = j.portal.server.active.spacesloader
+        loaders = j.portal.tools.server.active.spacesloader
         loaders.removeLoader(id)
 
         def reloadApp():
             print("RELOAD APP SPACE DELETE")
-            j.portal.server.active.loadSpaces(reset=True)
+            j.portal.tools.server.active.loadSpaces(reset=True)
 
-        # loader=j.portal.server.active.spacesloader.id2object
+        # loader=j.portal.tools.server.active.spacesloader.id2object
         # loader.pop(id)
 
-        j.portal.server.active.addSchedule1MinPeriod(name="reloadportal", method=reloadApp)
+        j.portal.tools.server.active.addSchedule1MinPeriod(name="reloadportal", method=reloadApp)
 
     def notifySpaceModification(self, id, **args):
         """
@@ -302,7 +302,7 @@ class system_contentmanager(j.tools.code.classGetBase()):
 
         """
         id = id.lower()
-        loaders = j.portal.server.active.spacesloader
+        loaders = j.portal.tools.server.active.spacesloader
         loader = loaders.getLoaderFromId(id)
         loader.reset()
 
@@ -332,12 +332,12 @@ class system_contentmanager(j.tools.code.classGetBase()):
 
         path = path
 
-        loader = j.portal.server.active.spacesloader
+        loader = j.portal.tools.server.active.spacesloader
 
         if key not in loader.id2object:
             # does not exist yet, create required dirs in basedir
             if path == "":
-                path = j.sal.fs.joinPaths(j.portal.server.active.basepath, "spaces", name)
+                path = j.sal.fs.joinPaths(j.portal.tools.server.active.basepath, "spaces", name)
             else:
                 j.sal.fs.createDir(path)
 
@@ -379,8 +379,8 @@ class system_contentmanager(j.tools.code.classGetBase()):
         actorname = actor
         appname = app
 
-        filesroot = j.portal.server.active.filesroot
-        actorloader = j.portal.server.active.actorsloader.id2object["%s__%s" % (appname, actorname)]
+        filesroot = j.portal.tools.server.active.filesroot
+        actorloader = j.portal.tools.server.active.actorsloader.id2object["%s__%s" % (appname, actorname)]
 
         path = j.sal.fs.joinPaths(actorloader.model.path, "specs")
 
@@ -412,7 +412,7 @@ class system_contentmanager(j.tools.code.classGetBase()):
         j.sal.fs.writeFile(contents['path'], text)
         # after writing the conent, we need to make sure that the doc is marked dirty so that it will be reloaded from the disk
         # there is already a watchdog that monitor all the docs but there is no guarantee that it will mark the doc on time before the redirect is executed
-        space = j.portal.server.active.spacesloader.getLoaderFromId(contents['space'])
+        space = j.portal.tools.server.active.spacesloader.getLoaderFromId(contents['space'])
         if contents['page'] in space.docprocessor.name2doc:
             doc = space.docprocessor.name2doc[contents['page']]
             doc.dirty = True

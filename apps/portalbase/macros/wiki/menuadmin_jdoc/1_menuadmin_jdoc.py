@@ -7,7 +7,7 @@ def main(j, args, params, tags, tasklet):
 
     params.result = ""
 
-    # spaces = sorted(j.portal.server.active.getSpaces())
+    # spaces = sorted(j.portal.tools.server.active.getSpaces())
     # spacestxt=""
     # for item in spaces:
     #     if item[0] != "_" and item.strip() != "" and item.find("space_system")==-1 and item.find("test")==-1 and  item.find("gridlogs")==-1:
@@ -42,7 +42,7 @@ Doc Portal:/doc_jumpscale_portal
 # '/system/'}).done(function(){location.reload();console.log('Reloaded');}).error(function(){checkSpaceIsUp(trials
 # - 1)});}, 1000);})(10);})();void(0);
 
-    if j.portal.server.active.isAdminFromCTX(params.requestContext):
+    if j.portal.tools.server.active.isAdminFromCTX(params.requestContext):
         params.result = C
 
     params.result = (params.result, doc)

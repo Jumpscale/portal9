@@ -4,7 +4,7 @@ def main(j, args, params, tags, tasklet):
     doc = params.doc
     tags = params.tags
 
-    doc = j.portal.tools.defmanager.processDefs(doc)
+    doc = j.portal.tools.defmanager.portaldefmanager.processDefs(doc)
 
     params.result = ("", doc)
 

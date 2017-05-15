@@ -32,9 +32,9 @@ from .PortalTemplate import PortalTemplate
 from .PageProcessor import PageProcessor
 
 
-from flask.ext.bootstrap import Bootstrap
+# from flask.ext.bootstrap import Bootstrap
 from werkzeug.wsgi import DispatcherMiddleware
-from flask import render_template
+# from flask import render_template
 
 
 def exhaustgenerator(func):
@@ -65,17 +65,34 @@ class PortalServer:
     # INIT
     def __init__(self):
 
-        self.hrd = j.application.instanceconfig
+        self.cfg = j.application.instanceconfig
+        if not isinstance(self.cfg, dict):
+            # need to upgrade config
+            hrd = self.cfg.getDictFromPrefix('param.cfg')
+            production = hrd.get('production', False)
+            client_id = hrd.get('client_id', '')
+            client_secret = hrd.get('client_secret', '')
+            organization = hrd.get('organization', '')
+            redirect_address = hrd.get('redirect_url', '')
+            if redirect_address:
+                redirect_address = redirect_address.split('//')[1].split('/restmachine')[0]
+
+            j.tools.cuisine.local.core.dir_ensure('$TEMPLATEDIR/cfg/portal')
+            j.tools.cuisine.local.core.file_copy(j.sal.fs.joinPaths(j.dirs.CODEDIR, 'github/jumpscale/jumpscale_portal8/apps/portalbase/config.yaml'),
+                                        '$TEMPLATEDIR/cfg/portal/config.yaml')
+            j.tools.cuisine.local.apps.portal.configure(production=production, client_id=client_id, client_secret=client_secret, organization=organization, redirect_address=redirect_address)
+            j.application.instanceconfig = j.data.serializer.yaml.load('%s/portals/main/config.yaml' % (j.dirs.JSCFGDIR))
+            self.cfg = j.application.instanceconfig
+        self.logger = j.logger.get('j.portal.tools.server')
 
         self.contentdirs = list()
-        self.libpath = j.portal.tools.html.getHtmllibDir()
+        self.libpath = j.portal.tools.html.htmlfactory.getHtmllibDir()
         self.started = False
         self.epoch = time.time()
         self.force_oauth_url = None
-        self.cfg = self.hrd.getDictFromPrefix('param.cfg')
         self.force_oauth_instance = self.cfg.get('force_oauth_instance', "")
-        j.application.debug = self.hrd.getBool("debug", False)
-        j.portal.server.active = self
+        j.application.debug = self.cfg.get("debug", False)
+        j.portal.tools.server.active = self
 
         self.watchedspaces = []
         self.pageKey2doc = {}
@@ -85,11 +102,11 @@ class PortalServer:
         self.authentication_method = self.cfg.get("authentication.method")
         session_opts = {
             'session.cookie_expires': False,
-            'session.data_dir': '%s' % j.sal.fs.joinPaths(j.dirs.varDir, "beakercache")
+            'session.data_dir': '%s' % j.sal.fs.joinPaths(j.dirs.VARDIR, "beakercache")
         }
 
         # TODO change that to work with ays instance config instead of connection string
-        connection = self.hrd.getDict('param.mongoengine.connection')
+        connection = self.cfg.get('mongoengine.connection', {})
         self.port = connection.get('port', None)
 
         if not self.authentication_method:
@@ -104,7 +121,7 @@ class PortalServer:
             if self.authentication_method == 'gitlab':
                 self.auth = PortalAuthenticatorGitlab(instance=self.gitlabinstance)
             else:
-                j.data.models_system.connect2mongo(connection['host'], port=int(connection['port']))
+                j.portal.tools.models.system.connect2mongo(connection['host'], port=int(connection['port']))
 
                 mongoenginesession = {
                     'session.type': 'MongoEngineBeaker',
@@ -118,10 +135,11 @@ class PortalServer:
 
         self.loadConfig()
 
-        macroPathsPreprocessor = ["macros/preprocess"]
-        macroPathsWiki = ["macros/wiki"]
-        macroPathsPage = ["macros/page"]
-        macroPathsMarkDown = ["macros/markdown"]
+        macros_dir = j.sal.fs.joinPaths(j.sal.fs.getcwd(), 'macros')
+        macroPathsPreprocessor = [j.sal.fs.joinPaths(macros_dir, "preprocess")]
+        macroPathsWiki = [j.sal.fs.joinPaths(macros_dir, "wiki")]
+        macroPathsPage = [j.sal.fs.joinPaths(macros_dir, "page")]
+        macroPathsMarkDown = [j.sal.fs.joinPaths(macros_dir, "markdown")]
 
         self.macroexecutorPreprocessor = MacroExecutorPreprocess(macroPathsPreprocessor)
         self.macroexecutorPage = MacroExecutorPage(macroPathsPage)
@@ -138,7 +156,7 @@ class PortalServer:
 
         self._webserver = WSGIServer((self.listenip, self.port), self._megarouter)
 
-        self.confluence2htmlconvertor = j.portal.tools.docgenerator.getConfluence2htmlConvertor()
+        self.confluence2htmlconvertor = j.portal.tools.docgenerator.docgeneratorfactory.getConfluence2htmlConvertor()
         self.activejobs = list()
         self.jobids2greenlets = dict()
 
@@ -149,38 +167,38 @@ class PortalServer:
         self.rediscache = redis.StrictRedis(host='localhost', port=9999, db=0)
         self.redisprod = redis.StrictRedis(host='localhost', port=9999, db=0)
 
-        self.jslibroot = j.sal.fs.joinPaths(j.dirs.appDir, "portals", "jslib")
+        self.jslibroot = j.sal.fs.joinPaths(j.dirs.JSAPPSDIR, "portals", "jslib")
 
         #  Load local spaces
         self.rest = PortalRest(self)
-        self.spacesloader = j.portalloader.getSpacesLoader()
         self.loadSpaces()
         # let's roll
 
     def loadConfig(self):
 
         def replaceVar(txt):
-            # txt = txt.replace("$base", j.dirs.base).replace("\\", "/")
-            txt = txt.replace("$appdir", j.sal.fs.getcwd()).replace("\\", "/")
-            txt = txt.replace("$vardir", j.dirs.varDir).replace("\\", "/")
-            txt = txt.replace("$htmllibdir", j.portal.tools.html.getHtmllibDir()).replace("\\", "/")
             txt = txt.replace("\\", "/")
+            txt = txt.replace("$HTMLLIBDIR", j.portal.tools.html.htmlfactory.getHtmllibDir())
+            txt = txt.replace("$APPSDIR", j.sal.fs.getcwd())
+            txt = txt.replace("$APPDIR", j.sal.fs.getcwd())
+            txt = txt.replace("\\", "/")
+            txt = j.dirs.replaceTxtDirVars(txt)
             return txt
 
         # INIT FILE
-        self.portaldir = j.tools.path.get('.').getcwd()
+        self.portaldir = j.tools.path.get(j.sal.fs.getcwd())
 
-        self.appdir = replaceVar(self.cfg.get("appdir", self.portaldir))
-        self.appdir = j.tools.path.get(self.appdir.replace("$base", j.dirs.base))
+        self.appdir = j.tools.path.get(replaceVar(self.cfg.get("appdir", self.portaldir)))
 
         self.getContentDirs()  # contentdirs need to be loaded before we go to other dir of base server
+
         self.appdir.chdir()
 
         self.listenip = self.cfg.get('listenip', '0.0.0.0')
         self.port = int(self.cfg.get("port", 82))
         self.addr = self.cfg.get("pubipaddr", '127.0.0.1')
         self.secret = self.cfg.get("secret")
-        self.admingroups = self.cfg.get("admingroups", [])
+        self.admingroups = [item.strip() for item in self.cfg.get("admingroups", []) if item.strip() != ""]
 
         self.filesroot = j.tools.path.get(replaceVar(self.cfg.get("filesroot")))
         self.filesroot.makedirs_p()
@@ -192,7 +210,7 @@ class PortalServer:
         self.getContentDirs()
 
         # load proxies
-        for _, proxy in self.hrd.getDictFromPrefix('param.cfg.proxy').items():
+        for _, proxy in self.cfg.get('cfg.proxy', {}).items():
             print('loading proxy', proxy)
             self.proxies[proxy['path']] = proxy
 
@@ -200,19 +218,19 @@ class PortalServer:
         self.routes = {}
         self.loadConfig()
         self.bootstrap()
-        j.core.codegenerator.resetMemNonSystem()
-        j.core.specparser.resetMemNonSystem()
+        j.portal.tools.codegentools.codegenerator.resetMemNonSystem()
+        j.portal.tools.specparser.specparserfactory.resetMemNonSystem()
         # self.actorsloader.scan(path=self.contentdirs,reset=True) #do we need to load them all
-        self.bucketsloader = j.portalloader.getBucketsLoader()
+        self.bucketsloader = j.portal.tools.portalloaders.loaderfactory.getBucketsLoader()
         self.loadSpaces()
 
     def bootstrap(self):
         self.actors = {}  # key is the applicationName_actorname (lowercase)
-        self.actorsloader = j.portalloader.getActorsLoader()
+        self.actorsloader = j.portal.tools.portalloaders.loaderfactory.getActorsLoader()
         self.app_actor_dict = {}
         self.taskletengines = {}
         self.actorsloader.reset()
-        # self.actorsloader._generateLoadActor("system", "contentmanager", actorpath="%s/apps/portalbase/system/system__contentmanager/"%j.dirs.base)
+        # self.actorsloader._generateLoadActor("system", "contentmanager", actorpath="%s/apps/portalbase/system/system__contentmanager/"%j.dirs.JSBASEDIR)
         # self.actorsloader._generateLoadActor("system", "master", actorpath="system/system__master/")
         # self.actorsloader._generateLoadActor("system", "usermanager", actorpath="system/system__usermanager/")
         self.actorsloader.scan(self.contentdirs)
@@ -232,8 +250,8 @@ class PortalServer:
 
     def loadSpaces(self):
 
-        self.bucketsloader = j.portalloader.getBucketsLoader()
-        self.spacesloader = j.portalloader.getSpacesLoader()
+        self.bucketsloader = j.portal.tools.portalloaders.loaderfactory.getBucketsLoader()
+        self.spacesloader = j.portal.tools.portalloaders.loaderfactory.getSpacesLoader()
         self.bucketsloader.scan(self.contentdirs)
 
         self.spacesloader.scan(self.contentdirs)
@@ -514,8 +532,23 @@ class PortalServer:
 
         return True, session
 
-    def _getParamsFromEnv(self, env, ctx):
+    def _escape(self, params):
+        """
+        Escape html params
+        """
+        for k, v_list in params.items():
+            escaped_vals = []
+            for v in v_list:
+                escaped_vals.append(j.portal.tools.html.escape(v))
+
+            params[k] = escaped_vals
+        return params
+
+    def _getParamsFromEnv(self, env, ctx, escape=True):
         params = urllib.parse.parse_qs(env["QUERY_STRING"], 1)
+
+        if escape:
+            params = self._escape(params)
 
         def simpleParams(params):
             # HTTP parameters can be repeated multiple times, i.e. in case of using <select multiple>
@@ -569,7 +602,7 @@ class PortalServer:
                 for key, value in list(files.items()):
                     params.setdefault(key, dict())[value.filename] = value.file
             elif env.get('HTTP_TRANSFER_ENCODING') == 'chunked':
-                from JumpScale.portal.html.multipart2.multipart import parse_options_header
+                from JumpScale9Portal.portal.html.multipart2.multipart import parse_options_header
                 content_type, parameters = parse_options_header(env.get('CONTENT_TYPE'))
                 boundary = parameters.get(b'boundary')
                 inp = env.get('wsgi.input')
@@ -589,7 +622,19 @@ class PortalServer:
 
         ctx = RequestContext(application="", actor="", method="", env=environ,
                              start_response=start_response, path=path, params=None)
-        ctx.params = self._getParamsFromEnv(environ, ctx)
+
+        rest_prefixes = ['restmachine', 'restextmachine', 'rest', 'restext']
+        rest_found = False
+        for item in rest_prefixes:
+            if path.startswith(item):
+                rest_found = True
+                break
+        if rest_found:
+            ctx.params = self._getParamsFromEnv(environ, ctx, escape=False)
+        else:
+            ctx.params = self._getParamsFromEnv(environ, ctx, escape=True)
+
+        self.logger.info("[router]: params are %s" % ctx.params)
         ctx.env['JS_CTX'] = ctx
 
         for proxypath, proxy in self.proxies.items():
@@ -646,6 +691,8 @@ class PortalServer:
         if not is_session:
             return session
         user = session['user']
+
+        self.logger.info("[PortalServer] pathparts: %s" % pathparts)
         match = pathparts[0]
         path = ""
         if len(pathparts) > 1:
@@ -660,7 +707,7 @@ class PortalServer:
         elif match == "restextmachine":
             if not self.authentication_method:
                 try:
-                    j.clients.osis.getByInstance(self.hrd.get('instance', 'main'))
+                    j.clients.osis.getByInstance(self.cfg.get('instance', 'main'))
                 except Exception as e:
                     self.pageprocessor.raiseError(
                         ctx,
@@ -708,7 +755,8 @@ class PortalServer:
 
         else:
             path = '/'.join(pathparts)
-            ctx.params["path"] = '/'.join(pathparts)
+            path = j.portal.tools.html.htmlfactory.escape(path)
+            ctx.params["path"] = path
             space, pagename = self.pageprocessor.path2spacePagename(path)
             self.pageprocessor.log(ctx, user, path, space, pagename)
             pagestring = str(self.pageprocessor.returnDoc(ctx, start_response, space, pagename, {}))
@@ -736,6 +784,7 @@ class PortalServer:
         ctx = RequestContext(application="", actor="", method="", env=environ,
                              start_response=start_response, path=path, params=None)
         ctx.params = self._getParamsFromEnv(environ, ctx)
+        self.logger.info("[render]: params are %s" % ctx.params)
 
         doc, _ = self.pageprocessor.getDoc(space, doc, ctx)
 
@@ -930,7 +979,7 @@ class PortalServer:
         import fcntl
         args = sys.argv[:]
         args.insert(0, sys.executable)
-        apppath = j.sal.fs.joinPaths(j.dirs.appDir, app)
+        apppath = j.sal.fs.joinPaths(j.dirs.JSAPPSDIR, app)
         max_fd = 1024
         for fd in range(3, max_fd):
             try:

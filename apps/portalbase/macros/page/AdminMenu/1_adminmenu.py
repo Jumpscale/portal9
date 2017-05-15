@@ -16,7 +16,7 @@ def main(j, args, params, tags, tasklet):
 ''')
     spaceName = args.doc.getSpaceName()
     pageName = args.doc.name.split('.')[0]
-    if j.portal.server.active.isAdminFromCTX(params.requestContext):
+    if j.portal.tools.server.active.isAdminFromCTX(params.requestContext):
         page.addMessage('''
 	<ul class="nav navbar-nav navbar-left">
 	<li class="dropdown">

@@ -12,7 +12,7 @@ def main(j, args, params, tags, tasklet):
     else:
         appname = ""
 
-    page2 = j.portalloader.actorsinfo.getActorsInfoPage(appname=appname, actor=actorname)
+    page2 = j.portal.tools.portalloaders.portalloaderfactory.actorsinfo.getActorsInfoPage(appname=appname, actor=actorname)
 
     page.addBootstrap()
     page.addMessage(page2.body)

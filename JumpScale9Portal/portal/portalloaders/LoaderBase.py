@@ -31,7 +31,7 @@ class LoaderBase(object):
 
     # def _getSystemLoaderForUsersGroups(self):
     #     lba = LoaderBaseObject("")
-    #     userspath = j.sal.fs.joinPaths(j.portal.server.active.cfgdir, 'users.cfg')
+    #     userspath = j.sal.fs.joinPaths(j.portal.tools.server.active.cfgdir, 'users.cfg')
     #     if not j.sal.fs.exists(userspath):
     #         ini = j.config.getInifile(userspath)
     #         ini.addSection('admin')
@@ -43,7 +43,7 @@ class LoaderBase(object):
     #         ini.addParam('guest', 'groups', 'guest')
     #         ini.addParam('guest', 'reset', '1')
 
-    #     lba.processUsers(j.portal.server.active.cfgdir)
+    #     lba.processUsers(j.portal.tools.server.active.cfgdir)
 
     def scan(self, path, reset=False):
         """
@@ -89,18 +89,18 @@ class LoaderBaseObject():
 
     def _createDefaults(self, path):
         if self.type == "space":
-            macros = j.sal.fs.joinPaths(j.portalloader.getTemplatesPath(), "space/.macros")
+            macros = j.sal.fs.joinPaths(j.portal.tools.portalloaders.loaderfactory.getTemplatesPath(), "space/.macros")
             dest = j.sal.fs.joinPaths(path, ".macros")
             j.sal.fs.copyDirTree(macros, dest, keepsymlinks=False, deletefirst=False, overwriteFiles=False)
             if (j.sal.fs.exists("%s/home.md" % path) or j.sal.fs.exists("%s/Home.md" % path)):
                 space = "spaceMD"
             elif (j.sal.fs.exists("%s/home.wiki" % path) or j.sal.fs.exists("%s/Home.wiki" % path)):
                 space = "spaceWIKI"
-            spaces = j.sal.fs.joinPaths(j.portalloader.getTemplatesPath(), "space/.%s" % space)
+            spaces = j.sal.fs.joinPaths(j.portal.tools.portalloaders.loaderfactory.getTemplatesPath(), "space/.%s" % space)
             dest = j.sal.fs.joinPaths(path, ".space")
             j.sal.fs.copyDirTree(spaces, dest, keepsymlinks=False, deletefirst=False, overwriteFiles=False)
         else:
-            src = j.sal.fs.joinPaths(j.portalloader.getTemplatesPath(), "%s" % self.type)
+            src = j.sal.fs.joinPaths(j.portal.tools.portalloaders.loaderfactory.getTemplatesPath(), "%s" % self.type)
             dest = j.sal.fs.joinPaths(path)
             j.sal.fs.copyDirTree(src, dest, keepsymlinks=False, deletefirst=False, overwriteFiles=False)
 

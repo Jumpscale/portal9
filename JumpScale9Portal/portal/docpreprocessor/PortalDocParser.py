@@ -2,10 +2,7 @@ from js9 import j
 import re
 
 
-class DocParser():
-
-    def __init__(self):
-        self.__jslocation__ = "j.portal.tools.docpreprocessor"
+class PortalDocParser():
 
     def parseDoc(self, doc):
         content = doc.content

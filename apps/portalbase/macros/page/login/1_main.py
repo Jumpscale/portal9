@@ -80,7 +80,7 @@ def main(j, args, params, tags, tasklet):
 
           <button class="btn btn-primary btn-lg btn-block mbm" type="submit">Sign in</button>"""
 
-    name = j.portal.server.active.cfg.get('force_oauth_instance')
+    name = j.portal.tools.server.active.cfg.get('force_oauth_instance')
     if name:
         body += '''
         <a class="btn btn-block btn-social btn-%s" href=/restmachine/system/oauth/authenticate?type=%s>

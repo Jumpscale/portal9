@@ -4,7 +4,7 @@ def main(j, args, params, tags, tasklet):
 
     codepaths = dict()
 
-    actors = j.portal.server.active.actorsloader.actors
+    actors = j.portal.tools.server.active.actorsloader.actors
     for actorname, info in actors.items():
         if j.sal.fs.exists(info.model.path):
             parent = j.sal.fs.getParent(info.model.path)

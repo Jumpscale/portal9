@@ -5,14 +5,14 @@ def main(j, args, params, tags, tasklet):
     hostname = pars.get('hostname', '')
     contentpage = pars.get('contentpage', '')
     divid = pars.get('divid', '')
-    j.portal.tools.docgenerator.getConfluence2htmlConvertor()
+    j.portal.tools.docgenerator.portaldocgeneratorfactory.getConfluence2htmlConvertor()
 
     scriptcontent = """
         (typeof(tocheck) == "undefined")? tocheck = [] : tocheck=tocheck;
         tocheck.push({"hostname":"%s", "divid":"%s"});""" % (hostname, divid)
 
     page.addJS(jsContent=scriptcontent)
-    space = j.portal.server.active.spacesloader.spaces[args.doc.getSpaceName()]
+    space = j.portal.tools.server.active.spacesloader.spaces[args.doc.getSpaceName()]
     if space.docprocessor.docExists(contentpage):
         doc = space.docprocessor.docGet(contentpage)
         htmlcontent = doc.getHtmlBody()

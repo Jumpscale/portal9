@@ -26,15 +26,15 @@ class SpaceWatcher():
             # Watch the contentdir for changes
             observer = Observer()
             self.file_observers.append(observer)
-            j.portal.server.active.watchedspaces.append(contentdir)
+            j.portal.tools.server.active.watchedspaces.append(contentdir)
             print(('Monitoring', contentdir))
             observer.schedule(self.spacehandler, contentdir, recursive=True)
             observer.start()
 
     def addSpace(self, spacename, spacepath):
-        if spacename not in j.portal.server.active.spacesloader.spaces:
+        if spacename not in j.portal.tools.server.active.spacesloader.spaces:
             print(('Space %s added' % spacename))
-            j.portal.server.active.spacesloader.scan(spacepath)
+            j.portal.tools.server.active.spacesloader.scan(spacepath)
 
 
 class SpaceHandler(FileSystemEventHandler):

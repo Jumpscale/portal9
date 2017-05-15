@@ -14,7 +14,7 @@ def main(j, args, params, tags, tasklet):
 
     out = ""
 
-    spaces = j.portal.server.active.spacesloader.spaces
+    spaces = j.portal.tools.server.active.spacesloader.spaces
 
     for spacename in sorted(spaces.keys()):
         model = spaces[spacename].model  # TODO: security breach

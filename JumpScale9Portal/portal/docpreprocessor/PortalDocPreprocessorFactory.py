@@ -2,10 +2,7 @@ from js9 import j
 from .DocPreprocessor import *
 
 
-class DocPreprocessorFactory():
-
-    def __init__(self):
-        self.__jslocation__ = "j.portal.tools.docpreprocessorparser"
+class PortalDocPreprocessorFactory():
 
     def get(self, contentDirs=[], varsPath="", spacename=""):
         """
@@ -45,7 +42,7 @@ class DocPreprocessorFactory():
         if format == "preprocess":
             doc.generate2disk(outpath)
         elif format == "confluence":
-            page = j.portal.tools.docgenerator.pageNewConfluence(doc.name)
+            page = j.portal.tools.docgenerator.portaldocgeneratorfactory.pageNewConfluence(doc.name)
             for line in doc.content.split("\n"):
                 macrostrs = poogen.macroexecutor.findMacros(line)
                 if len(macrostrs) > 0:

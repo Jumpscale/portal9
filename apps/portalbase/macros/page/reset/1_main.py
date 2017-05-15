@@ -1,4 +1,4 @@
-from JumpScale.portal.macrolib import div_base
+from JumpScale9Portal.portal.macrolib import div_base
 
 
 def main(j, args, params, *other_args):

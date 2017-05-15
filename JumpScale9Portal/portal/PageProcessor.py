@@ -25,11 +25,11 @@ CONTENT_TYPE_PNG = 'image/png'
 class PageProcessor():
 
     def __init__(self):
-        self.logdir = j.tools.path.get(j.dirs.logDir).joinpath("portal", str(j.portal.server.active.port))
+        self.logdir = j.tools.path.get(j.dirs.LOGDIR).joinpath("portal", str(j.portal.tools.server.active.port))
         self.logdir.makedirs_p()
 
     def getpage(self):
-        page = j.portal.tools.docgenerator.pageNewHTML("index.html", htmllibPath="/jslib")
+        page = j.portal.tools.docgenerator.portaldocgeneratorfactory.pageNewHTML("index.html", htmllibPath="/jslib")
         return page
 
     def sendpage(self, page, start_response):
@@ -51,7 +51,7 @@ class PageProcessor():
             space = self.defaultspace.lower()
             name = self.defaultpage
 
-        if space not in j.portal.server.active.spacesloader.spaces:
+        if space not in j.portal.tools.server.active.spacesloader.spaces:
             if space == "system":
                 raise RuntimeError("wiki has not loaded system space, cannot continue")
             ctx.params["error"] = "Could not find space %s\n" % space
@@ -59,7 +59,7 @@ class PageProcessor():
             space = self.defaultspace or 'system'
             name = "pagenotfound"
         else:
-            spaceObject = j.portal.server.active.spacesloader.getLoaderFromId(space)
+            spaceObject = j.portal.tools.server.active.spacesloader.getLoaderFromId(space)
             spacedocgen = spaceObject.docprocessor
 
             if name in spacedocgen.name2doc:
@@ -83,14 +83,14 @@ class PageProcessor():
                 name = "pagenotfound"
                 spacedocgen = None
 
-        username, right = j.portal.server.active.getUserSpaceRights(ctx, space)
+        username, right = j.portal.tools.server.active.getUserSpaceRights(ctx, space)
 
         if name in standard_pages:
             if "r" not in right:
                 right = "r" + right
 
         if "r" not in right:
-            if j.portal.server.active.force_oauth_instance and not loggedin:
+            if j.portal.tools.server.active.force_oauth_instance and not loggedin:
                 name = "accessdenied"
             elif not loggedin:
                 name = "login"
@@ -272,7 +272,7 @@ class PageProcessor():
             return send_file(pathfull, size)
 
     def process_elfinder(self, path, ctx):
-        from JumpScale.portal.html import elFinder
+        from JumpScale9Portal.portal.html import elFinder
         db = j.data.kvs.getRedisCacheLocal()
         rootpath = db.get(path)
         options = {'root': rootpath, 'dotFiles': True}

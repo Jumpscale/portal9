@@ -37,7 +37,7 @@ def main(j, args, params, *other_args):
     page.addJS('/jslib/titledcontentslideshow/js/tiltSlider.js')
     hrd = j.data.hrd.get(content=args.cmdstr)
 
-    space = j.portal.server.active.spacesloader.spaces[args.doc.getSpaceName()]
+    space = j.portal.tools.server.active.spacesloader.spaces[args.doc.getSpaceName()]
     imagedir = j.sal.fs.joinPaths(space.model.path, '.files', 'img/')
 
     slides = []

@@ -4,7 +4,7 @@ def main(j, args, params, tags, tasklet):
     doc = params.doc
     tags = params.tags
 
-    defmanager = j.portal.tools.defmanager
+    defmanager = j.portal.tools.defmanager.portaldefmanager
 
     defs = defmanager.getDefListWithLinks()
 

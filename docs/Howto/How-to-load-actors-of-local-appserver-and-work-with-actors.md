@@ -1,7 +1,7 @@
 Loading and working with actors
 ===============================
 
-When calling j.portal.server.loadActorsInProcess(), then by default system
+When calling j.portal.tools.server.loadActorsInProcess(), then by default system
 actors will be available under j.apps.system
 
 ```python
@@ -11,7 +11,7 @@ import JumpScale.portal
 j.sal.fs.changeDir("/opt/jumpscale8/apps/portals/main/")
 
 #load the actors
-j.portal.server.loadActorsInProcess()
+j.portal.tools.server.loadActorsInProcess()
 ```
 
 If you want your app actors to be loaded under

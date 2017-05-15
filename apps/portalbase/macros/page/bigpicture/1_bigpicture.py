@@ -53,7 +53,7 @@ def main(j, args, params, tags, tasklet):
     bigpicture['subtitleLinkSize'] = hrd.getStr('subtitle.link.size', 'medium')
 
     # check if can find image under .files/img by the given name
-    space = j.portal.server.active.spacesloader.spaces[args.doc.getSpaceName()]
+    space = j.portal.tools.server.active.spacesloader.spaces[args.doc.getSpaceName()]
     imagedir = j.sal.fs.joinPaths(space.model.path, '.files', 'img/')
 
     if os.path.isfile(imagedir + hrd.getStr('picture.path', '')):

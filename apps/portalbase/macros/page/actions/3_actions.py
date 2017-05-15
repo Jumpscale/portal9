@@ -1,6 +1,6 @@
 def main(j, args, params, tags, tasklet):
     page = args.page
-    from JumpScale.portal.docgenerator.popup import Popup
+    from JumpScale9Portal.portal.docgenerator.popup import Popup
     import yaml
 
     def _showexample():

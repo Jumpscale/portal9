@@ -11,23 +11,23 @@ def main(j, args, params, tags, tasklet):
 
     bullets = params.tags.labelExists("bullets")
     table = params.tags.labelExists("table")
-    isgitlab = j.portal.server.active.authentication_method == 'gitlab'
+    isgitlab = j.portal.tools.server.active.authentication_method == 'gitlab'
     addSpinner = isgitlab
 
-    spaces = j.portal.server.active.getUserSpaces(params.requestContext)
+    spaces = j.portal.tools.server.active.getUserSpaces(params.requestContext)
     if isgitlab:
         gitlabnonclonedspaces = [s[s.index('portal_'):]
-                                 for s in j.portal.server.active.getNonClonedGitlabSpaces(params.requestContext)]
+                                 for s in j.portal.tools.server.active.getNonClonedGitlabSpaces(params.requestContext)]
         spaces = {}
-        for s in j.portal.server.active.getUserSpacesObjects(params.requestContext):
+        for s in j.portal.tools.server.active.getUserSpacesObjects(params.requestContext):
             if s['namespace']['name']:
                 spaces[s['name']] = "%s_%s" % (s['namespace']['name'], s['name'])
             else:
                 spaces[s['name']] = s['name']
     else:
         spaces = {}
-        for spaceid in j.portal.server.active.getUserSpaces(params.requestContext):
-            space = j.portal.server.active.getSpace(spaceid, ignore_doc_processor=True)
+        for spaceid in j.portal.tools.server.active.getUserSpaces(params.requestContext):
+            space = j.portal.tools.server.active.getSpace(spaceid, ignore_doc_processor=True)
             if space.model.hidden:
                 continue
             spaces[spaceid] = space.model.name

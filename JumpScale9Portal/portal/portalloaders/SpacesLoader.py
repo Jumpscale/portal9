@@ -1,5 +1,5 @@
 from js9 import j
-from LoaderBase import LoaderBaseObject, LoaderBase
+from .LoaderBase import LoaderBaseObject, LoaderBase
 
 
 class Space(LoaderBaseObject):
@@ -28,13 +28,13 @@ class Space(LoaderBaseObject):
             macroPathsMarkDown = [j.sal.fs.joinPaths(self.model.path, ".macros", "markdown")]
 
             name = self.model.id.lower()
-            webserver = j.portal.server.active
+            webserver = j.portal.tools.server.active
             webserver.macroexecutorPage.addMacros(macroPathsPage, name)
             webserver.macroexecutorPreprocessor.addMacros(macroPathsPreprocessor, name)
             webserver.macroexecutorWiki.addMacros(macroPathsWiki, name)
             webserver.macroexecutorMarkDown.addMacros(macroPathsMarkDown, name)
 
-        self._docprocessor = j.portal.tools.docpreprocessorparser.get(
+        self._docprocessor = j.portal.tools.docpreprocessor.docpreprocessorfactory.get(
             contentDirs=[self.model.path], spacename=self.model.id)
 
     def createTemplate(self, path, templatetype='wiki'):

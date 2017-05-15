@@ -87,7 +87,7 @@ class WorkerSession(TCPSession):
             print("loopstart")
             dtype, length, epoch, gid, nid, pid, data = self.read()
             print("loopend")
-            j.portal.server.active.messagerouter.queue(gid, nid, pid, data)
+            j.portal.tools.server.active.messagerouter.queue(gid, nid, pid, data)
 
         # except Exception,e:
             # print("read error in appserver6 workergreenlet %s\n" % self.sessionnr
@@ -153,7 +153,7 @@ class ManholeSession(TCPSession):
     def __init__(self, addr, port, socket):
         TCPSession.__init__(self, addr, port, socket)
         self.type = "manhole"
-        self.cmds = j.portal.server.active.tcpservercmds
+        self.cmds = j.portal.tools.server.active.tcpservercmds
         self.socket.settimeout(None)
 
     def run(self):
@@ -234,15 +234,15 @@ commands:
         return result
 
     def getsession(self, id):
-        if id not in j.portal.server.active.sessions:
+        if id not in j.portal.tools.server.active.sessions:
             self.send("Could not find session with id %s" % id)
             return False
-        return j.portal.server.active.sessions[id]
+        return j.portal.tools.server.active.sessions[id]
 
     def killallsessions(self):
         result = ""
-        for key in list(j.portal.server.active.sessions.keys()):
-            session = j.portal.server.active.sessions[key]
+        for key in list(j.portal.tools.server.active.sessions.keys()):
+            session = j.portal.tools.server.active.sessions[key]
             if session.type != "manhole":
                 session.active = False
                 session.kill()
@@ -252,8 +252,8 @@ commands:
 
     def listsessions(self):
         result = ""
-        for key in list(j.portal.server.active.sessions.keys()):
-            session = j.portal.server.active.sessions[key]
+        for key in list(j.portal.tools.server.active.sessions.keys()):
+            session = j.portal.tools.server.active.sessions[key]
             result += "%s" % session
         return result
 

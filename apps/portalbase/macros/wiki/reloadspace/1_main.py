@@ -13,7 +13,7 @@ def main(j, args, params, tags, tasklet):
         return params
 
     try:
-        space = j.portal.server.active.loadSpace(name, force=True)
+        space = j.portal.tools.server.active.loadSpace(name, force=True)
 
     except Exception as e:
         error = e

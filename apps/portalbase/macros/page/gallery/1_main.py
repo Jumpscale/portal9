@@ -16,14 +16,14 @@ def main(j, args, params, tags, tasklet):
 
     """
     This is code for using buckets can be extented later.
-    buckets = j.portal.server.active.bucketsloader.buckets
+    buckets = j.portal.tools.server.active.bucketsloader.buckets
     if pars.has_key('picturebucket') and pars['picturebucket'] in buckets:
         bucket = buckets[pars['picturebucket']]
         files = j.sal.fs.listFilesInDir(bucket.model.path)
     else:
         files = []
     """
-    space = j.portal.server.active.spacesloader.spaces[args.doc.getSpaceName()]
+    space = j.portal.tools.server.active.spacesloader.spaces[args.doc.getSpaceName()]
     imagedir = j.sal.fs.joinPaths(space.model.path, '.files', 'img')
     if 'title' not in pars:
         title = ""

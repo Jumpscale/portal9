@@ -10,10 +10,9 @@ class Def():
         self.content = ""
 
 
-class DefManager():
+class PortalDefManager():
 
     def __init__(self):
-        self.__jslocation__ = "j.portal.tools.defmanager"
         self.inited = False
         self.defs = {}
         self.aliases = {}

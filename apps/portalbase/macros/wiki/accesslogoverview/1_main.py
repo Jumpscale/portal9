@@ -6,7 +6,7 @@ def main(j, args, params, tags, tasklet):
     tags = params.tags.getDict()
     spacename = params.paramsExtra['space']
     out = ""
-    logdir = j.portal.server.active.logdir
+    logdir = j.portal.tools.server.active.logdir
     backupdir = j.sal.fs.joinPaths(logdir, 'backup')
     if 'filename' in list(tags.keys()):
         filen = tags['filename']
@@ -17,9 +17,9 @@ def main(j, args, params, tags, tasklet):
         j.sal.fs.copyFile(originalfile, destfile)
         j.sal.fs.writeFile(originalfile, "")
 
-    spaces = j.portal.server.active.getSpaces()
+    spaces = j.portal.tools.server.active.getSpaces()
     if spacename in spaces:
-        sp = j.portal.server.active.getSpace(spacename)
+        sp = j.portal.tools.server.active.getSpace(spacename)
     else:
         params.result = (out, params.doc)
         return params

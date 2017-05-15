@@ -4,7 +4,7 @@ def main(j, args, params, tags, tasklet):
 
     out = ""
 
-    spaces = j.portal.server.active.spacesloader.spaces
+    spaces = j.portal.tools.server.active.spacesloader.spaces
     for item in list(spaces.keys()):
         model = spaces[spacename].model
         out += "* [%s|/system/ReloadApplication/?name=%s]\n" % (item, item.lower().strip("/"))

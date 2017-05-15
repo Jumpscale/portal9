@@ -5,7 +5,7 @@ def main(j, args, params, tags, tasklet):
     out = "{{datatables_use}}}}\n\n"
 
     out += "||Name||Description||Domain||Active||\n"
-    groups = j.portal.server.active.auth.listGroups()
+    groups = j.portal.tools.server.active.auth.listGroups()
     for group in groups:
 
         out += "|[%(name)s|group?id=%(id)s]|%(description)s|%(domain)s|%(active)s|\n" % group

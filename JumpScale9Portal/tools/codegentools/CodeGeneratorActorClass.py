@@ -182,8 +182,8 @@ self.appname="{appname}"
                     "Cannot find default db, there needs to be fs,mem or arakoon specified as db on aktor level.")
 
             if False:  # TODO: "redis" in dbtypes:
-                if j.portal.server.active.rediscfg is not None and appname != "system":
-                    redisip, redisport, redisdb, rediskey = j.portal.server.active.startConnectRedisServer(
+                if j.portal.tools.server.active.rediscfg is not None and appname != "system":
+                    redisip, redisport, redisdb, rediskey = j.portal.tools.server.active.startConnectRedisServer(
                         appname, actorname)
                     actorobject.dbredis = j.data.kvs.getRedisStore(
                         namespace="", host=redisip, port=redisport, db=redisdb, key=rediskey)

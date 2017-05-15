@@ -8,8 +8,8 @@ def main(j, args, params, tags, tasklet):
     out = ""
     cmdstr = params.macrostr.split(":", 1)[1].replace("}}", "").strip()
     md5 = j.data.hash.md5_string(cmdstr)
-    j.sal.fs.createDir(j.sal.fs.joinPaths(j.portal.server.active.filesroot, "dot"))
-    path = j.sal.fs.joinPaths(j.portal.server.active.filesroot, "dot", md5)
+    j.sal.fs.createDir(j.sal.fs.joinPaths(j.portal.tools.server.active.filesroot, "dot"))
+    path = j.sal.fs.joinPaths(j.portal.tools.server.active.filesroot, "dot", md5)
     if not j.sal.fs.exists(path + ".png"):
         j.sal.fs.writeFile(path + ".dot", cmdstr)
         cmd = "dot -Tpng %s.dot -o %s.png" % (path, path)

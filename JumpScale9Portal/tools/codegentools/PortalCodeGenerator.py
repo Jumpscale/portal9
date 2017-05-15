@@ -13,7 +13,6 @@ import sys
 class PortalCodeGenerator():
 
     def __init__(self):
-        # self.__jslocation__ = "j.core.codegenerator"
         self.codepath = j.sal.fs.joinPaths(j.dirs.VARDIR, "code")
         self._target = 'server'
         self.generated = {}  # will have classname inside
@@ -35,28 +34,28 @@ class PortalCodeGenerator():
         appname = appname.lower()
         actor = actor.lower()
 
-        for key2 in list(j.core.codegenerator.classes.keys()):
+        for key2 in list(j.portal.tools.codegentools.portalcodegenerator.classes.keys()):
             type, app, spectype, item, remaining = key2.split("_", 5)
             if app == appname and item.find(actor) == 0:
                 # print("remove code generated class %s from memory" % key
-                j.core.codegenerator.classes.pop(key2)
+                j.portal.tools.codegentools.portalcodegenerator.classes.pop(key2)
 
-        for key2 in list(j.portal.server.active.taskletengines.keys()):
+        for key2 in list(j.portal.tools.server.active.taskletengines.keys()):
             app, item, remaining = key2.split("_", 2)
             if app == appname and item.find(actor) == 0:
                 # print("remove tasklets %s from memory" % key
-                j.portal.server.active.taskletengines.pop(key2)
+                j.portal.tools.server.active.taskletengines.pop(key2)
 
     def resetMemNonSystem(self):
-        for key2 in list(j.core.codegenerator.classes.keys()):
+        for key2 in list(j.portal.tools.codegentools.portalcodegenerator.classes.keys()):
             type, app, spectype, item, remaining = key2.split("_", 5)
             if app != "system":
-                j.core.codegenerator.classes.pop(key2)
+                j.portal.tools.codegentools.portalcodegenerator.classes.pop(key2)
 
-        for key2 in list(j.portal.server.active.taskletengines.keys()):
+        for key2 in list(j.portal.tools.server.active.taskletengines.keys()):
             app, item, remaining = key2.split("_", 2)
             if app != "system":
-                j.portal.server.active.taskletengines.pop(key2)
+                j.portal.tools.server.active.taskletengines.pop(key2)
 
     def getClassactorLocal(self, appname, actor, typecheck=True, dieInGenCode=True):
         """
@@ -66,8 +65,8 @@ class PortalCodeGenerator():
         # key="%s_%s_%s_%s_%s" % (type,appname,spectype,actor,actor)
         # if self.classes.has_key(key):
         # return self.classes[key]
-        spec = j.core.specparser.getactorSpec(appname, actor)
-        # spec=j.core.specparser.findSpec(appname=appname,actorname=actor,specname=actor,type=spectype,findOnlyOne=True)
+        spec = j.portal.tools.specparser.portalspecparserfactory.getactorSpec(appname, actor)
+        # spec=j.portal.tools.specparser.portalspecparserfactory.findSpec(appname=appname,actorname=actor,specname=actor,type=spectype,findOnlyOne=True)
         classs = self.generate(
             spec, type=type, typecheck=typecheck, dieInGenCode=dieInGenCode)
         return classs
@@ -80,8 +79,8 @@ class PortalCodeGenerator():
         # key="%s_%s_%s_%s_%s" % (type,appname,spectype,actor,actor)
         # if self.classes.has_key(key):
         # return self.classes[key]
-        spec = j.core.specparser.getactorSpec(appname, actor)
-        # spec=j.core.specparser.findSpec(appname=appname,actorname=actor,specname=actor,type=spectype,findOnlyOne=True)
+        spec = j.portal.tools.specparser.portalspecparserfactory.getactorSpec(appname, actor)
+        # spec=j.portal.tools.specparser.portalspecparserfactory.findSpec(appname=appname,actorname=actor,specname=actor,type=spectype,findOnlyOne=True)
         classs = self.generate(spec, type=type, typecheck=typecheck,
                                dieInGenCode=dieInGenCode, codepath=codepath)
 
@@ -96,8 +95,8 @@ class PortalCodeGenerator():
         key = "%s_%s_%s_%s_%s" % (type, appname, spectype, actor, actor)
         # if self.classes.has_key(key):
         # return self.classes[key]
-        spec = j.core.specparser.getactorSpec(appname, actor)
-        # spec=j.core.specparser.findSpec(appname=appname,actorname=actor,specname=actor,type=spectype,findOnlyOne=True)
+        spec = j.portal.tools.specparser.portalspecparserfactory.getactorSpec(appname, actor)
+        # spec=j.portal.tools.specparser.portalspecparserfactory.findSpec(appname=appname,actorname=actor,specname=actor,type=spectype,findOnlyOne=True)
         classs = self.generate(
             spec, type=type, typecheck=typecheck, dieInGenCode=dieInGenCode)
         return classs
@@ -111,8 +110,8 @@ class PortalCodeGenerator():
         key = key.replace(".", "_")
         if key in self.classes:
             return self.classes[key]
-        # spec=j.core.specparser.findSpec(appname=appname,actorname=actor,specname=modelname,type=spectype,findOnlyOne=True)
-        spec = j.core.specparser.getModelSpec(appname, actor, modelname)
+        # spec=j.portal.tools.specparser.portalspecparserfactory.findSpec(appname=appname,actorname=actor,specname=modelname,type=spectype,findOnlyOne=True)
+        spec = j.portal.tools.specparser.portalspecparserfactory.getModelSpec(appname, actor, modelname)
         classs = self.generate(spec, type=type, typecheck=typecheck,
                                dieInGenCode=dieInGenCode, codepath=codepath)
         return classs
@@ -122,8 +121,8 @@ class PortalCodeGenerator():
         """
         spectype = "model"
         type = "JSModel"
-        spec = j.core.specparser.getModelSpec(appname, actor, modelname)
-        cg = j.core.codegeneratormodel.get(spec, typecheck=True,
+        spec = j.portal.tools.specparser.portalspecparserfactory.getModelSpec(appname, actor, modelname)
+        cg = j.portal.tools.codegentools.portalcodegeneratorfactory.get(spec, typecheck=True,
                                 dieInGenCode=dieInGenCode)
         code = cg.generate()
         return code
@@ -133,7 +132,7 @@ class PortalCodeGenerator():
         """
         spectype = "model"
         type = "EveModel"
-        spec = j.core.specparser.getModelSpec(appname, actor, modelname)
+        spec = j.portal.tools.specparser.portalspecparserfactory.getModelSpec(appname, actor, modelname)
         cg = CodeGeneratorEveModel(
             spec, typecheck=typecheck, dieInGenCode=dieInGenCode, codepath=codepath)
         code = cg.generate()
@@ -148,7 +147,7 @@ class PortalCodeGenerator():
     #     key=key.replace(".","_")
     # if self.classes.has_key(key):
     # return self.classes[key]
-    #     spec=j.core.specparser.findSpec(appname=appname,actorname=actor,specname=modelname,type=spectype,findOnlyOne=True)
+    #     spec=j.portal.tools.specparser.portalspecparserfactory.findSpec(appname=appname,actorname=actor,specname=modelname,type=spectype,findOnlyOne=True)
     #     classs=self.generate(spec,type=type,typecheck=typecheck,dieInGenCode=dieInGenCode)
     #     return classs
     def getClassEnumeration(self, appname, actor, enumname, typecheck=True, dieInGenCode=True):
@@ -159,7 +158,7 @@ class PortalCodeGenerator():
         key = "%s_%s_%s_%s_%s" % (type, appname, spectype, actor, enumname)
         # if self.classes.has_key(key):
         # return self.classes[key]
-        spec = j.core.specparser.findSpec(
+        spec = j.portal.tools.specparser.portalspecparserfactory.findSpec(
             appname=appname, actorname=actor, specname=enumname, type=spectype, findOnlyOne=True)
         self.generate(spec, type=type, typecheck=typecheck,
                       dieInGenCode=dieInGenCode)

@@ -8,11 +8,11 @@ class Confluence2HTML():
 
     def defGet(self, name):
         name = name.lower().replace("_", "").replace("-", "").replace(" ", "")
-        if name in j.portal.tools.defmanager.aliases:
-            name = j.portal.tools.defmanager.aliases[name]
-        if name not in j.portal.tools.defmanager.defs:
+        if name in j.portal.tools.defmanager.portaldefmanager.aliases:
+            name = j.portal.tools.defmanager.portaldefmanager.aliases[name]
+        if name not in j.portal.tools.defmanager.portaldefmanager.defs:
             return None
-        return j.portal.tools.defmanager.defs[name]
+        return j.portal.tools.defmanager.portaldefmanager.defs[name]
 
     def processDefs(self, line, doc, page):
         if not doc.processDefs:
@@ -85,7 +85,7 @@ class Confluence2HTML():
                     link = "/%s/%s" % (space.strip().strip("/"), pagename.strip().strip("/"))
                 # print "match:%s"%match.founditem
                 # print "getlink:%s" %page.getLink(descr,link)
-                line = line.replace(match.founditem, j.core.pagehtml.get().getLink(descr, link, link_id, link_class, htmlelements))
+                line = line.replace(match.founditem, j.portal.tools.docgenerator.portalpagehtmlfactory.get().getLink(descr, link, link_id, link_class, htmlelements))
         return line
 
     # This is copied from PageHTML.py
@@ -189,7 +189,7 @@ class Confluence2HTML():
         content = ''.join(blocks)
 
         if page is None:
-            page = j.portal.tools.docgenerator.pageNewHTML("temp")
+            page = j.portal.tools.docgenerator.portaldocgeneratorfactory.pageNewHTML("temp")
 
         # images=j.sal.fs.listFilesInDir(dirpath,False)
         # images3=[]L
@@ -537,7 +537,7 @@ class Confluence2HTML():
                         item, " ***error*** : COULD NOT FIND DOC %s, could not include." %
                         item2)
                     continue
-                page2 = j.portal.tools.docgenerator.pageNewHTML("includeInConfluence2Wiki")
+                page2 = j.portal.tools.docgenerator.portaldocgeneratorfactory.pageNewHTML("includeInConfluence2Wiki")
                 page2.liblocation = page.liblocation
                 page2 = self.convert(doc2.content, page2, doc2, requestContext)
 

@@ -2,10 +2,9 @@
 from js9 import j
 
 
-class InfoMgr():
+class PortalInfoMgr():
 
     def __init__(self):
-        self.__jslocation__ = "j.portal.tools.infomgr"
         self.inited = False
         self.models = j.apps.system.infomgr.models
         self._infotableobj = self.models.infotable.get(guid="infotable", createIfNeeded=True)
@@ -17,8 +16,8 @@ class InfoMgr():
         self._hourseconds = float(60 * 60)
         self._dayseconds = float(24 * 60 * 60)
         self._monthseconds = float(31 * self._dayseconds)
-        j.portal.server.active.addSchedule1MinPeriod("saveInfomgr", self.save)
-        j.portal.server.active.addSchedule15MinPeriod("cleanCacheInfoMgr", self.cleanCache)
+        j.portal.tools.server.active.addSchedule1MinPeriod("saveInfomgr", self.save)
+        j.portal.tools.server.active.addSchedule15MinPeriod("cleanCacheInfoMgr", self.cleanCache)
 
         # per hour we keep: nritems,maxitem,minitem,total  (so out of this we can calc average)
 
@@ -47,8 +46,8 @@ class InfoMgr():
 
     def save(self, force=False):
         ttime = self.now()
-        now5min = j.portal.server.active.fiveMinuteId
-        nowh = j.portal.server.active.hourId
+        now5min = j.portal.tools.server.active.fiveMinuteId
+        nowh = j.portal.tools.server.active.hourId
         # walk over history obj and save if needed
         for key in list(self.historyObjs.keys()):
             if force or ttime > (self.historyObjsLastSave[key] + 900):
@@ -107,7 +106,7 @@ class InfoMgr():
             # embed()
 
     def now(self):
-        return j.portal.server.active.epoch
+        return j.portal.tools.server.active.epoch
 
     def getHistoryObject(self, id):
         if id in self.historyObjs:

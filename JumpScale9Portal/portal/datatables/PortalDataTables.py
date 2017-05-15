@@ -8,7 +8,6 @@ from mongoengine.queryset import Q
 class PortalDataTables():
 
     def __init__(self):
-        # self.__jslocation__ = "j.portal.tools.datatables"
         self.inited = False
         self.cache = j.data.kvs.getMemoryStore('datatables')
 
@@ -80,7 +79,7 @@ class PortalDataTables():
         field = field % row
         field = Confluence2HTML.findLinks(field)
         if field.find("{{") != -1:
-            field = j.portal.server.active.macroexecutorPage.processMacrosInWikiContent(field)
+            field = j.portal.tools.server.active.macroexecutorPage.processMacrosInWikiContent(field)
 
         return field
 

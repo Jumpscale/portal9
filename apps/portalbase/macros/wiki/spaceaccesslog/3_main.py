@@ -10,7 +10,7 @@ def main(j, args, params, tags, tasklet):
         filename = tags['filename']
         logs = j.sal.fs.joinPaths(logdir, filename)
     else:
-        spaces = j.portal.server.active.getSpaces()
+        spaces = j.portal.tools.server.active.getSpaces()
         if space in spaces:
             logs = j.sal.fs.joinPaths(logdir, 'space_%s.log') % space
         else:

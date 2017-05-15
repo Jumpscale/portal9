@@ -18,10 +18,10 @@ class DocPreprocessor():
         """
         self.varsPath = varsPath
 
-        self.macroexecutorPreprocessor = j.portal.server.active.macroexecutorPreprocessor
-        self.macroexecutorPage = j.portal.server.active.macroexecutorPage
-        self.macroexecutorWiki = j.portal.server.active.macroexecutorWiki
-        self.macroexecutorMarkDown = j.portal.server.active.macroexecutorMarkDown
+        self.macroexecutorPreprocessor = j.portal.tools.server.active.macroexecutorPreprocessor
+        self.macroexecutorPage = j.portal.tools.server.active.macroexecutorPage
+        self.macroexecutorWiki = j.portal.tools.server.active.macroexecutorWiki
+        self.macroexecutorMarkDown = j.portal.tools.server.active.macroexecutorMarkDown
 
         if spacename == "":
             raise RuntimeError("spacename cannot be empty")
@@ -44,7 +44,7 @@ class DocPreprocessor():
                             self.params[paramname.lower()] = value.strip()
         self.images = {}
 
-        from JumpScale.portal.docpreprocessor.DocHandler import DocHandler, Observer
+        from JumpScale9Portal.portal.docpreprocessor.DocHandler import DocHandler, Observer
         self.file_observers = []
         self.doc_handler = DocHandler(self)
 

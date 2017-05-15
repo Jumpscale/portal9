@@ -6,7 +6,7 @@ def main(j, args, params, tags, tasklet):
     page = params.page
     tags = params.tags
 
-    for item in j.portal.server.active.bucketsloader.buckets.keys():
+    for item in j.portal.tools.server.active.bucketsloader.buckets.keys():
         params.page.addBullet(item, 1)
 
     params.result = page

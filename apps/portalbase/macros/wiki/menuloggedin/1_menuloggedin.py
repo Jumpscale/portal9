@@ -8,7 +8,7 @@ def main(j, args, params, tags, tasklet):
 
     C = args.macrostr.replace("menuloggedin", "menu")
 
-    if j.portal.server.active.isLoggedInFromCTX(params.requestContext):
+    if j.portal.tools.server.active.isLoggedInFromCTX(params.requestContext):
         params.result = C
 
     params.result = (params.result, doc)

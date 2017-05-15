@@ -4,7 +4,7 @@ from js9 import j
 class GeventWSFactory:
 
     def __init__(self):
-        self.__jslocation__ = "j.servers.geventws"
+        # self.__jslocation__ = "j.servers.geventws"
         self.cache = {}
         self.cachecat = {}
 

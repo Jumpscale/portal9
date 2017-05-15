@@ -1,6 +1,6 @@
 def main(j, args, params, tags, tasklet):
     page = args.page
-    from JumpScale.portal.docgenerator.form import Form
+    from JumpScale9Portal.portal.docgenerator.form import Form
     import yaml
 
     query_params = args.requestContext.params

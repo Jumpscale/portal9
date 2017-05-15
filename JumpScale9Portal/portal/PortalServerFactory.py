@@ -12,8 +12,6 @@ class Group():
 class PortalServerFactory():
 
     def __init__(self):
-        self.__jslocation__ = "j.portal.server"
-        # self._inited = False
         self.active = None
         self.inprocess = False
 
@@ -33,8 +31,8 @@ class PortalServerFactory():
             def __init__(self):
                 self.actors = dict()
                 self.epoch = time.time()
-                self.actorsloader = j.portalloader.getActorsLoader()
-                self.spacesloader = j.portalloader.getSpacesLoader()
+                self.actorsloader = j.portal.tools.portalloaders.portalloaderfactory.getActorsLoader()
+                self.spacesloader = j.portal.tools.portalloaders.portalloaderfactory.getSpacesLoader()
 
             def addRoute(self, *args, **kwargs):
                 pass
@@ -53,7 +51,7 @@ class PortalServerFactory():
         appdir = appdir.replace("$base", j.dirs.base)
         j.sal.fs.changeDir(appdir)
         server = FakeServer()
-        j.portal.server.active = server
+        j.portal.tools.server.active = server
         server.actorsloader.scan(appdir)
         server.actorsloader.scan(basedir + "/base")
 

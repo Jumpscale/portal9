@@ -84,7 +84,7 @@ class Doc(object):
 
     def getPageKey(self):
         key = j.data.hash.md5_string("%s_%s" % (self.pagename, self.getSpaceName()))
-        j.portal.server.active.pageKey2doc[key] = self
+        j.portal.tools.server.active.pageKey2doc[key] = self
         return key
 
     def checkVisible(self, visibility):
@@ -150,7 +150,7 @@ class Doc(object):
 
         if preprocess and self.source.strip() != "":
             # print path3
-            j.portal.tools.docpreprocessor.parseDoc(self)
+            j.portal.tools.docpreprocessor.docparser.parseDoc(self)
             self.preprocess()
 
     def fixMinHeadingLevel(self, minLevel):
@@ -208,10 +208,10 @@ class Doc(object):
         content, doc = self.executeMacrosDynamicWiki(paramsExtra, ctx)
 
         if self.md:
-            convertor = j.portal.tools.docgenerator.getMarkDown2ConfluenceConvertor()
+            convertor = j.portal.tools.docgenerator.portaldocgeneratorfactory.getMarkDown2ConfluenceConvertor()
             content = convertor.convert(content)
 
-        ws = j.portal.server.active
+        ws = j.portal.tools.server.active
         page = ws.confluence2htmlconvertor.convert(
             content,
             doc=self,

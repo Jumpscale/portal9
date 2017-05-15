@@ -1,5 +1,5 @@
 from js9 import j
-from LoaderBase import *
+from .LoaderBase import *
 
 
 class Bucket(LoaderBaseObject):

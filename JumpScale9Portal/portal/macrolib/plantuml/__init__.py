@@ -32,7 +32,7 @@ def run_plant_uml(space_name, uml, output_path):
 
     img_name = 'img-{}.png'.format(hashlib.md5(uml).hexdigest())
 
-    space_path = j.portal.server.active.getSpace(space_name).model.path
+    space_path = j.portal.tools.server.active.getSpace(space_name).model.path
     output_path = os.path.join(space_path, output_path)
     if not os.path.exists(output_path):
         os.makedirs(output_path)

@@ -1,11 +1,10 @@
 from js9 import j
-from JumpScale.portal.portalloaders import BucketLoader, SpacesLoader, ActorsLoader, ActorsInfo
+from JumpScale9Portal.portal.portalloaders import BucketLoader, SpacesLoader, ActorsLoader, ActorsInfo
 
 
 class PortalLoaderFactory(object):
 
     def __init__(self):
-        self.__jslocation__ = "j.portalloader"
         self.actorsinfo = ActorsInfo.ActorsInfo()
 
     def getActorsLoader(self):

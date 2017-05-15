@@ -3,7 +3,7 @@ import urllib.parse
 import urllib.error
 import json
 from js9 import j
-from JumpScale.portal.portal import exceptions
+from JumpScale9Portal.portal.portal import exceptions
 from JumpScale.clients.oauth.OauthInstance import AuthError
 
 
@@ -14,7 +14,7 @@ class system_oauth(j.tools.code.classGetBase()):
 
     def __init__(self):
         self.logger = j.logger.get("j.portal.oauth")
-        self.cfg = j.portal.server.active.cfg
+        self.cfg = j.portal.tools.server.active.cfg
         self._client = None
 
     @property
@@ -28,8 +28,8 @@ class system_oauth(j.tools.code.classGetBase()):
     def authenticate(self, type='', **kwargs):
         cache = j.core.db
 
-        if j.portal.server.active.force_oauth_instance:
-            type = j.portal.server.active.force_oauth_instance
+        if j.portal.tools.server.active.force_oauth_instance:
+            type = j.portal.tools.server.active.force_oauth_instance
 
         if not type:
             type = 'github'

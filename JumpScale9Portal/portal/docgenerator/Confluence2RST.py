@@ -171,7 +171,7 @@ class Confluence2RST():
         content = ''.join(blocks)
 
         if page is None:
-            page = j.portal.tools.docgenerator.pageNewMD("temp")
+            page = j.portal.tools.docgenerator.portaldocgeneratorfactory.pageNewMD("temp")
 
         # images=j.sal.fs.listFilesInDir(dirpath,False)
         # images3=[]L
@@ -454,7 +454,7 @@ class Confluence2RST():
                         item, " ***error*** : COULD NOT FIND DOC %s, could not include." %
                         item2)
                     continue
-                page2 = j.portal.tools.docgenerator.pageNewMD("includeInConfluence2Wiki")
+                page2 = j.portal.tools.docgenerator.portaldocgeneratorfactory.pageNewMD("includeInConfluence2Wiki")
                 # page2.liblocation = page.liblocation
                 page2 = self.convert(doc2.content, page2, doc2)
 

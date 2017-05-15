@@ -146,7 +146,7 @@ class PortalProcess():
         # pass
 
         self.mainLoop = mainLoop
-        j.portal.server.active = self
+        j.portal.tools.server.active = self
 
         self.cfg = ini
 
@@ -190,8 +190,8 @@ class PortalProcess():
 
     def loadFromConfig(self, reset=False):
         if reset:
-            j.core.codegenerator.resetMemNonSystem()
-            j.core.specparser.resetMemNonSystem()
+            j.portal.tools.codegentools.portalcodegenerator.resetMemNonSystem()
+            j.portal.tools.specparser.portalspecparserfactory.resetMemNonSystem()
             self.webserver.contentdirs = {}
 
         loader = self.actorsloader
@@ -201,7 +201,7 @@ class PortalProcess():
         # txt = txt.replace("$base", j.dirs.base).replace("\\", "/")
         txt = txt.replace("$appdir", j.sal.fs.getcwd()).replace("\\", "/")
         txt = txt.replace("$vardir", j.dirs.varDir).replace("\\", "/")
-        txt = txt.replace("$htmllibdir", j.portal.tools.html.getHtmllibDir()).replace("\\", "/")
+        txt = txt.replace("$htmllibdir", j.portal.tools.html.portalhtmlfactory.getHtmllibDir()).replace("\\", "/")
         txt = txt.replace("\\", "/")
         return txt
 

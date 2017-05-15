@@ -6,7 +6,7 @@ def main(j, args, params, tags, tasklet):
 
     keywords = args.expandParamsAsDict()
     search_space = keywords.get('space', args.doc.getSpaceName())
-    space = j.portal.server.active.spacesloader.spaces.get(search_space, None)
+    space = j.portal.tools.server.active.spacesloader.spaces.get(search_space, None)
     if not space:
         page.addMessage('ERROR: space {} does not exist'.format(search_space))
         return params

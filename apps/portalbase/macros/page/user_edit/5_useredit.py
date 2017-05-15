@@ -1,4 +1,4 @@
-from JumpScale.portal.docgenerator.popup import Popup
+from JumpScale9Portal.portal.docgenerator.popup import Popup
 
 
 def main(j, args, params, tags, tasklet):

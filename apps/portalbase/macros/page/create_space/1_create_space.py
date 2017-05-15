@@ -4,13 +4,13 @@ import os
 def main(j, args, params, tags, tasklet):
     params.result = page = args.page
 
-    portal = j.portal.server.active
+    portal = j.portal.tools.server.active
     contentdir = args.paramsExtra.get('contentdir')
     space_path = args.paramsExtra.get('space_path')
     space_type = args.paramsExtra.get('space_type')
 
     if contentdir and space_path:
-        portal.spacesloader = j.portalloader.getSpacesLoader()
+        portal.spacesloader = j.portal.tools.portalloaders.portalloaderfactory.getSpacesLoader()
 
         if os.path.exists(space_path):
             page.addMessage('***ERROR***: The space path "{}" already exists'.format(space_path))

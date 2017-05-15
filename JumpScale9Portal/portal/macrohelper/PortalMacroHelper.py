@@ -2,11 +2,7 @@
 from js9 import j
 
 
-class MacroHelper():
-
-    def __init__(self):
-        self.__jslocation__ = "j.portal.tools.macrohelper"
-        pass
+class PortalMacroHelper():
 
     def push2doc(self, args, params, objFetchManipulate):
         params.merge(args)

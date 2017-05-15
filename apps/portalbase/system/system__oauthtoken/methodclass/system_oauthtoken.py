@@ -1,5 +1,5 @@
 from js9 import j
-from JumpScale.portal.portal import exceptions
+from JumpScale9Portal.portal.portal import exceptions
 import requests
 
 

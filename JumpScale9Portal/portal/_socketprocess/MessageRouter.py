@@ -73,7 +73,7 @@ class Message():
 
     def __init__(self, messagedata):
         self.messagedata = messagedata
-        self.starttime = j.portal.server.active.epoch
+        self.starttime = j.portal.tools.server.active.epoch
         self.timedout = False
         self.jobid = jobid
         self.caller = None

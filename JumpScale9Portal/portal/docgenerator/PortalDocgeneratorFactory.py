@@ -5,17 +5,13 @@ from .Confluence2RST import Confluence2RST
 from .MD2Confluence import MD2Confluence
 
 
-class DocgeneratorFactory:
-
-    def __init__(self):
-        self.__jslocation__ = "j.portal.tools.docgenerator"
-        pass
+class PortalDocgeneratorFactory:
 
     def getConfluenceClient(self, url, login, passwd, spacename, erasespace=False, erasepages=False):
         """
         @param url e.g. http://10.0.1.193:8080/confluence
         """
-        from JumpScale.portal.docgenerator.WikiClientConfluence import WikiClientConfluence
+        from JumpScale9Portal.portal.docgenerator.WikiClientConfluence import WikiClientConfluence
         if url != "":
             j.clients.confluence.connect(url, login, passwd)
         return WikiClientConfluence(spacename, erasespace, erasepages)
@@ -65,22 +61,22 @@ class DocgeneratorFactory:
         return Confluence2RST()
 
     def pageNewConfluence(self, pagename, parent="Home"):
-        from JumpScale.portal.docgenerator.PageConfluence import PageConfluence
+        from JumpScale9Portal.portal.docgenerator.PageConfluence import PageConfluence
         page = PageConfluence(pagename, content="", parent=parent)
         return page
 
     def pageNewHTML(self, pagename, htmllibPath=None):
-        from JumpScale.portal.docgenerator.PageHTML import PageHTML
+        from JumpScale9Portal.portal.docgenerator.PageHTML import PageHTML
         page = PageHTML(pagename, htmllibPath=htmllibPath)
         return page
 
     def pageNewRST(self, pagename, htmllibPath=None):
-        from JumpScale.portal.docgenerator.PageRST import PageRST
+        from JumpScale9Portal.portal.docgenerator.PageRST import PageRST
         page = PageRST(pagename)
         return page
 
     def pageGroupNew(self, pages={}):
-        from JumpScale.portal.docgenerator.PageGroup import PageGroup
+        from JumpScale9Portal.portal.docgenerator.PageGroup import PageGroup
         return PageGroup(pages)
 
     def getMacroPath(self):

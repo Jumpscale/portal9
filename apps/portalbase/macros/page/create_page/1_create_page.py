@@ -10,18 +10,18 @@ def main(j, args, params, tags, tasklet):
 
     # Creating a new page
     if page_name and page_space:
-        space = j.portal.server.active.getSpace(page_space)
+        space = j.portal.tools.server.active.getSpace(page_space)
         if not page_name:
             page.addMessage("ERROR: page name must be specified")
             return
 
-        space = j.portal.server.active.getSpace(page_space)
+        space = j.portal.tools.server.active.getSpace(page_space)
         j.sal.fs.createDir(os.path.join(space.model.path, page_name))
         j.sal.fs.writeFile(os.path.join(space.model.path, page_name, page_name + '.%s' % page_type), '')
 
         # Reload spaces to discover the new page
         # TODO: find an efficient way of doing this
-        j.portal.server.active.loadSpaces()
+        j.portal.tools.server.active.loadSpaces()
 
         # Redirect to edit the new page
         page.addMessage(
@@ -62,7 +62,7 @@ def main(j, args, params, tags, tasklet):
             '''.replace("$$space", page_space))
     else:
 
-        spaces = sorted(s for s in j.portal.server.active.getSpaces())
+        spaces = sorted(s for s in j.portal.tools.server.active.getSpaces())
         spaces = ''.join('<option value="{0}">{0}</option>'.format(space) for space in spaces)
         page.addMessage('''
             <form class="form-horizontal" method="get" action="/system/create">

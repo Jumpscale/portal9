@@ -3,7 +3,7 @@ def main(j, args, params, tags, tasklet):
 
     page = args.page
 
-    modifier = j.portal.tools.html.getPageModifierGridDataTables(page)
+    modifier = j.portal.tools.html.portalhtmlfactory.getPageModifierGridDataTables(page)
     namespace = args.getTag('namespace')
     category = args.getTag('category')
     url = args.getTag('url')

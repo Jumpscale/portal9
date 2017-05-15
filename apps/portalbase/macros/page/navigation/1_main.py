@@ -62,7 +62,7 @@ def main(j, args, params, tags, tasklet):
                     raise RuntimeError(
                         "**ERROR: error executing macros for line:%s and for doc:%s, this happens inside navigation macro." % (line, args.doc.name))
 
-                convertor = j.portal.tools.docgenerator.getConfluence2htmlConvertor()
+                convertor = j.portal.tools.docgenerator.portaldocgeneratorfactory.getConfluence2htmlConvertor()
                 convertor.convert(line, args.page, args.doc)
             # out+=line+"\n"
             else:

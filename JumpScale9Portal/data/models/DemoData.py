@@ -8,7 +8,7 @@ def create(outputpath='/optvar/var/populate.json'):
     """
     Creates dummy objects of all defined models and writes the json objects in a file
     """
-    j.data.models_system.connect2mongo()
+    j.portal.tools.models.system.connect2mongo()
     output = []
     for name, mem in inspect.getmembers(Models, inspect.isclass):
         if issubclass(mem, mongoengine.base.document.BaseDocument) and issubclass(mem, Models.ModelBase):
@@ -39,5 +39,5 @@ def load(path='/optvar/var/populate.json'):
     for obj in contents:
         obj = j.data.serializer.json.loads(obj)
         cls = obj.pop('_cls')
-        model = getattr(j.data.models_system, cls)()
+        model = getattr(j.portal.tools.models.system, cls)()
         model.save(data=obj)

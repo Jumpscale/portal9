@@ -1,6 +1,6 @@
 def main(j, args, params, tags, tasklet):
     page = args.page
-    modifier = j.portal.tools.html.getPageModifierGridDataTables(page)
+    modifier = j.portal.tools.html.portalhtmlfactory.getPageModifierGridDataTables(page)
 
     macrostr = args.macrostr.strip().strip('{{').strip('}}')
     tags = j.data.tags.getObject(macrostr, keepcase=True)

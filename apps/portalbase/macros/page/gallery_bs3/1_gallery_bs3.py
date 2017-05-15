@@ -4,7 +4,7 @@ import os
 def main(j, args, params, tags, tasklet):
     params.result = args.page
 
-    space = j.portal.server.active.spacesloader.spaces[args.doc.getSpaceName()]
+    space = j.portal.tools.server.active.spacesloader.spaces[args.doc.getSpaceName()]
     imagedir = j.sal.fs.joinPaths(space.model.path, '.files', 'img')
     pars = args.expandParamsAsDict()
 

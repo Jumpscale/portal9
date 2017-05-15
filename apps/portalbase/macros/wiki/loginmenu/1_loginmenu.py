@@ -6,7 +6,7 @@ def main(j, args, params, tags, tasklet):
     macrostr = params.macrostr
     macrostr = macrostr.split('\n')
 
-    if j.portal.server.active.isLoggedInFromCTX(params.requestContext):
+    if j.portal.tools.server.active.isLoggedInFromCTX(params.requestContext):
         loginorlogout = "Logout: /system/login?user_logoff_=1"
     else:
         loginorlogout = "Login: /system/login"

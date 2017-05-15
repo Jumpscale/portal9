@@ -22,7 +22,7 @@ def main(j, args, params, tags, tasklet):
         from PIL import Image
 
     space_name = args.doc.getSpaceName()
-    space_path = j.portal.server.active.getSpace(space_name).model.path
+    space_path = j.portal.tools.server.active.getSpace(space_name).model.path
 
     macro_params = args.cmdstr.split(' ')
     img_url = macro_params[0]

@@ -1,6 +1,6 @@
 def main(j, args, params, tags, tasklet):
     page = args.page
-    modifier = j.portal.tools.html.getPageModifierGridDataTables(page)
+    modifier = j.portal.tools.html.portalhtmlfactory.getPageModifierGridDataTables(page)
 
     macrostr = args.macrostr.strip().strip('{{').strip('}}')
     tags = j.data.tags.getObject(macrostr, keepcase=True)
@@ -15,7 +15,7 @@ def main(j, args, params, tags, tasklet):
 
     loggedin = tags.pop('loggedin', False)
     if loggedin:
-        user = j.portal.server.active.getUserFromCTX(args.requestContext)
+        user = j.portal.tools.server.active.getUserFromCTX(args.requestContext)
         tags['assignees'] = user
 
     if 'assignees' in tags:
