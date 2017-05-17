@@ -29,7 +29,7 @@ class PageProcessor():
         self.logdir.makedirs_p()
 
     def getpage(self):
-        page = j.portal.tools.docgenerator.portaldocgeneratorfactory.pageNewHTML("index.html", htmllibPath="/jslib")
+        page = j.portal.tools.docgenerator.docgeneratorfactory.pageNewHTML("index.html", htmllibPath="/jslib")
         return page
 
     def sendpage(self, page, start_response):

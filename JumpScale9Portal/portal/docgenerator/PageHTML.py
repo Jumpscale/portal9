@@ -1,6 +1,6 @@
 
 from js9 import j
-from . import Page
+from .Page import Page
 import copy
 #import ExtraTools
 import inspect

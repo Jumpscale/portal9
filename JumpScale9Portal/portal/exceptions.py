@@ -1,4 +1,6 @@
 from js9 import j
+import requests
+from functools import wraps
 import http.client
 
 codemapping = http.client.responses.copy()
@@ -65,3 +67,26 @@ class ServiceUnavailable(Error):
 
 class InternalServer(Error):
     CODE = 500
+
+
+def catcherrors(debug=False, msg="Error was {}", ):
+    def wrapper(method):
+        @wraps(method)
+        def mymeth(self, *methargs, **methkwargs):
+            try:
+                res = method(self, *methargs, **methkwargs)
+            except requests.exceptions.HTTPError as e:
+                if debug:
+                    jsonresp = e.response.json()
+                    if 'error' in jsonresp:
+                        raise BadRequest(msg.format(jsonresp['error']))
+                    else:
+                        raise BadRequest(msg.format(str(e)))
+                else:
+                    raise BadRequest(str(e))
+            except Exception as e:
+                raise BadRequest(str(e))
+            else:
+                return res
+        return mymeth
+    return wrapper

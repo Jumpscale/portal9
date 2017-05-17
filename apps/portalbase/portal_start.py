@@ -29,7 +29,7 @@ def start(ctx, instance):
     j.application.instanceconfig = cfg
 
     j.application.start("portal")
-
+    
     server = j.portal.tools.server.get()
     server.start()
 
