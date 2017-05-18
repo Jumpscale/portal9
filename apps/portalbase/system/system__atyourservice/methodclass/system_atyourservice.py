@@ -9,7 +9,7 @@ class system_atyourservice(j.tools.code.classGetBase()):
     """
 
     def __init__(self):
-        self.cuisine = j.tools.cuisine.local
+        self.cuisine = j.tools.prefab.local
 
     def get_client(self, **kwargs):
         ctx = kwargs['ctx']

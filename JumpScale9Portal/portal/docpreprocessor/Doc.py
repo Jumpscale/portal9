@@ -208,7 +208,7 @@ class Doc(object):
         content, doc = self.executeMacrosDynamicWiki(paramsExtra, ctx)
 
         if self.md:
-            convertor = j.portal.tools.docgenerator.portaldocgeneratorfactory.getMarkDown2ConfluenceConvertor()
+            convertor = j.portal.tools.docgenerator.docgeneratorfactory.getMarkDown2ConfluenceConvertor()
             content = convertor.convert(content)
 
         ws = j.portal.tools.server.active

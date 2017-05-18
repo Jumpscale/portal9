@@ -191,7 +191,7 @@ class PortalProcess():
     def loadFromConfig(self, reset=False):
         if reset:
             j.portal.tools.codegentools.portalcodegenerator.resetMemNonSystem()
-            j.portal.tools.specparser.portalspecparserfactory.resetMemNonSystem()
+            j.portal.tools.specparser.specparserfactory.resetMemNonSystem()
             self.webserver.contentdirs = {}
 
         loader = self.actorsloader

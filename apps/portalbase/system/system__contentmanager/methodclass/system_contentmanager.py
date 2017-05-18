@@ -92,7 +92,7 @@ class system_contentmanager(j.tools.code.classGetBase()):
         param:modelname
         param:key
         """
-        dtext = j.portal.tools.datatables.portaldatatables
+        dtext = j.portal.tools.datatables.datatables
         data = dtext.getData(namespace, category, key, **args)
         return data
 

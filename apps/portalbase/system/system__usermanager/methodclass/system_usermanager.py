@@ -42,7 +42,7 @@ class system_usermanager(j.tools.code.classGetBase()):
         get a user
         param:name name of user
         """
-        user = j.data.models.system.User.find({"name": name, "gid": j.application.whoAmI.gid})
+        user = j.portal.tools.models.system.User.find({"name": name, "gid": j.application.whoAmI.gid})
         return user[0].to_dict()
 
     def getuserwithid(self, id, **kwargs):
@@ -50,18 +50,18 @@ class system_usermanager(j.tools.code.classGetBase()):
         get a user
         param:id id of user
         """
-        return j.data.models.system.User.get(id).to_dict()
+        return j.portal.tools.models.system.User.get(id).to_dict()
 
     def getgroup(self, id, **kwargs):
         """
         get a user
         param:id id of user
         """
-        return j.data.models.system.Group.get(id).to_dict()
+        return j.portal.tools.models.system.Group.get(id).to_dict()
 
     def listusers(self, **kwargs):
         dict_users = list()
-        users = j.data.models.system.User.find({})
+        users = j.portal.tools.models.system.User.find({})
         for user in users:
             dict_users.append(user.to_dict())
         return dict_users
@@ -85,7 +85,7 @@ class system_usermanager(j.tools.code.classGetBase()):
             return user.groups
 
     def _getUser(self, user):
-        users = j.data.models.system.User.find({"name": user, "gid": j.application.whoAmI.gid})
+        users = j.portal.tools.models.system.User.find({"name": user, "gid": j.application.whoAmI.gid})
         if not users:
             return None
         return users[0]
@@ -127,14 +127,14 @@ class system_usermanager(j.tools.code.classGetBase()):
         session = ctx.env['session']
         session.delete()
 
-        user = j.data.models.system.User.find({"name": username})[0]
+        user = j.portal.tools.models.system.User.find({"name": username})[0]
         user.delete()
         return True
 
     @auth(['admin'])
     def deleteGroup(self, id, **kwargs):
-        group = j.data.models.system.Group.get(id)
-        for user in j.data.models.system.User.find({"groups": group['name']}):
+        group = j.portal.tools.models.system.Group.get(id)
+        for user in j.portal.tools.models.system.User.find({"groups": group['name']}):
             user['groups'].remove(group.name)
             user.save()
         group.delete()
@@ -149,9 +149,9 @@ class system_usermanager(j.tools.code.classGetBase()):
         result bool
 
         """
-        if j.data.models.system.Group.find({"name": name}):
+        if j.portal.tools.models.system.Group.find({"name": name}):
             raise exceptions.Conflict("Group with name %s already exists" % name)
-        group = j.data.models.system.Group()
+        group = j.portal.tools.models.system.Group()
         group.name = name.strip()
         group.domain = domain
         group.description = description
@@ -168,7 +168,7 @@ class system_usermanager(j.tools.code.classGetBase()):
         result bool
 
         """
-        groups = j.data.models.system.Group.find({"name": name})
+        groups = j.portal.tools.models.system.Group.find({"name": name})
 
         if not groups:
             raise exceptions.NotFound("Group with name %s does not exists" % name)
@@ -176,7 +176,7 @@ class system_usermanager(j.tools.code.classGetBase()):
             group = groups[0]
         if users and isinstance(users, str):
             users = users.split(',')
-        users_old = [u['name'] for u in j.data.models.system.User.find({'groups': name})]
+        users_old = [u['name'] for u in j.portal.tools.models.system.User.find({'groups': name})]
         users_remove = [x for x in users_old if x not in users]
         for user_name in users_remove:
             user = self._getUser(user_name)
@@ -217,7 +217,7 @@ class system_usermanager(j.tools.code.classGetBase()):
 
     def _checkUser(self, username):
 
-        users = j.data.models.system.User.find({"name": username})
+        users = j.portal.tools.models.system.User.find({"name": username})
         if not users:
             return False, 'User %s does not exist' % username
         return True, users[0]
@@ -228,7 +228,7 @@ class system_usermanager(j.tools.code.classGetBase()):
         result bool
 
         """
-        user = j.data.models.system.User.find({"name": name, "gid": j.application.whoAmI.gid})[0]
+        user = j.portal.tools.models.system.User.find({"name": name, "gid": j.application.whoAmI.gid})[0]
         if user:
             return True
 

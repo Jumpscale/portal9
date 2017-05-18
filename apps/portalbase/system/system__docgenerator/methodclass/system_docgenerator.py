@@ -34,7 +34,7 @@ class system_docgenerator(j.tools.code.classGetBase()):
         apppart, actorpart = actorname.split('__')
         # force load
         j.portal.tools.server.active.actorsloader.getActor(apppart, actorpart)
-        specobj = j.portal.tools.specparser.portalspecparserfactory.getactorSpec(apppart, actorpart, False)
+        specobj = j.portal.tools.specparser.specparserfactory.getactorSpec(apppart, actorpart, False)
         if not specobj:
             return
         tags.append({'name': actorname, 'description': specobj.description})

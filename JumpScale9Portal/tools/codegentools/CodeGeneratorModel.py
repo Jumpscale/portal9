@@ -33,7 +33,7 @@ if not isinstance(value, %(type)s) and value is not None:
         if type in defaultmap:
             init = "self._P_%s=%s" % (name, defaultmap.get(type))
         else:
-            specfound = j.portal.tools.specparser.portalspecparserfactory.findSpec(
+            specfound = j.portal.tools.specparser.specparserfactory.findSpec(
                 query=type, findFromSpec=self.spec)
 
             if specfound.type == "enumeration":
@@ -170,7 +170,7 @@ return self._P_{name}[-1]\n
 
         for prop in self.spec.properties:
 
-            rtype, spec = j.portal.tools.specparser.portalspecparserfactory.getSpecFromTypeStr(
+            rtype, spec = j.portal.tools.specparser.specparserfactory.getSpecFromTypeStr(
                 self.spec.appname, self.spec.actorname, prop.type)
             # print str(rtype)+" : "+str(spec)
             if rtype is not None and rtype != "object" and rtype != "enum":

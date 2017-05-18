@@ -24,12 +24,13 @@ def cli(ctx, instance):
 @click.pass_context
 @click.option('--instance', default='main', help='instance of portal')
 def start(ctx, instance):
+    import pdb; pdb.set_trace()
     instance = instance or ctx.obj.get('INSTANCE')
     cfg = j.data.serializer.yaml.load('%s/portals/%s/config.yaml' % (j.dirs.CFGDIR, instance))
     j.application.instanceconfig = cfg
 
     j.application.start("portal")
-    
+
     server = j.portal.tools.server.get()
     server.start()
 

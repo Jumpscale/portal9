@@ -101,13 +101,13 @@ class SpecModelactorsGenerator:
 
     def generate(self):
 
-        specnames = [item for item in list(j.portal.tools.specparser.portalspecparserfactory.specs.keys()) if item.find(
+        specnames = [item for item in list(j.portal.tools.specparser.specparserfactory.specs.keys()) if item.find(
             "model_%s_%s" % (self.appname, self.actorname)) == 0]
 
         for specname in specnames:
             print(("##generate %s" % specname))
 
-            spec = j.portal.tools.specparser.portalspecparserfactory.specs[specname]
+            spec = j.portal.tools.specparser.specparserfactory.specs[specname]
 
             if spec.tags is not None and spec.tags.find("nocrud") != -1:
                 # if no crud should be generated go to next

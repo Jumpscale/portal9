@@ -286,7 +286,7 @@ class PageProcessor():
         headers = [(k, v) for k, v in list(header.items())]
         ctx.start_response(status, headers)
         if 'download' not in params:
-            response = j.data.serializer.serializers.getSerializerType('j').dumps(response)
+            response = j.data.serializer.getSerializerType('j').dumps(response)
         else:
             response = response.get('content')
         return [response]
@@ -401,7 +401,7 @@ class PageProcessor():
                 return data
             eco.tb = ""
             eco.frames = []
-            msg = j.data.serializer.serializers.getSerializerType('j').dumps(todict(eco))
+            msg = j.data.serializer.getSerializerType('j').dumps(todict(eco))
 
         ctx.start_response(httpcode, [('Content-Type', 'text/html')])
 
@@ -422,7 +422,7 @@ class PageProcessor():
         return self._text2html(pprint.pformat(content))
 
     def _resultjsonSerializer(self, content):
-        return j.data.serializer.serializers.getSerializerType('j').dumps({"result": content})
+        return j.data.serializer.getSerializerType('j').dumps({"result": content})
 
     def _resultyamlSerializer(self, content):
         return j.tools.code.object2yaml({"result": content})
@@ -434,7 +434,7 @@ class PageProcessor():
             "text/plain": str,
             "text/html": self._text2htmlSerializer,
             "application/yaml": self._resultyamlSerializer,
-            "application/json": j.data.serializer.serializers.getSerializerType('j').dumps
+            "application/json": j.data.serializer.getSerializerType('j').dumps
         }
 
         if not contenttype:
@@ -454,7 +454,7 @@ class PageProcessor():
             "text": {"content_type": CONTENT_TYPE_HTML, "serializer": self._text2htmlSerializer},
             "html": {"content_type": CONTENT_TYPE_HTML, "serializer": self._text2htmlSerializer},
             "raw": {"content_type": CONTENT_TYPE_PLAIN, "serializer": str},
-            "jsonraw": {"content_type": CONTENT_TYPE_JSON, "serializer": j.data.serializer.serializers.getSerializerType('j').dumps},
+            "jsonraw": {"content_type": CONTENT_TYPE_JSON, "serializer": j.data.serializer.getSerializerType('j').dumps},
             "json": {"content_type": CONTENT_TYPE_JSON, "serializer": self._resultjsonSerializer},
             "yaml": {"content_type": CONTENT_TYPE_YAML, "serializer": self._resultyamlSerializer}
         }
@@ -463,7 +463,7 @@ class PageProcessor():
             result = {'httpStatus': ctx.httpStatus,
                       'httpMessage': ctx.httpMessage, 'body': result}
             return CONTENT_TYPE_JS, "%s(%s);" % (
-                ctx.params['_jsonp'], j.data.serializer.serializers.getSerializerType('j').dumps(result))
+                ctx.params['_jsonp'], j.data.serializer.getSerializerType('j').dumps(result))
 
         if ctx._response_started:
             return None, result

@@ -539,7 +539,7 @@ class PortalServer:
         for k, v_list in params.items():
             escaped_vals = []
             for v in v_list:
-                escaped_vals.append(j.portal.tools.html.escape(v))
+                escaped_vals.append(j.portal.tools.html.htmlfactory.escape(v))
 
             params[k] = escaped_vals
         return params
@@ -580,7 +580,7 @@ class PortalServer:
                 postData = env["wsgi.input"].read()
                 if postData.strip() == "":
                     return params
-                postParams = j.data.serializer.serializers.getSerializerType('j').loads(postData)
+                postParams = j.data.serializer.getSerializerType('j').loads(postData)
                 if postParams:
                     params.update(postParams)
                 return params

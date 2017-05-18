@@ -3,8 +3,7 @@ import urllib.parse
 import urllib.error
 import json
 from js9 import j
-from JumpScale9Portal.portal.portal import exceptions
-from JumpScale.clients.oauth.OauthInstance import AuthError
+from JumpScale9Portal.portal import exceptions
 
 
 class system_oauth(j.tools.code.classGetBase()):
@@ -102,7 +101,7 @@ class system_oauth(j.tools.code.classGetBase()):
         except AuthError as e:
             return authfailure(str(e))
 
-        user_model = j.data.models.system.User
+        user_model = j.portal.tools.models.system.User
         user_obj = user_model.find({'name': userinfo.username})
 
         if not user_obj:
@@ -133,3 +132,7 @@ class system_oauth(j.tools.code.classGetBase()):
         session.save()
 
         raise exceptions.Redirect(str(cache_result['redirect']))
+
+
+class AuthError(Exception):
+    pass

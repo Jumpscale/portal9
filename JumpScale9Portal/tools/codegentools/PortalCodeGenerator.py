@@ -65,8 +65,8 @@ class PortalCodeGenerator():
         # key="%s_%s_%s_%s_%s" % (type,appname,spectype,actor,actor)
         # if self.classes.has_key(key):
         # return self.classes[key]
-        spec = j.portal.tools.specparser.portalspecparserfactory.getactorSpec(appname, actor)
-        # spec=j.portal.tools.specparser.portalspecparserfactory.findSpec(appname=appname,actorname=actor,specname=actor,type=spectype,findOnlyOne=True)
+        spec = j.portal.tools.specparser.specparserfactory.getactorSpec(appname, actor)
+        # spec=j.portal.tools.specparser.specparserfactory.findSpec(appname=appname,actorname=actor,specname=actor,type=spectype,findOnlyOne=True)
         classs = self.generate(
             spec, type=type, typecheck=typecheck, dieInGenCode=dieInGenCode)
         return classs
@@ -79,8 +79,8 @@ class PortalCodeGenerator():
         # key="%s_%s_%s_%s_%s" % (type,appname,spectype,actor,actor)
         # if self.classes.has_key(key):
         # return self.classes[key]
-        spec = j.portal.tools.specparser.portalspecparserfactory.getactorSpec(appname, actor)
-        # spec=j.portal.tools.specparser.portalspecparserfactory.findSpec(appname=appname,actorname=actor,specname=actor,type=spectype,findOnlyOne=True)
+        spec = j.portal.tools.specparser.specparserfactory.getactorSpec(appname, actor)
+        # spec=j.portal.tools.specparser.specparserfactory.findSpec(appname=appname,actorname=actor,specname=actor,type=spectype,findOnlyOne=True)
         classs = self.generate(spec, type=type, typecheck=typecheck,
                                dieInGenCode=dieInGenCode, codepath=codepath)
 
@@ -95,8 +95,8 @@ class PortalCodeGenerator():
         key = "%s_%s_%s_%s_%s" % (type, appname, spectype, actor, actor)
         # if self.classes.has_key(key):
         # return self.classes[key]
-        spec = j.portal.tools.specparser.portalspecparserfactory.getactorSpec(appname, actor)
-        # spec=j.portal.tools.specparser.portalspecparserfactory.findSpec(appname=appname,actorname=actor,specname=actor,type=spectype,findOnlyOne=True)
+        spec = j.portal.tools.specparser.specparserfactory.getactorSpec(appname, actor)
+        # spec=j.portal.tools.specparser.specparserfactory.findSpec(appname=appname,actorname=actor,specname=actor,type=spectype,findOnlyOne=True)
         classs = self.generate(
             spec, type=type, typecheck=typecheck, dieInGenCode=dieInGenCode)
         return classs
@@ -110,8 +110,8 @@ class PortalCodeGenerator():
         key = key.replace(".", "_")
         if key in self.classes:
             return self.classes[key]
-        # spec=j.portal.tools.specparser.portalspecparserfactory.findSpec(appname=appname,actorname=actor,specname=modelname,type=spectype,findOnlyOne=True)
-        spec = j.portal.tools.specparser.portalspecparserfactory.getModelSpec(appname, actor, modelname)
+        # spec=j.portal.tools.specparser.specparserfactory.findSpec(appname=appname,actorname=actor,specname=modelname,type=spectype,findOnlyOne=True)
+        spec = j.portal.tools.specparser.specparserfactory.getModelSpec(appname, actor, modelname)
         classs = self.generate(spec, type=type, typecheck=typecheck,
                                dieInGenCode=dieInGenCode, codepath=codepath)
         return classs
@@ -121,7 +121,7 @@ class PortalCodeGenerator():
         """
         spectype = "model"
         type = "JSModel"
-        spec = j.portal.tools.specparser.portalspecparserfactory.getModelSpec(appname, actor, modelname)
+        spec = j.portal.tools.specparser.specparserfactory.getModelSpec(appname, actor, modelname)
         cg = j.portal.tools.codegentools.portalcodegeneratorfactory.get(spec, typecheck=True,
                                 dieInGenCode=dieInGenCode)
         code = cg.generate()
@@ -132,7 +132,7 @@ class PortalCodeGenerator():
         """
         spectype = "model"
         type = "EveModel"
-        spec = j.portal.tools.specparser.portalspecparserfactory.getModelSpec(appname, actor, modelname)
+        spec = j.portal.tools.specparser.specparserfactory.getModelSpec(appname, actor, modelname)
         cg = CodeGeneratorEveModel(
             spec, typecheck=typecheck, dieInGenCode=dieInGenCode, codepath=codepath)
         code = cg.generate()
@@ -147,7 +147,7 @@ class PortalCodeGenerator():
     #     key=key.replace(".","_")
     # if self.classes.has_key(key):
     # return self.classes[key]
-    #     spec=j.portal.tools.specparser.portalspecparserfactory.findSpec(appname=appname,actorname=actor,specname=modelname,type=spectype,findOnlyOne=True)
+    #     spec=j.portal.tools.specparser.specparserfactory.findSpec(appname=appname,actorname=actor,specname=modelname,type=spectype,findOnlyOne=True)
     #     classs=self.generate(spec,type=type,typecheck=typecheck,dieInGenCode=dieInGenCode)
     #     return classs
     def getClassEnumeration(self, appname, actor, enumname, typecheck=True, dieInGenCode=True):
@@ -158,7 +158,7 @@ class PortalCodeGenerator():
         key = "%s_%s_%s_%s_%s" % (type, appname, spectype, actor, enumname)
         # if self.classes.has_key(key):
         # return self.classes[key]
-        spec = j.portal.tools.specparser.portalspecparserfactory.findSpec(
+        spec = j.portal.tools.specparser.specparserfactory.findSpec(
             appname=appname, actorname=actor, specname=enumname, type=spectype, findOnlyOne=True)
         self.generate(spec, type=type, typecheck=typecheck,
                       dieInGenCode=dieInGenCode)

@@ -131,12 +131,15 @@ class connector():
     def __init__(self, opts):
         for opt in opts:
             self._options[opt] = opts.get(opt)
-
+        def decode(val):
+            if isinstance(val, bytes):
+                return val.decode()
+            return val
         self._response['debug'] = {}
         self._options['URL'] = self.__checkUtf8(self._options['URL'])
         self._options['URL'] = self._options['URL'].rstrip('/')
         self._options['root'] = self.__checkUtf8(self._options['root'])
-        self._options['root'] = self._options['root'].decode().rstrip(os.sep)
+        self._options['root'] = decode(self._options['root']).rstrip(os.sep)
         self.__debug('URL', self._options['URL'])
         self.__debug('root', self._options['root'])
 
@@ -1469,10 +1472,7 @@ class connector():
             self._sp = subprocess
 
         try:
-            sp = self._sp.Popen(cmd, shell=False, stdout=self._sp.PIPE, stderr=self._sp.PIPE, stdin=self._sp.PIPE)
-            out, err = sp.communicate('')
-            ret = sp.returncode
-            # print cmd, ret, out, err
+            ret, out, err = j.sal.process.execute(cmd, die=True)
         except:
             return False
 

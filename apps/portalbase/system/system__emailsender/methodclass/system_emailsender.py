@@ -2,7 +2,7 @@ import smtplib
 import os
 from js9 import j
 
-ujson = j.data.serializer.serializers.getSerializerType('j')
+ujson = j.data.serializer.getSerializerType('j')
 
 
 class system_emailsender(j.tools.code.classGetBase()):
@@ -85,7 +85,7 @@ class system_emailsender(j.tools.code.classGetBase()):
         system_path = j.portal.tools.server.active.getSpace('system').model.path
         emails_file = os.path.join(system_path, '.space', 'emails.json')
         try:
-            emails = j.data.serializer.serializers.json.loads(open(emails_file).read())
+            emails = j.data.serializer.json.loads(open(emails_file).read())
         except IOError:  # File doesn't exist yet
             emails = []
 
@@ -99,4 +99,4 @@ class system_emailsender(j.tools.code.classGetBase()):
             'other_data': kwargs
         })
 
-        open(emails_file, 'w').write(j.data.serializer.serializers.json.dumps(emails))
+        open(emails_file, 'w').write(j.data.serializer.json.dumps(emails))

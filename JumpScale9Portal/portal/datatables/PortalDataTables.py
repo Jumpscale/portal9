@@ -12,7 +12,7 @@ class PortalDataTables():
         self.cache = j.data.kvs.getMemoryStore('datatables')
 
     def getClient(self, namespace, category):
-        client = getattr(j.data.models, namespace)
+        client = getattr(j.portal.tools.models, namespace)
         client = getattr(client, category.capitalize())
         return client
 
