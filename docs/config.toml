@@ -1,8 +1,6 @@
 
 name ="jsportal"
-depends = ["https://github.com/Jumpscale/jumpscale_core8/tree/8.2.0/docs",
-        "https://github.com/Jumpscale/jscockpit",
-        "https://github.com/Jumpscale/ays_jumpscale8/tree/8.2.0"]
+depends = ["https://github.com/Jumpscale/core9/tree/master/docs"]
 
 
 languageCode = "en-us"
