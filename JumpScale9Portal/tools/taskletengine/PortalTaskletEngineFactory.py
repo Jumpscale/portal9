@@ -1,5 +1,5 @@
-import sys
 from js9 import j
+import sys
 import random
 import imp
 
@@ -19,9 +19,6 @@ class InvalidTaskletFunction(RuntimeError):
 
 
 class TaskletEngineFactory:
-
-    # def __init__(self):
-    #     self.__jslocation__ = "j.tools.taskletengine"
 
     def get(self, path):
         """

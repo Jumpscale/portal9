@@ -12,3 +12,10 @@ provide the following to the getPortalClient call:
 import JumpScale.portal
 cl = j.clients.portal.get(ip='<REMOTE-APPSERVER-IP>', port=82, secret="1234")
 ```
+
+```
+!!!
+tags = []
+title = "PortalClient"
+date = "2017-05-22"
+```
