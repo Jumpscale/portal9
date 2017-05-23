@@ -51,10 +51,10 @@ class Confluence2HTML():
     def findLinks(line, lower=True):
         # r=r"\[[-:|_@#.?\w\s\\=/&]*\]"
         r = r"\[[^\[\]]+\]"  # TODO: does not seem right to me
-        if j.tools.code.regex.match(r, line):  # find links
+        if j.data.regex.match(r, line):  # find links
             # print "match %s"% line
             htmlelements = ""
-            for match in j.tools.code.regex.yieldRegexMatches(r, line):
+            for match in j.data.regex.yieldRegexMatches(r, line):
                 # print "link: %s" % match.founditem
                 link_id = link_class = None
                 match2 = match.founditem.replace("[", "").replace("]", "")
@@ -283,8 +283,8 @@ class Confluence2HTML():
 
             # IMAGE
             regex = r"\![\w\-:_/=*.,|?&][\w\-:_/= *.,|?&]*[\w\-:_/=*.,|?&]\!"
-            if (state == "start" or state == "table")and j.tools.code.regex.match(regex, line):
-                matches = j.tools.code.regex.findAll(regex, line)
+            if (state == "start" or state == "table")and j.data.regex.match(regex, line):
+                matches = j.data.regex.findAll(regex, line)
                 for match in matches:
                     image = match.replace("!", "")
                     if '|' in image:
@@ -401,12 +401,12 @@ class Confluence2HTML():
             if line.strip() == "":
                 continue
 
-            # print "linkcheck: %s" % j.tools.code.regex.match("\[[-\\:|_\w\s/]*\]",line)
+            # print "linkcheck: %s" % j.data.regex.match("\[[-\\:|_\w\s/]*\]",line)
             # FIND LINKS
             line = self.findLinks(line)
 
             # HEADING
-            header = j.tools.code.regex.getRegexMatch("^h(\d)\. (.+?)$", line)
+            header = j.data.regex.getRegexMatch("^h(\d)\. (.+?)$", line)
             if header and state == "start":
                 level, line = header.foundSubitems
                 level = int(level)
@@ -414,7 +414,7 @@ class Confluence2HTML():
                 page.addHeading(line, level)
                 continue
 
-            unorderedItem = j.tools.code.regex.getRegexMatch("^(\*+) (.+?)$", line)
+            unorderedItem = j.data.regex.getRegexMatch("^(\*+) (.+?)$", line)
             if state == "start" and unorderedItem:
                 stars, line = unorderedItem.foundSubitems
                 level = len(stars)
@@ -423,7 +423,7 @@ class Confluence2HTML():
                 ulAttributes = ''  # ulAttributes is set in the previous iteration of the for-loop. It should be reset _after_ the list is added
                 continue
 
-            numberedItem = j.tools.code.regex.getRegexMatch("^\*(#+) (.+?)$", line)
+            numberedItem = j.data.regex.getRegexMatch("^\*(#+) (.+?)$", line)
             if state == "start" and numberedItem:
                 hashes, line = numberedItem.foundSubitems
                 level = len(hashes)
@@ -438,14 +438,14 @@ class Confluence2HTML():
             #   *- id=main-menu | class=nav nav-list
             #   * item 1
             #   * item 2
-            ulAttributes = j.tools.code.regex.getRegexMatch("^(\*+)- (.+?)$", line)
+            ulAttributes = j.data.regex.getRegexMatch("^(\*+)- (.+?)$", line)
             if ulAttributes:
                 ulAttributes = div_base.tag_params_to_html_attrs(ulAttributes.foundSubitems[1])
                 continue
             else:
                 ulAttributes = ''
 
-            if state == "start" and j.tools.code.regex.match(".*\|\|.*", line) and len(line.split("||")) == 2:
+            if state == "start" and j.data.regex.match(".*\|\|.*", line) and len(line.split("||")) == 2:
                 # DESCRIPTIONS
                 p1, p2 = line.split("||")
                 p2 = self.processDefs(line, doc, page)
@@ -527,7 +527,7 @@ class Confluence2HTML():
 
         if page.body != "":
             # work on the special includes with [[]]
-            includes = j.tools.code.regex.findAll("\[\[[\w :;,\.\*\!\?\^\=\'\-/]*\]\]", page.body)
+            includes = j.data.regex.findAll("\[\[[\w :;,\.\*\!\?\^\=\'\-/]*\]\]", page.body)
             for item in includes:
                 item2 = item.replace("[[", "").replace("]]", "")
                 if doc.preprocessor.docExists(item2):

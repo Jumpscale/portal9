@@ -70,7 +70,7 @@ class PortalDataTables():
     def executeMacro(self, row, field):
 
         try:
-            for match in j.tools.code.regex.getRegexMatches("\$\d*", field).matches:
+            for match in j.data.regex.getRegexMatches("\$\d*", field).matches:
                 nr = int(match.founditem.replace("$", ""))
                 field = field.replace(match.founditem, row[nr])
         except:

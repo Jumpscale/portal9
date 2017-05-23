@@ -59,9 +59,9 @@ class system_emailsender(j.tools.code.classGetBase()):
         # This is the same email pattern used in `contact_form` macro
         # TODO: abstract it in one place
         email_pattern = r"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)+$"
-        if not j.tools.code.regex.match(email_pattern, receiver_email):
+        if not j.data.regex.match(email_pattern, receiver_email):
             return 'Error: receiver email is not formatted well.'
-        if not j.tools.code.regex.match(email_pattern, sender_email):
+        if not j.data.regex.match(email_pattern, sender_email):
             return 'Error: your email is not formatted well.'
 
         receivers = [receiver_email]

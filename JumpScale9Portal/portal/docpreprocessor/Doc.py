@@ -236,7 +236,7 @@ class Doc(object):
         if self.content.strip() == "":
             return
 
-        result = j.tools.code.regex.findAll("\$\$\w*", self.content)  # finds $$...
+        result = j.data.regex.findAll("\$\$\w*", self.content)  # finds $$...
 
         result3 = []
         for item in result:  # make unique

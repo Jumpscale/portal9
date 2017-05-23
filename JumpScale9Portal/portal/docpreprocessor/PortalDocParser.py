@@ -62,7 +62,7 @@ class PortalDocParser():
                 line = line.strip()
             result.append(line)
             return False
-        text2 = j.tools.code.regex.replaceLines(process, arg="", text=text, includes=["%s.*" % item], excludes='')
+        text2 = j.data.regex.replaceLines(process, arg="", text=text, includes=["%s.*" % item], excludes='')
         if len(result) > maxitems:
             self.errorTrap("Error in text to parse, found more entities:%s than %s" % (item, maxitems))
         if maxitems == 1:
@@ -79,7 +79,7 @@ class PortalDocParser():
         return ""
 
     def _findId(self, text, path):
-        result = j.tools.code.regex.findAll("\(\(.*: *\d* *\)\)", text)
+        result = j.data.regex.findAll("\(\(.*: *\d* *\)\)", text)
 
         if len(result) > 1:
             raise RuntimeError("Found 2 id's in %s" % path)
@@ -189,7 +189,7 @@ class PortalDocParser():
                         #raise RuntimeError("Time item match failed for text %s" % text)
                 elif item.find(":") != -1:
                     # found user or group
-                    if not j.tools.code.regex.match("\w*:\w*", item):
+                    if not j.data.regex.match("\w*:\w*", item):
                         descr += item + " "
                         state = "endofmeta"
                     elif user == "":
@@ -292,7 +292,7 @@ class PortalDocParser():
                 if line.strip().find(variant) == 0:
                     return variant
         if text.lower().find("@todo") != -1:
-            lines = j.tools.code.regex.findAll("@todo.*", text)
+            lines = j.data.regex.findAll("@todo.*", text)
             for line in lines:
                 self.addUniqueId(line, fullPath, ttype="todo")
                 line, id1 = self._findId(line, fullPath)
