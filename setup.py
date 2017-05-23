@@ -25,7 +25,7 @@ def _post_install(libname, libpath):
     mounted_lib_path = os.path.join(gigdir, 'python_libs')
 
     for name, path in j.application.config['plugins'].items():
-        if j.do.exists(path, followlinks=True):
+        if j.sal.fs.exists(path, followlinks=True):
             moduleList = j.tools.jsloader.findModules(path=path, moduleList=moduleList)
             # link libs to location for hostos
             j.do.copyTree(path,
@@ -133,4 +133,3 @@ setup(
         'developement': develop
     },
 )
-
