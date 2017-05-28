@@ -8,10 +8,7 @@ import collections
 # libjpeg-dev/zesty
 
 def _post_install(libname, libpath):
-    from JumpScale9 import j as j
-    # ensure plugins section in config
-    if 'plugins' not in j.application.config:
-        j.application.config['plugins'] = {}
+    from js9 import j
 
     # add this plugin to the config
     c = j.core.state.configGet('plugins', defval={})
@@ -49,6 +46,7 @@ setup(
     license='Apache',
     packages=['JumpScale9Portal'],
     install_requires=[
+        'JumpScale9>=9.0.0',
         'redis',
         'colorlog',
         'pytoml',
