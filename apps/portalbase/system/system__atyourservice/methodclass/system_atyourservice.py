@@ -52,7 +52,7 @@ class system_atyourservice(j.tools.code.classGetBase()):
         if not repo and not template_name:
             if not ays_repo:
                 updated = list()
-                for domain, domain_info in j.atyourservice.config['metadata'].items():
+                for domain, domain_info in j.atyourservice.server.config['metadata'].items():
                     base, provider, account, repo, dest, url = j.do.getGitRepoArgs(domain_info.get('url'),
                                                                                    codeDir=j.dirs.CODEDIR)
                     self.cuisine.development.git.pullRepo(domain_info.get('url'),
@@ -320,9 +320,9 @@ class system_atyourservice(j.tools.code.classGetBase()):
         cl = self.get_client(**kwargs)
 
         path = j.sal.fs.joinPaths(j.dirs.CODEDIR, 'ays_cockpit')
-        if not j.atyourservice.exist(path=path):
+        if not j.atyourservice.server.exist(path=path):
             return "can't find ays repository for cockpit at %s" % path
-        repo = j.atyourservice.get(path=path)
+        repo = j.atyourservice.server.get(path=path)
 
         sshkey_service = repo.getService('sshkey', 'main', die=False)
         if sshkey_service is None:

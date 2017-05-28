@@ -11,7 +11,7 @@ def main(j, args, params, tags, tasklet):
         client = aysactor.get_client(ctx=ctx)
         if not reponame:
             # FIXME: migrate to ays_api calls if not reponame.
-            # template = j.atyourservice.actorTemplates[name]
+            # template = j.atyourservice.server.actorTemplates[name]
             template = client.getAYSTemplate(name).json()
             services = []
         else:
