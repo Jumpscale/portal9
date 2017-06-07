@@ -5,7 +5,7 @@
     - Repositories : /ays81/repos
     - Repo $$reponame: /ays81/Repo?reponame=$$reponame
     - Services: /ays81/Services?reponame=$$reponame
-    - Service $$aysname: /ays81/Service?aysrole=$$aysrole&aysname=$$aysname
+    - Service $$aysrole!$$aysname: /ays81/Service?aysrole=$$aysrole&aysname=$$aysname
 }}
 
 {% if error is defined %}
@@ -80,11 +80,11 @@ Error : ${error}
 #          value: False
 #    }}
 #
-    h4. Repository: [${reponame}| /ays81/repo?reponame=${reponame}]
-
+    h3. Service: $$aysrole!$$aysname
     h4. Service values
     || Parameter || Value||
     |Actor Template| ${type}|
+    |Repository| ${reponame}|
     {% for k, v in data.items() -%}
         |${k}|${v}|
     {% endfor %}
@@ -95,15 +95,21 @@ Error : ${error}
     | ${data.parent['role']} | ${data.parent['name']} |
     {% endif %}
 
-    {% if data.producers|length > 0 %}
+    {% if extra_data.producers|length > 0 %}
     h4. Producers:
     || Role || Name ||
-    {% for producer in data.producers -%}
-         |${producer.role}|${producer.name}|
+    {% for producer in extra_data.producers -%}
+         |${producer.role}|[${producer.name}|Service?aysrole=${producer.role}&aysname=${producer.name}&reponame=$$reponame]|
     {% endfor %}
     {% endif %}
 
-
+    {% if extra_data.consumers|length > 0 %}
+    h4. Consumers:
+    || Role || Name ||
+    {% for consumer in extra_data.consumers -%}
+         |${consumer.role}|[${consumer.name}|Service?aysrole=${consumer.role}&aysname=${consumer.name}&reponame=$$reponame]|
+    {% endfor %}
+    {% endif %}
 
     {{html:
           <script  src='/jslib/codemirror/autorefresh.js' type='text/javascript'></script>
@@ -111,7 +117,7 @@ Error : ${error}
           <div id="actions" class="collapse">
      }}
 
-     {% for action in data['actions'] -%}
+     {% for action in extra_data['actions'] -%}
          * *${action.name}*:
              ** state: ${action.state}
              ** code:

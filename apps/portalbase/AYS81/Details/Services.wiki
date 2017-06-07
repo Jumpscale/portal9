@@ -24,7 +24,7 @@ Error : ${error}
 }}
 || Actor Name || Name || State || Actions ||
     {% for service in services -%}
-      | ${service.role} | [${service.name}|ays81/Service?aysrole=${service.role}&aysname=${service.name}&reponame=${reponame}] | ${service.state} | {{action label:'Delete' deleterow:true id:'action-DeleteService' class:'glyphicon glyphicon-trash' data-repository:'$$reponame' data-role:'${service.role}' data-instance:'${service.name}'}} |
+      | ${service.role} | [${service.name}|Service?aysrole=${service.role}&aysname=${service.name}&reponame=${reponame}] | ${service.state} | {{action label:'Delete' deleterow:true id:'action-DeleteService' class:'glyphicon glyphicon-trash' data-repository:'$$reponame' data-role:'${service.role}' data-instance:'${service.name}'}} |
     {% else %}
     This repository doesn't contain any service instance yet.
     {% endfor %}

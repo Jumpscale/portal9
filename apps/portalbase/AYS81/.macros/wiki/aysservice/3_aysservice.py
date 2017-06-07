@@ -12,26 +12,28 @@ def main(j, args, params, tags, tasklet):
         client = aysactor.get_client(ctx=ctx)
         service = client.getServiceByName(name, role, reponame).json()
         if service:
-            link_to_template = ('[%s|ays81/ActorTemplate?aysname=%s]' % (role, role))
-
+            link_to_template = ('[%s|ActorTemplate?aysname=%s&reponame=%s]' % (role, role, reponame))
+            link_to_repo = ('[%s|Repo?reponame=%s]' % (reponame, reponame))
             # we prepend service path with '$codedir' to make it work in the explorer.
             # because of this line :
             # https://github.com/Jumpscale/jumpscale_portal8/blob/master/apps/portalbase/macros/page/explorer/1_main.py#L25
 
-            hidden = ['key.priv', 'password', 'passwd', 'pwd', 'oauth.jwt_key', 'keyPriv']
+            hidden = ['key.priv', 'consumers', 'producers', 'actions', 'password', 'passwd', 'pwd', 'oauth.jwt_key', 'keyPriv', 'repository']
             data_revised = dict()
             for k, v in service.items():
                 if k.strip() in hidden:
                     continue
                 else:
                     data_revised[k] = v.replace('\\n', '') if isinstance(v, str) else v
+            extra_data = {'producers': service['producers'], 'consumers': service['consumers'], 'actions': service['actions']}
             args.doc.applyTemplate({
                 'service': service,
                 'type': link_to_template,
+                'extra_data': extra_data,
                 'data': data_revised,
                 'name': name,
                 'role': role,
-                'reponame': reponame,
+                'reponame': link_to_repo,
             })
 
         else:
