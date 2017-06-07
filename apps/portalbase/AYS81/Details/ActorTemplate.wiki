@@ -61,7 +61,7 @@ ${value} }}
     {% for service in services -%}
         {% set role = service.role -%}
         {% set role = role.split('.')[0] -%}
-        | [${service.name}|ays81/Service?aysrole=${service.role}&aysname=${service.name}&reponame=$$reponame]|
+        | [${service.name}|Service?aysrole=${service.role}&aysname=${service.name}&reponame=$$reponame]|
     {% else %}
     No services for this template
     {% endfor %}

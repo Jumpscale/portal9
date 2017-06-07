@@ -37,12 +37,12 @@ h3. Actor Templates
     {% if reponame %}
     ||Role||Name||Path||
     {% for template in templates -%}
-    | ${template.role} | [${template.name}|ays81/ActorTemplate?aysname=${template.name}&reponame=$$reponame] | ${template.path} |
+    | ${template.role} | [${template.name}|ActorTemplate?aysname=${template.name}&reponame=$$reponame] | ${template.path} |
     {% endfor %}
     {% else %}
     ||Role||Name||Path||
     {% for template in templates -%}
-    | ${template.role} | [${template.name}|ays81/ActorTemplate?aysname=${template.name}] | ${template.path} |
+    | ${template.role} | [${template.name}|ActorTemplate?aysname=${template.name}] | ${template.path} |
     {% endfor %}
     {% endif %}
 {%endif%}
