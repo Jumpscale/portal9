@@ -4,8 +4,9 @@ from .form import Form
 
 class Popup(Form):
 
-    def __init__(self, id, submit_url, header='', action_button='Confirm', form_layout='',
-                 reload_on_success=True, navigateback=False, clearForm=True, showresponse=False):
+    def __init__(self, id, submit_url, header='', action_button='Confirm',
+                 form_layout='', reload_on_success=True, navigateback=False,
+                 clearForm=True, showresponse=False, gridbinding=None):
         self.widgets = []
         self.id = id
         self.form_layout = form_layout
@@ -16,10 +17,10 @@ class Popup(Form):
         self.reload_on_success = reload_on_success
         self.navigateback = navigateback
         self.clearForm = clearForm
+        self.gridbinding = gridbinding
 
         import jinja2
         self.jinja = jinja2.Environment(variable_start_string="${", variable_end_string="}")
-
 
     def write_html(self, page):
         template = self.jinja.from_string('''
@@ -56,8 +57,11 @@ class Popup(Form):
                 'reload': j.data.serializer.json.dumps(self.reload_on_success),
                 'showresponse': j.data.serializer.json.dumps(self.showresponse),
                 'navigateback': j.data.serializer.json.dumps(self.navigateback)}
-        content = template.render(id=self.id, header=self.header, action_button=self.action_button, form_layout=self.form_layout,
-                                  widgets=self.widgets, submit_url=self.submit_url, clearForm=self.clearForm, data=data)
+
+        gridbinding = self.gridbinding or {}
+        content = template.render(id=self.id, header=self.header, action_button=self.action_button,
+                                  form_layout=self.form_layout, widgets=self.widgets, submit_url=self.submit_url,
+                                  clearForm=self.clearForm, data=data, gridbinding=gridbinding)
 
         css = """
         .modal-header-text { font-weight: bold; font-size: 24.5px; line-height: 30px; }
@@ -102,6 +106,16 @@ class Popup(Form):
                             formData.push({'name': name, 'value': extradata[name]});
                         }
                     }
+
+                    var gridid = $form.data('gridbinding-name');
+                    if (gridid) {
+                        gridid = '#' + gridid;
+                        var name = $form.data('gridbinding-value');
+                        var rows = $(gridid).DataTable().rows({ selected: true}).data() || [];
+                        for (var i = 0; i < rows.length; i++) {
+                            formData.push({'name': name, 'value': rows[i][0]});
+                        }
+                    }
                     $form.find('.modal-footer > .btn-primary').button('loading');
                     $form.find("input,select,textarea").prop("disabled", true)
                 },
@@ -134,8 +148,14 @@ class Popup(Form):
                 },
                 error: function(response, statusText, xhr, $form) {
                     if (response) {
-                        var responsetext = response.responseJSON || response.responseText;
-                        this.popup.find('.modal-body-error').text(responsetext);
+                        var errortext = response.responseJSON || response.responseText;
+                        try {
+                            var eco = JSON.parse(errortext);
+                            errortext = eco.backtrace || errortext;
+                        } catch (e) {
+                            // dont do anything just use errortext
+                        }
+                        this.popup.find('.modal-body-error').text(errortext);
                     }
                     if (response && (response.status == 400 || response.status == 409)){
                         this.popup.find("input,select,textarea").prop("disabled", false)

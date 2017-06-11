@@ -10,7 +10,7 @@ from JumpScale9Lib.data.models.Models import ModelBase
 DB = 'jumpscale_cockpitevent'
 
 
-class Email(ModelBase, Document):
+class Email(ModelBase):
     type = StringField(default='email', choices=('email'), required=True)
     body = StringField(required=True, default='')
     body_type = StringField(choices=('md', 'html', 'text'))
@@ -22,7 +22,7 @@ class Email(ModelBase, Document):
     epoch = IntField(default=j.data.time.getTimeEpoch(), required=True)
 
 
-class Telegram(ModelBase, Document):
+class Telegram(ModelBase):
     type = StringField(default='telegram', choices=('telegram'), required=True)
     io = StringField(choices=('input', 'output'), required=True)
     action = StringField(required=True)
@@ -30,7 +30,7 @@ class Telegram(ModelBase, Document):
     epoch = IntField(default=j.data.time.getTimeEpoch(), required=True)
 
 
-class Alarm(ModelBase, Document):
+class Alarm(ModelBase):
     type = StringField(default='alarm', choices=('alarm'), required=True)
     service = StringField(required=True)
     method = StringField(required=True)
@@ -38,7 +38,7 @@ class Alarm(ModelBase, Document):
     epoch = IntField(default=j.data.time.getTimeEpoch(), required=True)
 
 
-class Generic(ModelBase, Document):
+class Generic(ModelBase):
     type = StringField(default='Generic', choices=('Generic'), required=True)
     args = DictField()
     epoch = IntField(default=j.data.time.getTimeEpoch(), required=True)

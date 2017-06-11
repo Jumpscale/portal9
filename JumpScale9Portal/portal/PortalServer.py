@@ -64,7 +64,6 @@ class PortalServer:
 
     # INIT
     def __init__(self):
-
         self.cfg = j.application.instanceconfig
         if not isinstance(self.cfg, dict):
             # need to upgrade config
@@ -79,7 +78,7 @@ class PortalServer:
 
             j.tools.cuisine.local.core.dir_ensure('$TEMPLATEDIR/cfg/portal')
             j.tools.cuisine.local.core.file_copy(j.sal.fs.joinPaths(j.dirs.CODEDIR, 'github/jumpscale/jumpscale_portal8/apps/portalbase/config.yaml'),
-                                        '$TEMPLATEDIR/cfg/portal/config.yaml')
+                                                 '$TEMPLATEDIR/cfg/portal/config.yaml')
             j.tools.cuisine.local.apps.portal.configure(production=production, client_id=client_id, client_secret=client_secret, organization=organization, redirect_address=redirect_address)
             j.application.instanceconfig = j.data.serializer.yaml.load('%s/portals/main/config.yaml' % (j.dirs.JSCFGDIR))
             self.cfg = j.application.instanceconfig
@@ -146,6 +145,8 @@ class PortalServer:
         self.macroexecutorMarkDown = MacroexecutorMarkDown(macroPathsMarkDown)
         self.macroexecutorWiki = MacroExecutorWiki(macroPathsWiki)
         templatedirs = [self.portaldir.joinpath('templates'), self.appdir.joinpath('templates')]
+        for contentdir in self.contentdirs:
+            templatedirs.append(j.sal.fs.joinPaths(contentdir, 'templates'))
         self.templates = PortalTemplate(templatedirs)
         self.bootstrap()
 
@@ -479,7 +480,7 @@ class PortalServer:
                         ctx, ctx.start_response, "system", "accessdenied", extraParams={"path": path})]
 
         oauth_logout_url = ''
-        if "user_logoff_" in ctx.params and not "user_login_" in ctx.params:
+        if "user_logoff_" in ctx.params and "user_login_" not in ctx.params:
             if session.get('user', '') not in ['guest', '']:
                 # If user session is oauth session and logout url is provided, redirect user to that URL
                 # after deleting session which will invalidate the oauth server session
@@ -708,7 +709,7 @@ class PortalServer:
             if not self.authentication_method:
                 try:
                     j.clients.osis.getByInstance(self.cfg.get('instance', 'main'))
-                except Exception as e:
+                except Exception:
                     self.pageprocessor.raiseError(
                         ctx,
                         msg="You have a minimal portal with no OSIS configured",
@@ -802,7 +803,7 @@ class PortalServer:
             page=self.pageprocessor.getpage(),
             paramsExtra=ctx.params)
 
-        if not 'postprocess' in page.processparameters or page.processparameters['postprocess']:
+        if 'postprocess' not in page.processparameters or page.processparameters['postprocess']:
             page.body = page.body.replace("$$space", space)
             page.body = page.body.replace("$$page", doc.original_name)
             page.body = page.body.replace("$$path", doc.path)
@@ -816,7 +817,7 @@ class PortalServer:
         start_response('200 OK', [('Content-Type', "text/html")])
         return str(page)
 
-    def addRoute(self, function, appname, actor, method, params, description="", auth=True, returnformat=None):
+    def addRoute(self, function, appname, actor, method, params, description="", auth=True, returnformat=None, httpmethod='post'):
         """
         @param function is the function which will be called as follows: function(webserver,path,params):
             function can also be a string, then only the string will be returned
@@ -844,15 +845,16 @@ class PortalServer:
         method = method.replace("_", ".")
         self.app_actor_dict["%s_%s" % (appname, actor)] = 1
 
-        methoddict = {'get': 'GET', 'set': 'PUT', 'new': 'POST', 'delete': 'DELETE',
-                      'find': 'GET', 'list': 'GET', 'datatables': 'GET', 'create': 'POST'}
+        methoddict = {'get': 'GET', 'set': 'PUT', 'new': 'POST',
+                      'delete': 'DELETE', 'find': 'GET', 'list': 'GET',
+                      'datatables': 'GET', 'create': 'POST', 'post': 'POST'}
         route = {
             'func': function,
             'params': params,
             'description': description,
             'auth': auth,
             'returnformat': returnformat}
-        self.routes["%s_%s_%s_%s" % ('GET', appname, actor, method)] = route
+        self.routes["%s_%s_%s_%s" % (methoddict.get(httpmethod, 'POST'), appname, actor, method)] = route
 
 # SCHEDULING
 

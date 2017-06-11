@@ -27,11 +27,11 @@ class Form:
         content = template.render(type=type, value=value, link=link, tag=tag, id=id)
         self.widgets.append(content)
 
-    def addText(self, label, name, required=False, type='text', value='', placeholder=''):
+    def addText(self, label, name, required=False, type='text', value='', placeholder='', step=''):
         template = self.jinja.from_string('''
             <div class="form-group">
                 <label class="line-height" for="${name}">${label}</label>
-                <input type="${type}" value="${value}", class="form-control" name="${name}" {% if required %}required{% endif %} placeholder="${placeholder}">
+                <input type="${type}" value="${value}", class="form-control" name="${name}" {% if required %}required{% endif %} placeholder="${placeholder}" step="${step}">
               </div>
         ''')
         content = template.render(
@@ -40,7 +40,8 @@ class Form:
             type=type,
             value=value,
             required=required,
-            placeholder=placeholder)
+            placeholder=placeholder,
+            step=step)
         self.widgets.append(content)
 
     def addHiddenField(self, name, value):

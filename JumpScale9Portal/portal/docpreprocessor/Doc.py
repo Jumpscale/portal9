@@ -3,6 +3,7 @@ import re
 import os
 import jinja2
 import os.path
+import copy
 
 fs = j.sal.fs
 
@@ -28,6 +29,21 @@ class HeaderTools():
                 if lowest is None or hnr < lowest:
                     lowest = hnr
         return lowest
+
+
+def _escape(object, cb):
+    if isinstance(object, dict):
+        for key, value in object.items():
+            if isinstance(key, str):
+                object.pop(key)
+                object[cb(key)] = value
+            object[key] = _escape(value, cb)
+    elif isinstance(object, list):
+        for idx, value in enumerate(object):
+            object[idx] = _escape(value, cb)
+    elif isinstance(object, str):
+        return cb(object)
+    return object
 
 
 class Doc(object):
@@ -218,7 +234,7 @@ class Doc(object):
             requestContext=ctx,
             page=ws.pageprocessor.getpage(),
             paramsExtra=ctx.params)
-        if not 'postprocess' in page.processparameters or page.processparameters['postprocess']:
+        if 'postprocess' not in page.processparameters or page.processparameters['postprocess']:
             page.body = page.body.replace("$$space", self.getSpaceName())
             page.body = page.body.replace("$$page", self.original_name)
             page.body = page.body.replace("$$path", self.path)
@@ -269,9 +285,14 @@ class Doc(object):
             self.content = content
         return content
 
-    def applyTemplate(self, params):
-        self.appliedparams.update(params)
-        self.content = self.jenv.from_string(self.content).render(**params)
+    def applyTemplate(self, params, escape=False):
+        appliedparams = copy.deepcopy(params)
+        if escape:
+            ws = j.portal.tools.server.active
+            appliedparams = _escape(appliedparams, ws.confluence2htmlconvertor.escape)
+
+        self.appliedparams.update(appliedparams)
+        self.content = self.jenv.from_string(self.content).render(**appliedparams)
         self.title = self.jenv.from_string(self.title).render(**params)
 
     def executeMacrosPreprocess(self):
@@ -314,7 +335,6 @@ class Doc(object):
             self.pagename = self.name
         out = ""
         linenr = 1
-        lastHeading = None
         lastLineWasEmpty = False
         lowestHeading = HeaderTools.findLowestHeading(self.content)
         lastLineWasHeading = False
