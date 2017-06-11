@@ -429,3 +429,11 @@ class DocPreprocessor():
 
     def __repr__(self):
         return self.__str__()
+
+base_loader = j.portal.tools._getBaseClassLoader()
+
+
+class docpreprocessor(base_loader):
+
+    def __init__(self):
+        base_loader.__init__(self)

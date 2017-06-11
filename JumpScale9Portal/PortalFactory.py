@@ -42,7 +42,7 @@ class PortalRootClassFactory:
 
     @property
     def models(self):
-        from JumpScale9Portal.data.models.models import models
+        from JumpScale9Portal.data.models.Models import models
         if self._models is None:
             self._models = models()
         return self._models
@@ -98,14 +98,14 @@ class PortalRootClassFactory:
 
     @property
     def docpreprocessor(self):
-        from JumpScale9Portal.portal.docpreprocessor.docpreprocessor import docpreprocessor
+        from JumpScale9Portal.portal.docpreprocessor.DocPreprocessor import docpreprocessor
         if self._docpreprocessor is None:
             self._docpreprocessor = docpreprocessor()
         return self._docpreprocessor
 
     @property
     def swaggergen(self):
-        from JumpScale9Portal.tools.swaggergen.swaggergenswaggergen import swaggergen
+        from JumpScale9Portal.tools.swaggergen.swaggergen import swaggergen
         if self._swaggergen is None:
             self._swaggergen = swaggergen()
         return self._swaggergen
