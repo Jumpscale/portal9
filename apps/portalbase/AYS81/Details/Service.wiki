@@ -92,7 +92,7 @@ Error : ${error}
     {% if data.parent %}
     h4. Parent:
     || Role || Instance ||
-    | ${data.parent['role']} | ${data.parent['name']} |
+    | ${data.parent['role']} |[${data.parent.name}|Service?aysrole=${data.parent.role}&aysname=${data.parent.name}&reponame=$$reponame]|
     {% endif %}
 
     {% if extra_data.producers|length > 0 %}
@@ -108,6 +108,14 @@ Error : ${error}
     || Role || Name ||
     {% for consumer in extra_data.consumers -%}
          |${consumer.role}|[${consumer.name}|Service?aysrole=${consumer.role}&aysname=${consumer.name}&reponame=$$reponame]|
+    {% endfor %}
+    {% endif %}
+
+    {% if extra_data.children|length > 0 %}
+    h4. Children:
+    || Role || Name ||
+    {% for children in extra_data.children -%}
+         |${children.role}|[${children.name}|Service?aysrole=${children.role}&aysname=${children.name}&reponame=$$reponame]|
     {% endfor %}
     {% endif %}
 
