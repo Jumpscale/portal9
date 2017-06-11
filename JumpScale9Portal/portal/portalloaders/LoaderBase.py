@@ -1,4 +1,7 @@
 from js9 import j
+import imp
+
+_INITEDCONTENTDIRS = set()
 
 
 class LoaderBase(object):
@@ -57,6 +60,14 @@ class LoaderBase(object):
             items = [j.sal.fs.pathNormalize(item.replace(".%s" % self.type, "") + "/") for
                      item in j.sal.fs.listDirsInDir(path, True, False, True)
                      if j.sal.fs.getDirName(item + "/", True) == ".%s" % self.type]
+
+            if items and str(path) not in _INITEDCONTENTDIRS:
+                _INITEDCONTENTDIRS.add(str(path))
+                initpath = j.sal.fs.joinPaths(path, 'init.py')
+                if j.sal.fs.exists(initpath):
+                    module = imp.load_source(str(path), str(initpath))
+                    if hasattr(module, 'init'):
+                        module.init()
 
             # find objects like spaces,actors,...
             for path in items:

@@ -317,7 +317,7 @@ def match(j, args, params, actor, tags, tasklet):
 
                 params = {}
                 for var in methodspec.vars:
-                    param = {'optional': False, 'description': '', 'default': None, 'type': None}
+                    param = {'optional': False, 'description': '', 'default': None, 'type': None, 'tags': None}
                     tags = j.data.tags.getObject(var.tags)
                     if tags.labelExists("optional"):
                         param['optional'] = True
@@ -328,6 +328,7 @@ def match(j, args, params, actor, tags, tasklet):
                     param['type'] = var.ttype
                     if var.defaultvalue:
                         param['default'] = var.defaultvalue
+                    param['tags'] = tags
                     params[var.name] = param
 
                 tags = j.data.tags.getObject(methodspec.tags)
@@ -338,8 +339,13 @@ def match(j, args, params, actor, tags, tasklet):
 
                 auth = not tags.labelExists("noauth")
                 methodcall = getattr(actorobject, methodspec.name)
-                j.portal.tools.server.active.addRoute(methodcall, appname, actorname, methodspec.name, params=params,
-                                                description=methodspec.description, auth=auth, returnformat=returnformat)
+                methodtypes = ('post', )
+                if 'method' in tags.tags:
+                    methodtypes = [tag for tag in tags.tags['method'].split(',') if tag]
+                for methodtype in methodtypes:
+                    j.portal.tools.server.active.addRoute(methodcall, appname, actorname, methodspec.name,
+                                                          params=params, description=methodspec.description, auth=auth,
+                                                          returnformat=returnformat, httpmethod=methodtype)
 
         # load taskletengines if they do exist
         tepath = j.sal.fs.joinPaths(actorpath, "taskletengines")

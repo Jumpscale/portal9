@@ -1,10 +1,12 @@
 from js9 import j
 from . import exceptions
+from . import Validators
 from JumpScale9Lib.servers.serverbase.Exceptions import RemoteException
 import urllib.request
 import urllib.parse
 import urllib.error
 import requests
+import re
 
 
 class PortalRest():
@@ -23,29 +25,96 @@ class PortalRest():
             ctx.start_response('401 Unauthorized', [])
             return False, msg
 
+        def emptyisnone(func):
+            def wrapper(val):
+                if val == '':
+                    return None
+                else:
+                    return func(val)
+            return wrapper
+
+        NoneType = type(None)
+        convertermap = {'int': ((int, NoneType), emptyisnone(j.data.types.int.fromString)),
+                        'float': ((float, int, NoneType), emptyisnone(j.data.types.float.fromString)),
+                        'bool': ((bool, NoneType), emptyisnone(j.data.types.bool.fromString))
+                        }
         params = self.ws.routes[ctx.path]['params']
 
+        def loadList(key):
+            if isinstance(ctx.params[key], (list, NoneType)):
+                return
+            try:
+                ctx.params[key] = j.data.types.list.fromString(ctx.params[key])
+            except ValueError:
+                raise exceptions.BadRequest('Value of param %s not correct needs to be of type %s' % (key, param['type']))
+
         for key, param in params.items():
-            if key not in ctx.params:
+            is_default = False
+            if key not in ctx.params or ctx.params[key] in ('', None):
                 if param['optional']:
                     # means is optional
+                    if param['tags'].labelExists('default_is_none'):
+                        ctx.params[key] = None
+                        continue
                     ctx.params[key] = param['default']
+                    is_default = True
                 else:
                     raise exceptions.BadRequest('Param with name:%s is missing.' % key)
-            elif param['type'] == 'int' and not isinstance(ctx.params[key], (int, type(None))):
-                try:
-                    ctx.params[key] = int(ctx.params[key])
-                except ValueError:
-                    raise exceptions.BadRequest(
-                        'Value of param %s not correct needs to be of type %s' %
-                        (key, param['type']))
-            elif param['type'] == 'bool' and not isinstance(ctx.params[key], (bool, type(None))):
-                try:
-                    ctx.params[key] = j.data.types.bool.fromString(ctx.params[key])
-                except ValueError:
-                    raise exceptions.BadRequest(
-                        'Value of param %s not correct needs to be of type %s' %
-                        (key, param['type']))
+            if param['type'] in convertermap:
+                type_, converter = convertermap[param['type']]
+                if not isinstance(ctx.params[key], type_):
+                    try:
+                        ctx.params[key] = converter(ctx.params[key])
+                    except ValueError:
+                        raise exceptions.BadRequest('Value of param %s not correct needs to be of type %s' % (key, param['type']))
+            elif param['type'] == 'list':
+                loadList(key)
+            elif param['type'] in ['list(int)', 'list(bool)', 'list(float)']:
+                if not ctx.params[key] is None:
+                    loadList(key)
+                    m = re.search("list\((?P<type>\w+)\)", param['type'])
+                    if m:
+                        type_, converter = convertermap[m.group('type')]
+                        for i in xrange(len(ctx.params[key])):
+                            try:
+                                if not isinstance(ctx.params[key][i], type_):
+                                    ctx.params[key][i] = converter(ctx.params[key][i])
+
+                            except ValueError:
+                                raise exceptions.BadRequest('Value of param %s not correct needs to be of type %s' % (key, param['type']))
+
+            if not is_default:
+                if param['tags'].tagExists('validator'):
+                    validator_name = param['tags'].tagGet('validator').upper()
+                    validator = getattr(Validators, validator_name)
+
+                    if isinstance(validator, str):
+                        def validator_callable(val):
+                            m = re.match(validator, val)
+                            return m and m.end() == len(val)
+                    else:
+                        validator_callable = validator
+
+                    if not validator_callable(ctx.params[key]):
+                        raise exceptions.BadRequest('Value of param %s is not a valid %s' % (key, validator_name.lower()))
+
+                if param['tags'].tagExists('validator-max'):
+                    validator_max = int(param['tags'].tagGet('validator-max'))
+                    if param['type'] == 'str':
+                        if len(ctx.params[key]) > validator_max:
+                            raise exceptions.BadRequest("Length of param %s should be smaller than %d" % (key, validator_max))
+                    if param['type'] in ('int', 'float'):
+                        if ctx.params[key] > validator_max:
+                            raise exceptions.BadRequest("Value of param %s should be smaller than %d" % (key, validator_max))
+
+                if param['tags'].tagExists('validator-min'):
+                    validator_min = int(param['tags'].tagGet('validator-min'))
+                    if param['type'] == 'str':
+                        if len(ctx.params[key]) < validator_min:
+                            raise exceptions.BadRequest("Length of param %s should be larger than %d" % (key, validator_min))
+                    if param['type'] in ('int', 'float'):
+                        if ctx.params[key] < validator_min:
+                            raise exceptions.BadRequest("Value of param %s should be larger than %d" % (key, validator_min))
 
         return True, ""
 
@@ -121,7 +190,7 @@ class PortalRest():
         if routekey not in routes:
             self.activateActor(paths[0], paths[1])
         if routekey not in routes:
-            routekey = "GET_%s" % routekey
+            routekey = "%s_%s" % (ctx.env['REQUEST_METHOD'], routekey)
         if routekey in routes:
             if human:
                 ctx.fformat = "human"

@@ -2,8 +2,8 @@
 from js9 import j
 from .Page import Page
 import copy
-#import ExtraTools
 import inspect
+import jinja2
 
 
 class PageHTML(Page):
@@ -20,6 +20,7 @@ class PageHTML(Page):
 
         #self.title = "<title>%s</title>\n" % name
         self.title = ""
+        self.jenv = jinja2.Environment(variable_start_string="${", variable_end_string="}")
         self.head = ""
         self.tail = []
         self.libs = ""
@@ -315,6 +316,24 @@ class PageHTML(Page):
             return id
         else:
             return ''
+
+    def addBootstrapCombo(self, title, items, id=None):
+        self.addBootstrap()
+        html = """
+<div class="btn-group" ${id}>
+  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      ${title}<span class="caret"></span>
+  </button>
+  <ul class="dropdown-menu">
+    {% for name, action in items %}
+    <li><a href="javascript:void(0)" onclick="${action}">${name}</a></li>
+    {% endfor %}
+  </ul>
+</div>
+"""
+        id = 'id="%s"' % id if id else ''
+        html = self.jenv.from_string(html).render(items=items, title=title, id=id)
+        self.addHTML(html)
 
     def addActionBox(self, actions):
         """

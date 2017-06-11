@@ -1,5 +1,6 @@
 from js9 import j
 from JumpScale9Portal.portal.docgenerator.Confluence2HTML import Confluence2HTML
+from JumpScale9Portal.portal import exceptions
 import copy
 import mongoengine
 from mongoengine.queryset import Q
@@ -13,7 +14,9 @@ class PortalDataTables():
 
     def getClient(self, namespace, category):
         client = getattr(j.portal.tools.models, namespace)
-        client = getattr(client, category.capitalize())
+        if category.lower() == category:
+            category = category.capitalize()
+        client = getattr(client, category)
         return client
 
     def getTableDefFromActorModel(self, appname, actorname, modelname, excludes=[]):
@@ -31,7 +34,6 @@ class PortalDataTables():
         fieldids = []
         fieldnames = []
         counter = 0
-        iddone = False
 
         def getGuidPos():
             if "guid" in model.listProps:
@@ -50,7 +52,6 @@ class PortalDataTables():
                 #     iddone=True
                 fprop = "[$%s|%s]" % (counter, "/space_%s__%s/form_%s?guid=$%s" %
                                       (appname, actorname, modelname, getGuidPos()))
-                iddone = True
                 fields.append(fprop)
                 fieldids.append(lprop)
                 fieldnames.append(prop)
@@ -84,6 +85,10 @@ class PortalDataTables():
         return field
 
     def getData(self, namespace, category, key, **kwargs):
+        try:
+            datainfo = self.getFromCache(key)
+        except:
+            raise exceptions.Gone('Table is not available anymore. Please refresh')
         datainfo = self.getFromCache(key)
         fieldids = datainfo['fieldids']
         fieldvalues = datainfo['fieldvalues'] or fieldids
@@ -157,7 +162,7 @@ class PortalDataTables():
         result["iTotalDisplayRecords"] = total
         result["aaData"] = []
         for row in inn:
-            r = []
+            r = [str(getattr(row, 'id', 'NA'))]
             for field, fieldid in zip(fieldvalues, fieldids):
                 if str(field) in row:
                     r.append(row[field])

@@ -29,15 +29,8 @@ def extend(a, b):
         return b
 
 
-class ModelBase:
-    DoesNotExist = DoesNotExist
-
-    gid = IntField(
-        default=lambda: j.application.whoAmI.gid if j.application.whoAmI else 0)
-    nid = IntField(
-        default=lambda: j.application.whoAmI.nid if j.application.whoAmI else 0)
-    epoch = IntField(default=j.data.time.getTimeEpoch)
-    meta = default_meta
+class Base(Document):
+    meta = extend(default_meta, {'abstract': True})
 
     @property
     def guid(self):
@@ -49,9 +42,8 @@ class ModelBase:
 
     def to_dict(self):
         d = j.data.serializer.json.loads(Document.to_json(self))
-        d.pop("_cls")
-        if "_id" in d:
-            d.pop("_id")
+        d.pop("_cls", None)
+        d.pop("_id", None)
         return d
 
     @classmethod
@@ -153,7 +145,17 @@ class ModelBase:
     __repr__ = __str__
 
 
-class Errorcondition(ModelBase, Document):
+class ModelBase(Base):
+    meta = extend(default_meta, {'abstract': True})
+    epoch = IntField(default=j.data.time.getTimeEpoch)
+    DoesNotExist = DoesNotExist
+    gid = IntField(
+        default=lambda: j.application.whoAmI.gid if j.application.whoAmI else 0)
+    nid = IntField(
+        default=lambda: j.application.whoAmI.nid if j.application.whoAmI else 0)
+
+
+class Errorcondition(ModelBase):
     nid = IntField(required=True)
     gid = IntField(required=True)
     aid = IntField(default=0)
@@ -183,7 +185,7 @@ class Errorcondition(ModelBase, Document):
     occurrences = IntField(default=0)
 
 
-class Log(ModelBase, Document):
+class Log(ModelBase):
     aid = IntField(default=0)
     pid = IntField(default=0)
     jid = StringField(default='')
@@ -201,12 +203,12 @@ class Log(ModelBase, Document):
     epoch = IntField(default=j.data.time.getTimeEpoch())
 
 
-class Grid(ModelBase, Document):
+class Grid(ModelBase):
     name = StringField(default='master')
     #  id = IntField(default=1)
 
 
-class Group(ModelBase, Document):
+class Group(ModelBase):
     name = StringField(default='')
     domain = StringField(default='')
     gid = IntField(default=1)
@@ -236,7 +238,7 @@ class Job(EmbeddedDocument):
     })
 
 
-class Command(ModelBase, Document):
+class Command(ModelBase):
     guid = StringField(unique=True, required=True)
     gid = IntField(default=0)
     nid = IntField(default=0)
@@ -254,7 +256,7 @@ class Command(ModelBase, Document):
     })
 
 
-class Audit(ModelBase, Document):
+class Audit(ModelBase):
     user = StringField(default='')
     result = StringField(default='')
     call = StringField(default='')
@@ -268,7 +270,7 @@ class Audit(ModelBase, Document):
     ], 'allow_inheritance': True, "db_alias": DB})
 
 
-class Disk(ModelBase, Document):
+class Disk(ModelBase):
     partnr = IntField()
     path = StringField(default='')
     size = IntField(default=0)
@@ -285,7 +287,7 @@ class Disk(ModelBase, Document):
     lastcheck = IntField(default=j.data.time.getTimeEpoch())
 
 
-class VDisk(ModelBase, Document):
+class VDisk(ModelBase):
 
     machineguid = StringField(required=True)
     diskid = IntField()
@@ -308,7 +310,7 @@ class VDisk(ModelBase, Document):
     backupexpiration = IntField()
 
 
-class Alert(ModelBase, Document):
+class Alert(ModelBase):
     username = StringField(default='')
     description = StringField(default='')
     descriptionpub = StringField(default='')
@@ -329,14 +331,14 @@ class Alert(ModelBase, Document):
     errorconditions = ListField(IntField())  # ids of errorconditions
 
 
-class Heartbeat(ModelBase, Document):
+class Heartbeat(ModelBase):
 
     """
     """
     lastcheck = IntField(default=j.data.time.getTimeEpoch())
 
 
-class Machine(ModelBase, Document):
+class Machine(ModelBase):
     name = StringField(default='')
     roles = ListField(StringField())
     netaddr = StringField(default='')
@@ -354,7 +356,7 @@ class Machine(ModelBase, Document):
     lastcheck = IntField(default=j.data.time.getTimeEpoch())
 
 
-class Nic(ModelBase, Document):
+class Nic(ModelBase):
     name = StringField(default='')
     mac = StringField(default='')
     ipaddr = ListField(StringField())
@@ -363,7 +365,7 @@ class Nic(ModelBase, Document):
     lastcheck = IntField(default=j.data.time.getTimeEpoch())
 
 
-class Node(ModelBase, Document):
+class Node(ModelBase):
     name = StringField(default='')
     roles = ListField(StringField())
     netaddr = DictField(default={})
@@ -380,7 +382,7 @@ class Node(ModelBase, Document):
     _meta = ListField(StringField())
 
 
-class Process(ModelBase, Document):
+class Process(ModelBase):
     aysdomain = StringField(default='')
     aysname = StringField(default='')
     pname = StringField(default='')  # process name
@@ -414,7 +416,7 @@ class Process(ModelBase, Document):
     nr_connections_out = FloatField()
 
 
-class Test(ModelBase, Document):
+class Test(ModelBase):
     name = StringField(default='')
     testrun = StringField(default='')
     path = StringField(default='')
@@ -435,7 +437,7 @@ class Test(ModelBase, Document):
     source = DictField(default={})
 
 
-class User(ModelBase, Document):
+class User(ModelBase):
     name = StringField(default='')
     domain = StringField(default='')
     passwd = StringField(default='')  # stored hashed
@@ -468,7 +470,7 @@ class User(ModelBase, Document):
         super(ModelBase, user).save()
 
 
-class SessionCache(ModelBase, Document):
+class SessionCache(ModelBase):
     __redis__ = True
     user = StringField()
     kwargs = DictField()

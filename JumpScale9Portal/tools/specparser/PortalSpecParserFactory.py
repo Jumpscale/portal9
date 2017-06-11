@@ -22,6 +22,8 @@ class Specbase(ClassBase):
             value = value.strip("\"")
         if type == 'int' and value:
             return int(value)
+        elif type == 'float' and value:
+            return float(value)
         elif type == 'bool' and value:
             return j.data.types.bool.fromString(value)
         return value

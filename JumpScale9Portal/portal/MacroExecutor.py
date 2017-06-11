@@ -30,7 +30,7 @@ class MacroExecutorBase(object):
         spacename = doc.getSpaceName().lower()
         if macrospace is not None:
             macrospace = macrospace or None
-            if macrospace:
+            if macrospace and macrospace in j.portal.tools.server.active.spacesloader.spaces:
                 j.portal.tools.server.active.spacesloader.spaces[macrospace].loadDocProcessor()
             if macrospace in self.taskletsgroup and self.taskletsgroup[macrospace].hasGroup(macro):
                 return self.taskletsgroup[macrospace]
@@ -38,7 +38,7 @@ class MacroExecutorBase(object):
         if spacename in self.taskletsgroup and self.taskletsgroup[spacename].hasGroup(macro):
             return self.taskletsgroup[spacename]
         # last fall back to default macros
-        if self.taskletsgroup[macrospace].hasGroup(macro):
+        if macrospace in self.taskletsgroup and self.taskletsgroup[macrospace].hasGroup(macro):
             return self.taskletsgroup[macrospace]
         return None
 
