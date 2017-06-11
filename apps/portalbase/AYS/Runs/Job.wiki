@@ -11,7 +11,7 @@
 
 {{breadcrumb:
     - Repositories: /AYS/repos
-    - Repo $$reponame: /AYS/Repo?reponame=$$reponame
+    - "Repository: $$reponame": /AYS/Repo?reponame=$$reponame
     - Runs: /AYS/Runs?repo=$$reponame
     - Run $$runid: /AYS/RunModel?reponame=$$reponame&runid=$$runid
     - Job $$jobid:

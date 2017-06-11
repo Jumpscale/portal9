@@ -5,7 +5,7 @@
 
 {{breadcrumb:
     - Repositories : /AYS/repos
-    - Repo ${reponame}: /AYS/Repo?reponame=${reponame}
+    - "Repository: $$reponame": /AYS/Repo?reponame=${reponame}
     - Runs: /AYS/Runs?reponame=$$reponame
     - Run $$runid: /AYS/Run?repo=$$repo&runid=$$runid
 }}

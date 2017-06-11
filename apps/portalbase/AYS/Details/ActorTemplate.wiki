@@ -6,7 +6,7 @@
 {{breadcrumb:
     {% if reponame %}
     - Repositories : /AYS/repos
-    - Repo $$reponame: /AYS/Repo?reponame=$$reponame
+    - "Repository: $$reponame": /AYS/Repo?reponame=$$reponame
     - Actor Templates: /AYS/Actortemplates?reponame=$$reponame
     - Actor Template $$aysname: /AYS/actortemplate?reponame=$$reponame&aysname=$$aysname
     {% else %}

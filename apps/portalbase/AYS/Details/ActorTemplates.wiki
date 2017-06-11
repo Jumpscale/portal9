@@ -7,7 +7,7 @@ h3. Actor Templates
 {{breadcrumb:
     {% if reponame or error %}
     - Repositories: /AYS/repos
-    - Repo $$reponame: /AYS/Repo?reponame=$$reponame
+    - "Repository: $$reponame": /AYS/Repo?reponame=$$reponame
     {% endif %}
     - Actor Templates: /AYS/Actortemplates
 

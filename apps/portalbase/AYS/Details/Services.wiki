@@ -7,7 +7,7 @@ h2. test
 {{breadcrumb:
     {% if reponame or error %}
     - Repositories: /AYS/repos
-    - Repo $$reponame: /AYS/Repo?&reponame=$$reponame
+    - "Repository: $$reponame": /AYS/Repo?&reponame=$$reponame
     {% endif %}
     - Services: /AYS/services
 }}

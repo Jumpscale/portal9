@@ -3,7 +3,7 @@
 {{aysservice: aysrole:$$aysrole aysname:$$aysname reponame:$$reponame}}
 {{breadcrumb:
     - Repositories : /AYS/repos
-    - Repo $$reponame: /AYS/Repo?reponame=$$reponame
+    - "Repository: $$reponame": /AYS/Repo?reponame=$$reponame
     - Services: /AYS/Services?reponame=$$reponame
     - Service $$aysrole!$$aysname: /AYS/Service?aysrole=$$aysrole&aysname=$$aysname
 }}

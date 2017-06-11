@@ -8,7 +8,7 @@ h3. Repository: [$$reponame|/AYS/repo?reponame=$$reponame]
 
 {{breadcrumb:
     - Repositories : /AYS/repos
-    - Repo $$reponame: /AYS/Repo?reponame=$$reponame
+    - "Repository: $$reponame": /AYS/Repo?reponame=$$reponame
     - Simulate:  /AYS/simulate?repo=$$reponame
 
 }}

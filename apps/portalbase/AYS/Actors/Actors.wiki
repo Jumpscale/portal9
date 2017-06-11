@@ -9,7 +9,7 @@ Error : ${error}
 {% else %}
 {{breadcrumb:
     - Repositories : /AYS/repos
-    - Repo ${reponame}: /AYS/Repo?reponame=${reponame}
+    - "Repository: $$reponame": /AYS/Repo?reponame=${reponame}
     - Actors: /AYS/actors?reponame=$$reponame
 }}
 

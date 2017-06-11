@@ -6,7 +6,7 @@
 
 {{breadcrumb:
     - Repositories : /AYS/repos
-    - Repo $$reponame: /AYS/Repo?reponame=$$reponame
+    - "Repository: $$reponame": /AYS/Repo?reponame=$$reponame
     - Blueprints: /AYS/Blueprints?reponame=$$reponame
 }}
 

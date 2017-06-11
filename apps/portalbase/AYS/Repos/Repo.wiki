@@ -2,7 +2,7 @@
 
 {{breadcrumb:
     - Repositories : /AYS/Repos
-    - Repo $$reponame: /AYS/Repo?reponame=$$reponame
+    - "Repository: $$reponame": /AYS/Repo?reponame=$$reponame
 }}
 {% if error is defined %}
 Error : ${error}

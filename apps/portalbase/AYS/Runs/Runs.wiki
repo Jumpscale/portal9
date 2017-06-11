@@ -11,7 +11,7 @@ h3. AYS Repo Runs
 {{breadcrumb:
     - AYS : /
     - Repositories: /AYS/repos
-    - Repo ${reponame}: /AYS/Repo?reponame=${reponame}
+    - "Repository: $$reponame": /AYS/Repo?reponame=${reponame}
     - Runs: /AYS/Runs?reponame=$$repo
 }}
 
