@@ -23,9 +23,7 @@ h4. Actions
     - name: repository
       value: $$reponame
       type: hidden
-
-  showresponse: True
-
+  reload: True
 }}
 
 {% if error is defined %}
