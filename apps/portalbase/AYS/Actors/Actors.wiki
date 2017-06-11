@@ -8,9 +8,9 @@ Error : ${error}
 
 {% else %}
 {{breadcrumb:
-    - Repositories : /ays81/repos
-    - Repo ${reponame}: /ays81/Repo?reponame=${reponame}
-    - Actors: /ays81/actors?reponame=$$reponame
+    - Repositories : /AYS/repos
+    - Repo ${reponame}: /AYS/Repo?reponame=${reponame}
+    - Actors: /AYS/actors?reponame=$$reponame
 }}
 
 {{cssstyle
@@ -22,7 +22,7 @@ Error : ${error}
 
 h3. Actors $$reponame:
 
-*Repo*: [${reponame}|/ays81/Repo?reponame=${reponame}]
+*Repo*: [${reponame}|/AYS/Repo?reponame=${reponame}]
 
 {{html:
       <script  src='/jslib/codemirror/codemirror.js' type='text/javascript'></script>
@@ -33,6 +33,6 @@ h3. Actors $$reponame:
 h4. Actors:
 ||id||Actor||
   {% for actor in actors -%}
-|${loop.index}|[${actor.name}|/ays81/actor?reponame=${reponame}&actorname=${actor.name}]|
+|${loop.index}|[${actor.name}|/AYS/actor?reponame=${reponame}&actorname=${actor.name}]|
   {% endfor -%}
 {% endif %}

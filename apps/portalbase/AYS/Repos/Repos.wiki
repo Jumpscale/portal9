@@ -11,7 +11,7 @@ h2. Repositories
 {{datatables_use}}
 {{action id:'action-Createrepository' class:'glyphicon glyphicon-plus margin-bottom-medium margin-left-medium' label:'Create Repository'}}
 # {{action id:'action-Commitrepositories' class:'glyphicon glyphicon-save margin-bottom-medium margin-left-medium' label:'Commit Repositories'}}
-# {{action id:'action-Reloadays81' class:'glyphicon glyphicon-refresh margin-bottom-medium margin-left-medium' label:'Reload ays81'}}
+# {{action id:'action-ReloadAYS' class:'glyphicon glyphicon-refresh margin-bottom-medium margin-left-medium' label:'Reload AYS'}}
 
 {{actions:
 - display: Create repository
@@ -53,7 +53,7 @@ h2. Repositories
   reload: false
   action: /restmachine/system/atyourservice/deleteRepo
 
-# - display: Reload ays81
+# - display: Reload AYS
 #   hide: true
 #   action: /restmachine/system/atyourservice/reload
 #   showresponse: True
@@ -66,7 +66,7 @@ Error : ${error}
 {{aysrepos}}
 ||Name||Actions||
 {% for repo in repos -%}
-  |[${repo.name}|/ays81/Repo?reponame=${repo.name}]| {{action label:'Delete' deleterow:true id:'action-Destroythisrepository' data-repository:'${repo.name}' class:'glyphicon glyphicon-trash'}} |
+  |[${repo.name}|/AYS/Repo?reponame=${repo.name}]| {{action label:'Delete' deleterow:true id:'action-Destroythisrepository' data-repository:'${repo.name}' class:'glyphicon glyphicon-trash'}} |
 {% else %}
   The is no AYS repository yet.
   Create one by clicking 'Create Repository'

@@ -1,8 +1,8 @@
 @usedefaults
 
 {{breadcrumb:
-    - Repositories : /ays81/Repos
-    - Repo $$reponame: /ays81/Repo?reponame=$$reponame
+    - Repositories : /AYS/Repos
+    - Repo $$reponame: /AYS/Repo?reponame=$$reponame
 }}
 {% if error is defined %}
 Error : ${error}
@@ -11,7 +11,7 @@ Error : ${error}
 {{timestamp}}
 @block
 @row
-h2. Repository: [$$reponame|/ays81/Repo?reponame=$$reponame]
+h2. Repository: [$$reponame|/AYS/Repo?reponame=$$reponame]
 
 h4. Actions
 {{actions:

@@ -10,10 +10,10 @@
 }}
 
 {{breadcrumb:
-    - Repositories: /ays81/repos
-    - Repo $$reponame: /ays81/Repo?reponame=$$reponame
-    - Runs: /ays81/Runs?repo=$$reponame
-    - Run $$runid: /ays81/RunModel?reponame=$$reponame&runid=$$runid
+    - Repositories: /AYS/repos
+    - Repo $$reponame: /AYS/Repo?reponame=$$reponame
+    - Runs: /AYS/Runs?repo=$$reponame
+    - Run $$runid: /AYS/RunModel?reponame=$$reponame&runid=$$runid
     - Job $$jobid:
 }}
 {% if error is defined %}
@@ -36,6 +36,6 @@ ${job.code}
 ${job.printLogs}
 }}
 {% if job.profileData -%}
-    * [See job cProfile|/ays81/jobprofile?jobid=${job.key}]
+    * [See job cProfile|/AYS/jobprofile?jobid=${job.key}]
 {% endif %}
 {% endif %}

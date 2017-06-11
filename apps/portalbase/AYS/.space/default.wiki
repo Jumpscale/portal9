@@ -1,12 +1,12 @@
 
-{{title:AYS81}}
+{{title:AYS}}
 {{ApplyFlatTheme}}
 
 {{find}}
 {{PortalsHamburgerMenu}}
 
 {{menu:
-AYS Portal:/AYS81
+AYS Portal:/AYS
 }}
 
 {{menuadmin:

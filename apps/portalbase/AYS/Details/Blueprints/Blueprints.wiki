@@ -5,9 +5,9 @@
 {{aysblueprints ayspath:$$ayspath reponame:$$reponame}}
 
 {{breadcrumb:
-    - Repositories : /ays81/repos
-    - Repo $$reponame: /ays81/Repo?reponame=$$reponame
-    - Blueprints: /ays81/Blueprints?reponame=$$reponame
+    - Repositories : /AYS/repos
+    - Repo $$reponame: /AYS/Repo?reponame=$$reponame
+    - Blueprints: /AYS/Blueprints?reponame=$$reponame
 }}
 
 {% if error is defined %}

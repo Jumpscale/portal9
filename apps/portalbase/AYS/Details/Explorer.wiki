@@ -5,10 +5,10 @@
 {{aysrepo reponame:$$reponame}}
 {{breadcrumb:
     {% if repo %}
-    - Repositories: /ays81/repos
-    - Repo $$reponame: /ays81/Repo?reponame=$$reponame
+    - Repositories: /AYS/repos
+    - Repo $$reponame: /AYS/Repo?reponame=$$reponame
     {% endif %}
-    - Explorer: /ays81/Actortemplates
+    - Explorer: /AYS/Actortemplates
 
 }}
 {% if error is defined %}

@@ -5,13 +5,13 @@
 
 {{breadcrumb:
     {% if reponame %}
-    - Repositories : /ays81/repos
-    - Repo $$reponame: /ays81/Repo?reponame=$$reponame
-    - Actor Templates: /ays81/Actortemplates?reponame=$$reponame
-    - Actor Template $$aysname: /ays81/actortemplate?reponame=$$reponame&aysname=$$aysname
+    - Repositories : /AYS/repos
+    - Repo $$reponame: /AYS/Repo?reponame=$$reponame
+    - Actor Templates: /AYS/Actortemplates?reponame=$$reponame
+    - Actor Template $$aysname: /AYS/actortemplate?reponame=$$reponame&aysname=$$aysname
     {% else %}
-    - Actor Templates: /ays81/Actortemplates
-    - Actor Template $$aysname: /ays81/actortemplate?&aysname=$$aysname
+    - Actor Templates: /AYS/Actortemplates
+    - Actor Template $$aysname: /AYS/actortemplate?&aysname=$$aysname
     {% endif %}
 }}
 

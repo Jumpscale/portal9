@@ -5,6 +5,6 @@
 {{aysjobprofile: aysrepo:$$aysrepo jobid:$$jobid}}
 
 {{breadcrumb:
-    - AYS81 : /
+    - AYS : /
     - Job $$jobid:
 }}

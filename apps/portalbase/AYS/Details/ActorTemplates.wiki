@@ -6,10 +6,10 @@ h3. Actor Templates
 
 {{breadcrumb:
     {% if reponame or error %}
-    - Repositories: /ays81/repos
-    - Repo $$reponame: /ays81/Repo?reponame=$$reponame
+    - Repositories: /AYS/repos
+    - Repo $$reponame: /AYS/Repo?reponame=$$reponame
     {% endif %}
-    - Actor Templates: /ays81/Actortemplates
+    - Actor Templates: /AYS/Actortemplates
 
 }}
 {% if error is defined %}

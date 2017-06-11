@@ -4,10 +4,10 @@
 {{aysrun: repo:$$repo runid:$$runid reponame:$$reponame}}
 
 {{breadcrumb:
-    - Repositories : /ays81/repos
-    - Repo ${reponame}: /ays81/Repo?reponame=${reponame}
-    - Runs: /ays81/Runs?reponame=$$reponame
-    - Run $$runid: /ays81/Run?repo=$$repo&runid=$$runid
+    - Repositories : /AYS/repos
+    - Repo ${reponame}: /AYS/Repo?reponame=${reponame}
+    - Runs: /AYS/Runs?reponame=$$reponame
+    - Run $$runid: /AYS/Run?repo=$$repo&runid=$$runid
 }}
 
 {{cssstyle
@@ -21,7 +21,7 @@ Error : ${error}
 {% else %}
 h3. Run $$runid:
 
-*Repo*: [${reponame}|/ays81/Repo?reponame=${reponame}]
+*Repo*: [${reponame}|/AYS/Repo?reponame=${reponame}]
 {% if run['state'] in ['error'] %}
     *State*: {{html: <red style='color:red'>ERROR</red> }}
 {% elif run['state'] in 'ok' %}
@@ -48,7 +48,7 @@ h4. Steps:
         ** Jobs:
             || Actor name || Service Name || Action name ||
             {% for job in step.jobs -%}
-            |[${job.actor_name}| /ays81/job?jobid=${job.key}&runid=$$runid&reponame=${reponame}]| [${job.service_name}| /ays81/service?aysname=${job.service_name}&aysrole=${job.actor_name}&reponame=${reponame}]| ${job.action_name}|
+            |[${job.actor_name}| /AYS/job?jobid=${job.key}&runid=$$runid&reponame=${reponame}]| [${job.service_name}| /AYS/service?aysname=${job.service_name}&aysrole=${job.actor_name}&reponame=${reponame}]| ${job.action_name}|
             {% endfor %}
     {{html:
         </div>

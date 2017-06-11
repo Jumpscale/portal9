@@ -6,6 +6,6 @@ The token you acquired might give access to a lot more information that you want
 
 For these use cases, itsyou.online supports JWT RFC7519.
 
-You can generate JWT token by selecting **JWT** from the navigation menu under **AYS81 Portal**. On this page click the **Generate JWT token** to get your JWT token.
+You can generate JWT token by selecting **JWT** from the navigation menu under **AYS Portal**. On this page click the **Generate JWT token** to get your JWT token.
 
 You can now pass this token to the API client to be able to use the REST api.
