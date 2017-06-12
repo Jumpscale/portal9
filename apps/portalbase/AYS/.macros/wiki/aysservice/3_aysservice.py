@@ -24,7 +24,10 @@ def main(j, args, params, tags, tasklet):
                 if k.strip() in hidden:
                     continue
                 else:
-                    data_revised[k] = v.replace('\\n', '') if isinstance(v, str) else v
+                    if k == "path":
+                        data_revised[k] = v.replace("!", "\!")  # don't render paths as images in .wiki pages.
+                    else:
+                        data_revised[k] = v.replace('\\n', '') if isinstance(v, str) else v
             extra_data = {'producers': service['producers'], 'consumers': service['consumers'], 'actions': service['actions']}
             args.doc.applyTemplate({
                 'service': service,
