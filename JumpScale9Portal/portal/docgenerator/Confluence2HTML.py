@@ -50,7 +50,8 @@ class Confluence2HTML():
     @staticmethod
     def findLinks(line, lower=True):
         # r=r"\[[-:|_@#.?\w\s\\=/&]*\]"
-        r = r"\[[^\[\]]+\]"  # TODO: does not seem right to me
+        r = r"(\[.+?\|.+?\])"
+        #r = r"\[[^\[\]]+\]"  # TODO: does not seem right to me
         if j.data.regex.match(r, line):  # find links
             # print "match %s"% line
             htmlelements = ""
