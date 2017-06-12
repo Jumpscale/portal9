@@ -2,6 +2,11 @@ language: python
 sudo: enabled
 dist: trusty
 
+# whitelist master branch only
+branches:
+  only:
+    - master
+
 before_install:
   - sudo apt-get update
   - curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
