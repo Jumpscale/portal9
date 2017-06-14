@@ -46,8 +46,8 @@ class Popup(Form):
                     </div>
                   </div>
                   <div class="modal-footer">
+                  <button class="btn btn-primary" data-loading-text="Loading...">${action_button}</button>
                     <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
-                    <button class="btn btn-primary" data-loading-text="Loading...">${action_button}</button>
                   </div>
                 </div>
             </div>
