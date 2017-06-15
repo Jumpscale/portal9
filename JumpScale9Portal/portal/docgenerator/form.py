@@ -85,7 +85,9 @@ class Form:
         CSS = """
 <style type="text/css">
     .CodeMirror {
-        height: auto;
+        height: 10em;
+        margin-bottom: 1em;
+        padding: 6px 10px;
         border: $linecolor;
         border-top: $linecolortopbottom;
         border-bottom: $linecolortopbottom
