@@ -1,3 +1,11 @@
 h2. Actors Documentation
 
-{{actorsdocs}}
+Actors are restful API interfaces that are used to run backend tasks, in response to a message that it receives, an actor can make local decisions, create more actors, send more messages, and determine how to respond to the next received message. this functionality is tested through the UI of swagger.
+
+You can pass parameters of types integer, float, string, list and object. The parameters of type list and object should be entered in JSON.
+
+There is a get and post method for each API, They are always the same.
+
+h3. The links below show the actors' groups, divided according to app name
+
+{{actorgroups}}

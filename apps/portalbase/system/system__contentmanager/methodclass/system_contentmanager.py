@@ -420,3 +420,7 @@ class system_contentmanager(j.tools.code.classGetBase()):
         if contents['querystr']:
             returnpath += "?%s" % contents['querystr']
         raise exceptions.Redirect(returnpath)
+
+    def checkEvents(self, cursor, **kwargs):
+        ctx = kwargs['ctx']
+        return ctx.events.get(cursor)

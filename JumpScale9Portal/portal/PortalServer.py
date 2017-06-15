@@ -3,7 +3,6 @@ import collections
 import os
 import sys
 import inspect
-import redis
 
 from beaker.middleware import SessionMiddleware
 from .MacroExecutor import MacroExecutorPage, MacroExecutorWiki, MacroExecutorPreprocess, MacroexecutorMarkDown
@@ -165,9 +164,6 @@ class PortalServer:
         self.schedule1min = {}
         self.schedule15min = {}
         self.schedule60min = {}
-
-        self.rediscache = redis.StrictRedis(host='localhost', port=9999, db=0)
-        self.redisprod = redis.StrictRedis(host='localhost', port=9999, db=0)
 
         self.jslibroot = j.sal.fs.joinPaths(j.dirs.JSAPPSDIR, "portals", "jslib")
 
@@ -610,7 +606,6 @@ class PortalServer:
                 inp = env.get('wsgi.input')
                 params.update({'FILES': {'data': inp, 'boundary': boundary}})
         return params
-
 
     @property
     def requestContext(self):

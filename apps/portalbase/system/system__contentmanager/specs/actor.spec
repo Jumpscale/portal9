@@ -1,33 +1,34 @@
 [actor] @dbtype:mem #tasklets
-	"""
-	this actor manages all content on the wiki
-	can e.g. notify wiki/appserver of updates of content
-	"""
+    """
+    this actor manages all content on the wiki
+    can e.g. notify wiki/appserver of updates of content
+    """
+
     method:notifyFiledir @method:get,post
-		"""
-		"""
-		var:path str,,path of content which got changed
+        """
+         """
+        var:path str,,path of content which got changed
         result:bool
 
     method:getSpaces @method:get,post
-		"""
-		"""
+        """
+        """
         result:list(str)
 
     method:getSpacesWithPaths @method:get,post
-		"""
-		"""
+        """
+        """
         result:list([name,path])
 
     method:getContentDirsWithPaths @method:get,post
-		"""
-		return root dirs of content (actors,buckets,spaces)
-		"""
+        """
+        return root dirs of content (actors,buckets,spaces)
+        """
         result:list([name,path])
 
     method:getBucketsWithPaths @method:get,post
-		"""
-		"""
+        """
+        """
         result:list([name,path])
 
     method:getActorsWithPaths @method:get,post
@@ -36,88 +37,87 @@
         result:list([name,path])
 
     method:getBuckets @method:get,post
-		"""
-		"""
+        """
+        """
         result:list(str)
 
     method:getActors @method:get,post
-		"""
-		"""
+        """
+        """
         result:list(str)
 
 
     method:notifySpaceModification @method:get,post
-		"""
-		"""
-		var:id str,,id of space which changed# @tags: optional
+        """
+        """
+        var:id str,,id of space which changed# @tags: optional
         #var:name str,,name of space which changed @tags: optional
         result:bool
 
     method:notifySpaceNew @method:get,post
-		"""
-		"""
-		var:path str,,path of content which got changed
-		var:name str,,name
-		result:bool
+        """
+        """
+        var:path str,,path of content which got changed
+        var:name str,,name
+        result:bool
 
     method:notifySpaceDelete @method:get,post
-		"""
-		"""
-		var:id str,,id of space which changed
-		result:bool
+        """
+        """
+        var:id str,,id of space which changed
+        result:bool
 
     method:notifyBucketDelete @method:get,post
-		"""
-		"""
-		var:id str,,id of bucket which changed
-		result:bool
+        """
+        """
+        var:id str,,id of bucket which changed
+        result:bool
 
     method:notifyBucketModification @method:get,post
-		"""
-		"""
-		var:id str,,id of bucket which changed
+        """
+        """
+        var:id str,,id of bucket which changed
         result:bool
 
     method:notifyBucketNew @method:get,post
-		"""
-		"""
-		var:path str,,path of content which got changed
-		var:name str,,name
-		result:bool
+        """
+        """
+        var:path str,,path of content which got changed
+        var:name str,,name
+        result:bool
 
     method:notifyActorNew @method:get,post
-		"""
-		"""
-		var:path str,,path of content which got changed
-		var:name str,,name
-		result:bool
+        """
+        """
+        var:path str,,path of content which got changed
+        var:name str,,name
+        result:bool
 
     method:notifyActorModification @method:get,post
-		"""
-		"""
-		var:id str,,id of actor which changed
+        """
+        """
+        var:id str,,id of actor which changed
         result:bool
 
     method:notifyActorDelete @method:get,post
-		"""
-		"""
-		var:id str,,id of space which changed
-		result:bool
-
+        """
+        """
+        var:id str,,id of space which changed
+        result:bool
 
     method:prepareActorSpecs @method:get,post
-		"""
-		compress specs for specific actor and targz in appropriate download location
-		"""
-		var:app str,,name of app
-		var:actor str,,name of actor
-		result:bool
+        """
+        compress specs for specific actor and targz in appropriate download location
+        """
+        var:app str,,name of app
+        var:actor str,,name of actor
+        result:bool
 
     method:wikisave @noauth
-		"""
-		"""
-		var:cachekey str,,key to the doc
-		var:text str,,content of file to edit
+        """
+        """
+        var:cachekey str,,key to the doc
+        var:text str,,content of file to edit
         result:bool
 
     method:modelobjectlist @noauth returnformat:jsonraw method:get
@@ -158,3 +158,10 @@
         var:actorname str,,
         var:actorpath str,"",
         var:path str,,
+
+    method:checkEvents @method:get
+        """
+        Check for events
+        """
+        var:cursor int,,cursor to get from
+        result:dict

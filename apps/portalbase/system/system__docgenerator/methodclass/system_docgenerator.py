@@ -43,8 +43,12 @@ class system_docgenerator(j.tools.code.classGetBase()):
                 continue
             methods = dict()
             path = '/%s/%s/%s' % (specobj.appname, specobj.actorname, method.name)
+            methodtags = j.data.tags.getObject(method.tags)
             paths[path] = methods
-            for methodtype in ('get', 'post'):
+            methodtypes = ('post', )
+            if 'method' in methodtags.tags:
+                methodtypes = [tag for tag in methodtags.tags['method'].split(',') if tag]
+            for methodtype in methodtypes:
                 methodinfo = dict()
                 methods[methodtype] = methodinfo
                 methodinfo['description'] = method.description
