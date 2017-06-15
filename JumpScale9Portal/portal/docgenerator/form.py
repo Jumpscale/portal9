@@ -71,6 +71,110 @@ class Form:
         content = template.render(label=label, name=name, required=required, placeholder=placeholder)
         self.widgets.append(content)
 
+
+
+    def addCodeBlock(self, code, name='contents', template="python", path="", edit=True, exitpage=True, spacename='', pagename='', linenr=False,
+                     linecolor="#eee", linecolortopbottom="1px solid black", wrap=True, wrapwidth=100, querystr=None, theme='monokai', autorefresh=False, page=None):
+        """
+        TODO: define types of templates supported
+        @template e.g. python
+        if path is given and edit=True then file can be editted and a edit button will appear on editor
+        """
+        # if codeblock no postprocessing(e.g replacing $$space, ...) should be
+        # done
+
+        if edit:
+            page.processparameters['postprocess'] = False
+        page.addJS("%s/old/codemirror/lib/codemirror.js" % page.liblocation)
+        page.addCSS("%s/old/codemirror/lib/codemirror.css" % page.liblocation)
+        page.addJS("%s/old/codemirror/mode/javascript/javascript.js" % page.liblocation)
+        page.addCSS("%s/old/codemirror/theme/%s.css" % (page.liblocation, theme))
+        #page.addCSS("%s/codemirror/doc/docs.css"% page.liblocation)
+        page.addJS("%s/old/codemirror/mode/%s/%s.js" % (page.liblocation, template, template))
+        CSS = """
+<style type="text/css">
+    .CodeMirror {
+        height: auto;
+        border: $linecolor;
+        border-top: $linecolortopbottom;
+        border-bottom: $linecolortopbottom
+    }
+    .CodeMirror-scroll {
+        overflow-y: hidden;
+        overflow-x: auto;
+    }
+
+</style>
+"""
+        CSS = CSS.replace("$linecolortopbottom", linecolortopbottom)
+        CSS = CSS.replace("$linecolor", linecolor)
+
+        page.head += CSS
+        page._codeblockid += 1
+        # rows=\"20\"
+        TA = "<textarea id=\"code%s\" name=\"%s\" >" % (page._codeblockid, name)
+        TA += code
+        TA += "</textarea>"
+        if path != "" and edit:
+            TA += "<button class='btn btn-primary margin-top-large' type=\"submit\" onclick=\"copyText%s();\">Save.</button>" % page._codeblockid
+        self.widgets.append(TA)
+
+        if path != "" and edit:
+
+            F = """
+    <form id="hiddenForm$id" name="hiddenForm$id" method="post" action="/restmachine/system/contentmanager/wikisave">
+    <input type="hidden" name="text" id="text" value="">
+    <input type="hidden" name="cachekey" id="cachekey" value="$guid">
+    </form>
+            """
+            F = F.replace("$id", str(page._codeblockid))
+            guid = j.data.idgenerator.generateGUID()
+            content = {'space': spacename, 'path': path, 'page': pagename, 'querystr': querystr}
+            j.apps.system.contentmanager.dbmem.set(guid, content, 60)
+            F = F.replace("$guid", guid)
+            page.addMessage(F)
+
+        # if not self._hasCodeblock:
+        if linenr:
+            linenr = "true"
+        else:
+            linenr = "false"
+        JS = """
+var editor$id = CodeMirror.fromTextArea(document.getElementById("code$id"),
+    {
+    lineNumbers: $linenr,
+    theme: "elegant",
+    readOnly: $readonly,
+    theme: "$theme",
+    autoRefresh: "$autorefresh",
+    lineWrapping: $wrap,
+    mode: "{template}",
+    onCursorActivity: function() {
+        editor$id.addLineClass(hlLine, null, null);
+        hlLine = editor$id.addLineClass(editor$id.getCursor().line, null, "activeline");
+        }
+    }
+);
+var hlLine = editor$id.addLineClass(0, "activeline");
+
+function copyText$id() {
+    var text=editor$id.getValue()
+    document.hiddenForm$id.text.value = text;
+    document.forms["hiddenForm$id"].submit();
+    }
+"""
+
+        JS = JS.replace("$id", str(page._codeblockid))
+        JS = JS.replace("$linenr", linenr)
+        JS = JS.replace("$wrap", str(wrap).lower())
+        JS = JS.replace("$readonly", str(not edit).lower())
+        JS = JS.replace("$theme", theme)
+        JS = JS.replace("$autorefresh", str(autorefresh).lower())
+
+        page.addJS(jsContent=JS.replace("{template}", template), header=False)
+        page._hasCodeblock = True
+
+
     def addNumber(self, label, name, required=False):
         template = self.jinja.from_string('''
             <div class="form-group">
