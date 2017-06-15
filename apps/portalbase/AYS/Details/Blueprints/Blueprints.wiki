@@ -42,7 +42,7 @@ $(function() {
           var url = '/restmachine/system/atyourservice/restoreBlueprint';
       }
       $.ajax({
-        type: 'GET',
+        type: 'POST',
         data: 'repository='+repo+'&blueprint='+bp,
         success: function(result,status,xhr) {
           // restore

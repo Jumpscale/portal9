@@ -190,6 +190,7 @@ class system_atyourservice(j.tools.code.classGetBase()):
         result json
         """
         cl = self.get_client(**kwargs)
+
         cl.archiveBlueprint(data=None, blueprint=blueprint, repository=repository)
         return "blueprint archived."
 
@@ -200,6 +201,7 @@ class system_atyourservice(j.tools.code.classGetBase()):
         param:name blueprints in that base name will only be returned otherwise all names
         result json
         """
+
         cl = self.get_client(**kwargs)
         cl.restoreBlueprint(data=None, blueprint=blueprint, repository=repository)
 

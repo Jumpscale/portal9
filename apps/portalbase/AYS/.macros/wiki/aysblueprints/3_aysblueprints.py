@@ -17,7 +17,7 @@ def main(j, args, params, tags, tasklet):
             bp = dict()
             if blueprint['archived']:
                 label_color = 'warning'
-                label_content = 'inactive'
+                label_content = 'archived'
                 icon = 'saved'
 
             # elif not blueprint.is_valid:
