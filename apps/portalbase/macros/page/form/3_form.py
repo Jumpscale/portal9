@@ -103,6 +103,12 @@ eg:
                     name = var['name']
                     required = var.get('required', False)
                     form.addTextArea(label, name, required=required)
+                elif var['type'] == 'code':
+                    label = var['label']
+                    name = var['name']
+                    required = var.get('required', False)
+                    lang = var.get('language', 'yaml')
+                    form.addCodeBlock(code="", template=lang, page=page)
 
     form.addButton(type='submit', value=display)
 
