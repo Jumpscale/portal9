@@ -123,7 +123,7 @@ class Confluence2HTML():
             imagePath, title, width_n_height, Confluence2HTML._format_styles(styles))
 
     def escape(self, content):
-        for char in "`*_+-?^[{(":
+        for char in "`*_+-?^[{(}]":
             content = content.replace(char, '\\' + char)
         return content
 
