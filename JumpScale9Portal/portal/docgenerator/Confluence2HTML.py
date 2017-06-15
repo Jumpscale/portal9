@@ -122,8 +122,8 @@ class Confluence2HTML():
         return "<img src='%s' alt='%s' %s style='clear:both;%s' />" % (
             imagePath, title, width_n_height, Confluence2HTML._format_styles(styles))
 
-    def escape(selfc, content):
-        for char in "`*_+-?^[{(":
+    def escape(self, content):
+        for char in "`*_+-?^[{(}]":
             content = content.replace(char, '\\' + char)
         return content
 

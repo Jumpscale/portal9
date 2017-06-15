@@ -1,5 +1,3 @@
-
-
 def main(j, args, params, tags, tasklet):
     def alphabetical(bp):
         return bp.name
@@ -36,7 +34,7 @@ def main(j, args, params, tags, tasklet):
             bp['label_content'] = label_content
             bp['icon'] = icon
             bp['label_color'] = label_color
-            bp['content'] = blueprint['content'].replace('\n', '\?')
+            bp['content'] = j.portal.tools.html.htmlfactory.escape(blueprint['content'].replace('\n', '\?'))
             bps.append({blueprint['name']: bp})
         args.doc.applyTemplate({'data': bps, 'reponame': reponame})
 
