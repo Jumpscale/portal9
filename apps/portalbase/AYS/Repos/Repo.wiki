@@ -58,7 +58,8 @@ h2. Links:
     value: $$reponame
   - name: contents
     label: Add content of blueprint
-    type: textarea
+    type: code
+    language: yaml
 }}
 @colend
 {% endif %}
