@@ -49,7 +49,12 @@ def main(j, args, params, tags, tasklet):
             """ % panel_data)
 
         if panel_data.get('code', False):
-            page.addCodeBlock(panel_data['content'], edit=False, exitpage=True, spacename='', pagename='', linenr=True, autorefresh=True)
+            active = panel_data['label_content'] == 'active'
+            bpname = panel_data['title'] if active else '_' + panel_data['title']
+            reponame = args.requestContext.params['reponame']
+            bppath = '{vardir}/cockpit_repos/{reponame}/blueprints/{bpname}'.format(vardir=j.dirs.VARDIR, reponame=reponame, bpname=bpname)
+            page.addCodeBlock(panel_data['content'], path=bppath, edit=True, exitpage=True, spacename='AYS', pagename='Blueprints', querystr="reponame={}".format(reponame), linenr=False, autorefresh=False)
+
         else:
             page.addMessage(panel_data['content'])
 

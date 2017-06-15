@@ -412,11 +412,12 @@ class system_contentmanager(j.tools.code.classGetBase()):
         j.sal.fs.writeFile(contents['path'], text)
         # after writing the conent, we need to make sure that the doc is marked dirty so that it will be reloaded from the disk
         # there is already a watchdog that monitor all the docs but there is no guarantee that it will mark the doc on time before the redirect is executed
-        space = j.portal.tools.server.active.spacesloader.getLoaderFromId(contents['space'])
-        if contents['page'] in space.docprocessor.name2doc:
-            doc = space.docprocessor.name2doc[contents['page']]
-            doc.dirty = True
-        returnpath = "/%s/%s" % (contents['space'], contents['page'])
-        if contents['querystr']:
-            returnpath += "?%s" % contents['querystr']
-        raise exceptions.Redirect(returnpath)
+        if contents.get('space', False):
+            space = j.portal.tools.server.active.spacesloader.getLoaderFromId(contents['space'])
+            if contents['page'] in space.docprocessor.name2doc:
+                doc = space.docprocessor.name2doc[contents['page']]
+                doc.dirty = True
+            returnpath = "/%s/%s" % (contents['space'], contents['page'])
+            if contents['querystr']:
+                returnpath += "?%s" % contents['querystr']
+            raise exceptions.Redirect(returnpath)
