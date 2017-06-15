@@ -28,7 +28,10 @@ def main(j, args, params, tags, tasklet):
                         data_revised[k] = v.replace("!", "\!")  # don't render paths as images in .wiki pages.
                     else:
                         data_revised[k] = v.replace('\\n', '') if isinstance(v, str) else v
-            extra_data = {'producers': service['producers'], 'consumers': service['consumers'], 'actions': service['actions'], 'children': service['children']}
+            # Remove duplicate services from producers and consumers
+            producers = [dict(p) for p in set([tuple(pr.items()) for pr in service['producers']])]
+            consumers = [dict(c) for c in set([tuple(co.items()) for co in service['consumers']])]
+            extra_data = {'producers': producers, 'consumers': consumers, 'actions': service['actions'], 'children': service['children']}
             args.doc.applyTemplate({
                 'service': service,
                 'type': link_to_template,
