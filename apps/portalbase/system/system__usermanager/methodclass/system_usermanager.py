@@ -29,7 +29,7 @@ class system_usermanager(j.tools.code.classGetBase()):
 
         ctx = kwargs['ctx']
         if j.portal.tools.server.active.auth.authenticate(name, secret):
-            session = ctx.env['beaker.get_session']()  # create new session
+            session = ctx.env['beaker.session']
             session['user'] = name
             session._redis = True
             session.save()
@@ -73,7 +73,6 @@ class system_usermanager(j.tools.code.classGetBase()):
         result list(str)
 
         """
-        #raise NotImplementedError("not implemented method getusergroups")
         user = self._getUser(user)
         ctx = kwargs['ctx']
 
@@ -237,7 +236,10 @@ class system_usermanager(j.tools.code.classGetBase()):
         result current user
         """
         ctx = kwargs["ctx"]
-        return str(ctx.env['beaker.session']["user"])
+        return {
+            "name": ctx.env['beaker.session']["user"],
+            "admin": j.portal.tools.server.active.isAdminFromCTX(ctx)
+        }
 
     def userregister(self, name, passwd, emails, reference, remarks, config, **args):
         """

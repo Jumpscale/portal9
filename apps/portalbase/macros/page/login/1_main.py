@@ -1,6 +1,6 @@
 def main(j, args, params, tags, tasklet):
     page = args.page
-    page.addCSS("/jslib/bootstrap/css/bootstrap-3-3-1.min.css")
+    page.addCSS("/jslib/bootstrap/css/bootstrap-3-3-6.min.css")
     page.addCSS("/jslib/old/bootstrap/css/bootstrap-responsive.css")
     page.addCSS("/jslib/flatui/css/flat-ui.css")
     page.addCSS("/jslib/font-awesome/css/font-awesome.min.css")
@@ -23,10 +23,6 @@ def main(j, args, params, tags, tasklet):
       .login-field{
         height: 40px !important;
       }
-      .fixFirefoxSizing{
-        transform: scale(0.8, 0.8);
-        transform-origin: 45% 0px 0px;
-      }
       .btn-social{
         text-shadow: 0 0 0 rgba(255, 255, 255, 0.75) !important;
         margin-bottom: 10px;
@@ -47,18 +43,6 @@ def main(j, args, params, tags, tasklet):
       .btn-primary:hover{
         background-color: #4A7198;
       }
-    ''')
-    page.addJS(jsContent='''
-      $( function () {
-        $('body').addClass('flatTheme');
-        // fix firefox elements size on windows
-        var operatingSystem = navigator.platform;
-        if(operatingSystem.indexOf('Win') >= 0 && $.browser.mozilla == true){
-            $('body').addClass('fixFirefoxSizing');
-        }else{
-            $('body').addClass('removeTransform');
-        }
-      });
     ''')
     head = """
 <title>Login</title>

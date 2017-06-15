@@ -1,6 +1,6 @@
 <html>
 <head>
-	<link rel="stylesheet" href="/jslib/bootstrap/css/bootstrap-3-3-1.min.css">
+	<link rel="stylesheet" href="/jslib/bootstrap/css/bootstrap-3-3-6.min.css">
 	<link rel="stylesheet" href="/jslib/old/bootstrap/css/bootstrap-responsive.css">
 	<link rel="stylesheet" href="/jslib/flatui/css/flat-ui.css">
 	<link rel="stylesheet" href="/jslib/new-ui/new-ui.css">

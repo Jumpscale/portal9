@@ -1,4 +1,5 @@
 import re
+from .events import Events
 
 REC = re.compile("(?P<code>\d+)\s+(?P<message>.*)")
 
@@ -21,6 +22,7 @@ class RequestContext(object):
         self.application = application
         self.method = method
         self._response_started = False
+        self._events = None
         self.httpStatus = 200
         self.httpMessage = "OK"
         self.fformat = fformat.strip().lower()
@@ -28,6 +30,12 @@ class RequestContext(object):
     @property
     def response_started(self):
         return self._response_started
+
+    @property
+    def events(self):
+        if self._events is None:
+            self._events = Events(self)
+        return self._events
 
     def start_response(self, status, *args, **kwargs):
         force = kwargs.pop('forceheaders', False)

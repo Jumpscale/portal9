@@ -29,6 +29,7 @@ class PageHTML(Page):
         self._timestampsAdded = set()
         self.projectname = ""
         self.logo = ""
+        self.favicon = ""
         self.scriptBody = ""
         self.jscsslinks = {}
         self.login = False
@@ -58,10 +59,6 @@ class PageHTML(Page):
 
         self._hasCharts = False
         self._hasCodeblock = False
-        self._hasJQuery = False
-        self._hasBootstrap = False
-        self._hasBootstrapCSS = False
-        self._hasBootstrapJS = False
         self._hasSidebar = False
         self.functionsAdded = {}
         self._explorerInstance = 0
@@ -115,6 +112,9 @@ class PageHTML(Page):
 
     def addParagraph(self, message):
         self.addMessage(message, isElement=False)
+
+    def addFavicon(self, href, type):
+        self.favicon = '<link rel="shortcut icon" type="%s" href="%s" />' % (type, href)
 
     def addBullet(self, message, level=1, bullet_type='bullet', tag='ul', attributes=''):
         self._checkBlock(bullet_type, "", "</{0}>".format(tag))
@@ -184,8 +184,7 @@ class PageHTML(Page):
         heading = "<h%s class=\"title\">%s</h%s>" % (level, message, level)
         self.addMessage(heading, isElement=True)
 
-    def addList(self, rows, headers="", showcolumns=[], columnAliases={},
-                classparams="table-condensed table-hover", linkcolumns=[]):
+    def addList(self, rows, headers="", showcolumns=[], columnAliases={}, classparams="table-condensed table-hover", linkcolumns=[]):
         """
         @param rows [[col1,col2, ...]]  (array of array of column values)
         @param headers [header1, header2, ...]
@@ -194,7 +193,9 @@ class PageHTML(Page):
         if rows == [[]]:
             return
         if "datatables" in self.functionsAdded:
-            classparams += 'cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered display JSdataTable dataTable'
+            classparams += 'cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered display dataTable'
+            if headers:
+                classparams += ' JSdataTable'
         if len(rows) == 0:
             return False
         l = len(rows[0])
@@ -202,23 +203,9 @@ class PageHTML(Page):
             if l != len(headers):
                 headers = [""] + headers
             if l != len(headers):
-                #raise RuntimeError("Cannot process headers, wrong nr of cols")
                 print("Cannot process headers, wrong nr of cols")
                 self.addMessage("ERROR header wrong nr of cols:%s" % headers)
                 headers = []
-
-            # if len(headers) > l:
-                # while len(headers) != l:
-                # headers.pop(0)
-
-        # TODO: does not work
-        # if showcolumns != []:
-            # rows2=rows
-            # rows=[]
-            # for row in rows2:
-                # if row[0] in showcolumns:
-                # rows.append(row)
-            #headers.insert(0," ")
 
         c = "<table  class='table %s'>\n" % classparams  # the content
         if headers != "":
@@ -779,25 +766,17 @@ function copyText$id() {
 
         self._hasCharts = True
 
+    def addJQuery(self):
+        self.addJS('/jslib/jquery/jquery-2.2.1.min.js')
+        self.addJS('/jslib/jquery/jquery-migrate-1.2.1.js')
+        self.addJS("/jslib/jquery/jquery-ui.min.js")
+
     def addBootstrap(self, jquery=True):
-        if self._hasBootstrap:
-            return
+        if jquery:
+            self.addJQuery()
 
-        if jquery and not self._hasJQuery:
-            self.addJS("%s/old/jquery-latest.js" % self.liblocation)
-            self._hasJQuery = True
-
-        if not self._hasBootstrapJS:
-            self.addJS("%s/old/bootstrap/js/bootstrap.js" % self.liblocation)
-            self.addJS("%s/old/jquery.cookie.js" % self.liblocation)
-            self._hasBootstrapJS = True
-
-        if not self._hasBootstrapCSS:
-            self.addCSS("%s/old/bootstrap/css/bootstrap.css" % self.liblocation)
-            self.addCSS("%s/old/bootstrap/css/bootstrap-responsive.css" % self.liblocation)
-            self._hasBootstrapCSS = True
-
-        self._hasBootstrap = True
+        self.addJS('/jslib/bootstrap/js/bootstrap-3-3-6.min.js')
+        self.addCSS('/jslib/bootstrap/css/bootstrap-3-3-6.min.css')
 
     def addBodyAttribute(self, attribute):
         if attribute not in self.bodyattributes:
@@ -835,11 +814,9 @@ function copyText$id() {
             self.documentReadyFunctions.append(function)
 
     def addExplorer(self, path="", dockey=None, height=500, width=750, readonly=False, tree=False):
-
-        if not self._hasJQuery:
-            self.addJS("%s/old/jquery-latest.js" % self.liblocation)
-            self._hasJQuery = True
+        self.addJQuery()
         self.addJS("%s/jquery/jquery-ui.min.js" % self.liblocation)
+        self.addJS("%s/old/elfinder/jquery-ui.min.js" % self.liblocation)
         self.addCSS("%s/old/jquery-ui.css" % self.liblocation)
         self.addCSS("%s/old/elfinder/css/elfinder.min.css" % self.liblocation)
         self.addCSS("%s/old/elfinder/css/theme.css" % self.liblocation)
@@ -1105,14 +1082,17 @@ function copyText$id() {
         docdata = {'head': jsHead,
                    'bodyattrib': ' '.join(self.bodyattributes),
                    'body': self.body,
+                   'favicon': self.favicon,
                    'tail': '\n'.join(self.tail)}
         for key, val in docdata.items():
             docdata[key] = j.data.text.toStr(val)
-
         return '''
 <!DOCTYPE html>
 <html>
-<head>%(head)s</head>
+<head>
+ <meta charset="UTF-8">
+%(favicon)s
+%(head)s</head>
 <body %(bodyattrib)s>%(body)s
 %(tail)s</body>
 </html>''' % docdata

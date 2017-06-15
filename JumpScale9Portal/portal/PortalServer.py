@@ -2,7 +2,7 @@ import urllib.parse
 import collections
 import os
 import sys
-import redis
+import inspect
 
 from beaker.middleware import SessionMiddleware
 from .MacroExecutor import MacroExecutorPage, MacroExecutorWiki, MacroExecutorPreprocess, MacroexecutorMarkDown
@@ -164,9 +164,6 @@ class PortalServer:
         self.schedule1min = {}
         self.schedule15min = {}
         self.schedule60min = {}
-
-        self.rediscache = redis.StrictRedis(host='localhost', port=9999, db=0)
-        self.redisprod = redis.StrictRedis(host='localhost', port=9999, db=0)
 
         self.jslibroot = j.sal.fs.joinPaths(j.dirs.JSAPPSDIR, "portals", "jslib")
 
@@ -609,6 +606,22 @@ class PortalServer:
                 inp = env.get('wsgi.input')
                 params.update({'FILES': {'data': inp, 'boundary': boundary}})
         return params
+
+    @property
+    def requestContext(self):
+        currentframe = None
+        currentframe = inspect.currentframe()
+        backframe = currentframe.f_back
+        while backframe is not None:
+            for vars in (backframe.f_locals, backframe.f_globals):
+                ctx = vars.get('ctx')
+                if isinstance(ctx, RequestContext):
+                    return ctx
+                ctx = vars.get('kwargs', {}).get('ctx')
+                if isinstance(ctx, RequestContext):
+                    return ctx
+
+            backframe = backframe.f_back
 
     @exhaustgenerator
     def router(self, environ, start_response):

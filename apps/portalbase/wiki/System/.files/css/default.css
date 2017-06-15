@@ -1,0 +1,23 @@
+/* Specific for Grid space*/
+
+td {
+    /*min-width: 100px;*/
+    max-width:195px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    vertical-align: middle !important;
+}
+td:hover{
+  white-space: normal;
+  text-overflow: clip;
+}
+.fixFirefoxSizing td{
+    max-width: 336px;
+}
+.fixFirefoxSizing .dataTables_wrapper.form-inline{
+    width: 95% !important;
+}
+.dataTables_wrapper.form-inline{
+    width: 97% !important;
+}

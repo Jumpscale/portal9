@@ -564,7 +564,7 @@ class SpecFileParser:
         return ok
 
     def raiseError(self, msg, line="", linenr=0):
-        j.errorhandler.raiseInputError("Cannot parse file %s\nError on line:%s\n%s\n%s\n" % (
+        raise j.exceptions.Input("Cannot parse file %s\nError on line:%s\n%s\n%s\n" % (
             self.path, linenr, line, msg), "specparser.input")
 
 

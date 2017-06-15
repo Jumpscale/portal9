@@ -38,5 +38,3 @@ class NameSpaceLoader:
         """
         """
         mongoengine.connect(db=db, alias=db, host=host, port=port)
-
-

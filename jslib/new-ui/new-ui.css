@@ -1,13 +1,6 @@
 body{
 	margin-top: -15px;
 }
-@-moz-document url-prefix() { 
-  body {
-	transform: scale(0.8, 0.8);
-	transform-origin: 0px 0px 0px;
-	margin-left: 15%;
-  }
-}
 .navbar{
 	border-radius: 0;
 	border-bottom-right-radius: 6px;

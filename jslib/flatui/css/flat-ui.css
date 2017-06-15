@@ -538,7 +538,7 @@ a.thumbnail.active {
 .btn:hover,
 .btn:focus {
   outline: none;
-  /*color: #ffffff;*/
+  color: #ffffff;
 }
 .btn:active,
 .btn.active {
@@ -4365,7 +4365,6 @@ body.vjs-full-window {
   position: relative;
 }
 .login-screen {
-  /*background-color: #1abc9c;*/
   min-height: 473px;
   padding: 123px 170px 33px 405px;
 }
@@ -4720,16 +4719,4 @@ footer p {
   border-radius: 5px;
   padding: 10px 0;
   min-height: 500px;
-}
-.form-group{
-  width: 92%;
-}
-.form-group textarea{
-  height: 150px;
-}
-.alert-success{
-  width: 85%;
-}
-.alert-danger{
-  width: 85%;
 }
