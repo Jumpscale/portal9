@@ -4,9 +4,10 @@
 @row
 @col 6
 h3. JumpScale
-   * Core: {{repoversion: account:jumpscale repo:jumpscale_core8 provider:github}}
-   * Portal: {{repoversion: account:jumpscale repo:jumpscale_portal8 provider:github}}
+   * Core: {{repoversion: account:jumpscale repo:core9 provider:github}}
+   * Portal: {{repoversion: account:jumpscale repo:portal9 provider:github}}
+   * Lib: {{repoversion: account:jumpscale repo:lib9 provider:github}}
+   * Ays: {{repoversion: account:jumpscale repo:ays9 provider:github}}
+   * Prefab: {{repoversion: account:jumpscale repo:prefab9 provider:github}}
 
-h3. JSCockpit
-   * JSCockpit: {{repoversion: account:jumpscale repo:jscockpit provider:github}}
 @divend

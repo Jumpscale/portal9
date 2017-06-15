@@ -18,14 +18,17 @@ def main(j, args, params, tags, tasklet):
             # because of this line :
             # https://github.com/Jumpscale/jumpscale_portal8/blob/master/apps/portalbase/macros/page/explorer/1_main.py#L25
 
-            hidden = ['key.priv', 'consumers', 'producers', 'actions', 'password', 'passwd', 'pwd', 'oauth.jwt_key', 'keyPriv', 'repository']
+            hidden = ['key.priv', 'consumers', 'producers', 'children', 'actions', 'password', 'passwd', 'pwd', 'oauth.jwt_key', 'keyPriv', 'repository']
             data_revised = dict()
             for k, v in service.items():
                 if k.strip() in hidden:
                     continue
                 else:
-                    data_revised[k] = v.replace('\\n', '') if isinstance(v, str) else v
-            extra_data = {'producers': service['producers'], 'consumers': service['consumers'], 'actions': service['actions']}
+                    if k == "path":
+                        data_revised[k] = v.replace("!", "\!")  # don't render paths as images in .wiki pages.
+                    else:
+                        data_revised[k] = v.replace('\\n', '') if isinstance(v, str) else v
+            extra_data = {'producers': service['producers'], 'consumers': service['consumers'], 'actions': service['actions'], 'children': service['children']}
             args.doc.applyTemplate({
                 'service': service,
                 'type': link_to_template,
