@@ -31,7 +31,7 @@ class Events(object):
             return {'event': None, 'cursor': cursor}
         else:
             cursor += 1
-            return {'event': json.loads(event), 'cursor': cursor}
+            return {'event': json.loads(event.decode('utf8')), 'cursor': cursor}
 
     def sendMessage(self, title, text, level='info', **kwargs):
         msg = {'eventtype': 'message',
@@ -64,6 +64,7 @@ class Events(object):
                         errorcb(eco)
                     except:
                         pass
+                print(eco)
                 errormsg = error + "</br> For more info check <a href='/grid/error condition?id=%s'>error</a> details" % eco.guid
                 self.sendMessage(title, errormsg, 'error', hide=False)
                 return

@@ -4,20 +4,24 @@ import time
 import types
 
 
-def doAudit(user, path, kwargs, responsetime, statuscode, result):
+def doAudit(user, path, kwargs, responsetime, statuscode, result, tags):
     client = j.portal.tools.models.system.Audit
     audit = client()
     audit.user = user
     audit.call = path
     audit.status_code = statuscode
     audit.args = j.data.serializer.json.dumps([])  # we dont want to log self
+    audit.tags = tags
     auditkwargs = kwargs.copy()
     auditkwargs.pop('ctx', None)
     audit.kwargs = j.data.serializer.json.dumps(auditkwargs)
-    if not isinstance(result, types.GeneratorType):
-        audit.result = j.data.serializer.json.dumps(result)
-    else:
-        audit.result = j.data.serializer.json.dumps('Result of type generator')
+    try:
+        if not isinstance(result, types.GeneratorType):
+            audit.result = j.data.serializer.json.dumps(result)
+        else:
+            audit.result = j.data.serializer.json.dumps('Result of type generator')
+    except:
+        audit.result = "Result contains binary data"
 
     audit.responsetime = responsetime
     audit.save()
@@ -42,9 +46,10 @@ class AuditMiddleWare(object):
         if audit or statinfo['status'] >= 400:
             ctx = env.get('JS_CTX')
             user = env['beaker.session'].get('user', 'Unknown')
+            tags = env.get("tags", "")
             kwargs = ctx.params.copy() if ctx else {}
             if j.portal.tools.server.active.authentication_method:
-                doAudit(user, env['PATH_INFO'], kwargs, responsetime, statinfo['status'], result)
+                doAudit(user, env['PATH_INFO'], kwargs, responsetime, statinfo['status'], result, tags)
         return result
 
 
