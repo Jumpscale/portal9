@@ -25,7 +25,6 @@ def cli(ctx, instance):
 def start(ctx, instance):
     if not j.core.db:
         j.clients.redis.start4core()
-        j.core.db = j.clients.redis.get4core()
     instance = instance or ctx.obj.get('INSTANCE')
     cfg = j.data.serializer.yaml.load('%s/portals/%s/config.yaml' % (j.dirs.CFGDIR, instance))
     j.application.instanceconfig = cfg
