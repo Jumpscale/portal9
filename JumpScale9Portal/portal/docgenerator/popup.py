@@ -28,6 +28,10 @@ class Popup(Form):
         {% for key, value in data.items() -%}
             data-${key}="${value}"
         {%- endfor %}
+        {% if gridbinding -%}
+            data-gridbinding-name="${gridbinding[0]}"
+            data-gridbinding-value="${gridbinding[1]}"
+        {%- endif %}
         >
             <div id="${id}" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="${id}Label" aria-hidden="true">
                 <div class="modal-content">

@@ -36,6 +36,7 @@ class PortalRest():
         NoneType = type(None)
         convertermap = {'int': ((int, NoneType), emptyisnone(j.data.types.int.fromString)),
                         'float': ((float, int, NoneType), emptyisnone(j.data.types.float.fromString)),
+                        'str': ((str, NoneType), emptyisnone(str)),
                         'bool': ((bool, NoneType), emptyisnone(j.data.types.bool.fromString))
                         }
         params = self.ws.routes[ctx.path]['params']
@@ -69,13 +70,13 @@ class PortalRest():
                         raise exceptions.BadRequest('Value of param %s not correct needs to be of type %s' % (key, param['type']))
             elif param['type'] == 'list':
                 loadList(key)
-            elif param['type'] in ['list(int)', 'list(bool)', 'list(float)']:
+            elif param['type'] in ['list(int)', 'list(bool)', 'list(float)', 'list(str)']:
                 if not ctx.params[key] is None:
                     loadList(key)
                     m = re.search("list\((?P<type>\w+)\)", param['type'])
                     if m:
                         type_, converter = convertermap[m.group('type')]
-                        for i in xrange(len(ctx.params[key])):
+                        for i in range(len(ctx.params[key])):
                             try:
                                 if not isinstance(ctx.params[key][i], type_):
                                     ctx.params[key][i] = converter(ctx.params[key][i])

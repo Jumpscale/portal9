@@ -4,6 +4,7 @@ Spaces:/system/spaces
 System Config:/system/Systemconfig
 System Macros:/system/systemmacros
 Users:/system/userlist
+Audits:/system/audits
 Groups:/system/groups
 #Actors:/system/actors
 #Code:/system/code

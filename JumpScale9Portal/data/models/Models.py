@@ -264,6 +264,8 @@ class Audit(ModelBase):
     args = StringField(default='')
     kwargs = StringField(default='')
     timestamp = IntField(default=j.data.time.getTimeEpoch())
+    tags = StringField(default='')
+    responsetime = FloatField(default=0)
 
     meta = extend(default_meta, {'indexes': [
         {'fields': ['epoch'], 'expireAfterSeconds': 3600 * 24 * 5}

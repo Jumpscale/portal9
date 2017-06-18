@@ -1,0 +1,34 @@
+@usedefaults
+{{audit: id:$$id}}
+
+{% if id %}
+h2. Audit:
+
+|*Time*|${time}|
+|*User*|${user}|
+|*Call*|${call}|
+|*Status Code*|${statuscode}|
+|*Response Time*|${'%0.2f' % ((responsetime or 0) * 1000)} ms|
+|*Tags*|${tags}|
+|*Link to Error Condition*|{% if link %}[${link}|/system/error condition?id=${link}]{% else %} N/A{% endif %}|
+h3. Arguments:
+
+{{code:
+${args}
+}}
+
+h3. Keyword Arguments:
+{{code:
+${kwargs}
+}}
+
+h3. Result:
+{{code:
+${result}
+}}
+
+{% else %}
+
+Invalid audit id
+
+{% endif %}
