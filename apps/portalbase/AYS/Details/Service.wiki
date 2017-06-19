@@ -91,7 +91,7 @@ Error : ${error}
 
     {% if data.parent %}
     h4. Parent:
-    || Role || Instance ||
+    || Role || Name ||
     | ${data.parent['role']} | [${data.parent.name}|Service?aysrole=${data.parent.role}&aysname=${data.parent.name}&reponame=$$reponame]|
     {% endif %}
 
