@@ -16,6 +16,9 @@ Error : ${error}
         position: relative;
         left: 7%;
     }
+    .table-condensed > thead > tr > th {
+        min-width: 170px;
+    }
 }}
 
 {% if error is defined -%}
@@ -91,31 +94,32 @@ Error : ${error}
 
     {% if data.parent %}
     h4. Parent:
-    || Role || Instance ||
-    | ${data.parent['role']} | [${data.parent.name}|Service?aysrole=${data.parent.role}&aysname=${data.parent.name}&reponame=$$reponame]|
+    || Name || Role ||
+    | [${data.parent.name}|Service?aysrole=${data.parent.role}&aysname=${data.parent.name}&reponame=$$reponame] | ${data.parent['role']} |
+
     {% endif %}
 
     {% if extra_data.producers|length > 0 %}
     h4. Producers:
-    || Role || Name ||
+    || Name || Role ||
     {% for producer in extra_data.producers -%}
-         |${producer.role}|[${producer.name}|Service?aysrole=${producer.role}&aysname=${producer.name}&reponame=$$reponame]|
+         |[${producer.name}|Service?aysrole=${producer.role}&aysname=${producer.name}&reponame=$$reponame]|${producer.role}|
     {% endfor %}
     {% endif %}
 
     {% if extra_data.consumers|length > 0 %}
     h4. Consumers:
-    || Role || Name ||
+    || Name || Role ||
     {% for consumer in extra_data.consumers -%}
-         |${consumer.role}|[${consumer.name}|Service?aysrole=${consumer.role}&aysname=${consumer.name}&reponame=$$reponame]|
+         | [${consumer.name}|Service?aysrole=${consumer.role}&aysname=${consumer.name}&reponame=$$reponame] |${consumer.role}|
     {% endfor %}
     {% endif %}
 
     {% if extra_data.children|length > 0 %}
     h4. Children:
-    || Role || Name ||
+    || Name || Role ||
     {% for children in extra_data.children -%}
-         |${children.role}|[${children.name}|Service?aysrole=${children.role}&aysname=${children.name}&reponame=$$reponame]|
+         |[${children.name}|Service?aysrole=${children.role}&aysname=${children.name}&reponame=$$reponame]|${children.role}|
     {% endfor %}
     {% endif %}
 
