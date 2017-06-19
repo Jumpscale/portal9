@@ -1,4 +1,2 @@
 #!/bin/bash
-
-# start portal
-sudo docker exec js9_base js9 'j.tools.prefab.get().apps.portal.start()'
+ssh -A -i ~/.ssh/main root@localhost -p 2222 'cd /root/gig/code/github/jumpscale/portal9; /bin/bash test.sh'
