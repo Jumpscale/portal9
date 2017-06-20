@@ -38,7 +38,7 @@ $(document).ready(function (){
 var donestates = ["error", "ok"];
 var runstate=$('#td-run-${runkey}-state').text().toLowerCase();
 
-setTimeout(getRunState, 3000);
+
 function getRunState(){
     runstate=$('#td-run-${runkey}-state').text().toLowerCase();
     $.ajax
@@ -70,6 +70,8 @@ function getRunState(){
 
 }
 });
+
+setTimeout(getRunState, 3000);
 }}
 
 
