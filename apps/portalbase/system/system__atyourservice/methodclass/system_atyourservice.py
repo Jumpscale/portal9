@@ -36,6 +36,18 @@ class system_atyourservice(j.tools.code.classGetBase()):
         return cl.ays
 
     @exceptions.catcherrors()
+    def getRun(self, repository=None, runid=None, **kwargs):
+        """
+        get run
+        param:repository
+        param: runid
+        result json of runinfo
+        """
+        cl = self.get_client(**kwargs)
+        aysrun = cl.getRun(repository=repository, runid=runid).json()
+        return aysrun
+
+    @exceptions.catcherrors()
     def createRun(self, repository=None, **kwargs):
         """
         get run
