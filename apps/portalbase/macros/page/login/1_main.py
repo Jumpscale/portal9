@@ -63,7 +63,6 @@ def main(j, args, params, tags, tasklet):
           </div>
 
           <button class="btn btn-primary btn-lg btn-block mbm" type="submit">Sign in</button>"""
-
     name = j.portal.tools.server.active.cfg.get('force_oauth_instance')
     if name:
         body += '''
