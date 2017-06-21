@@ -68,8 +68,8 @@ class system_atyourservice(j.tools.code.classGetBase()):
                     base, provider, account, repo, dest, url = j.do.getGitRepoArgs(domain_info.get('url'),
                                                                                    codeDir=j.dirs.CODEDIR)
                     self.cuisine.development.git.pullRepo(domain_info.get('url'),
-                                                           branch=domain_info.get('branch', 'master'),
-                                                           dest=dest)
+                                                          branch=domain_info.get('branch', 'master'),
+                                                          dest=dest)
                     updated.append(domain)
                 return "template repos [" + ', '.join(updated) + "] are updated"
             else:

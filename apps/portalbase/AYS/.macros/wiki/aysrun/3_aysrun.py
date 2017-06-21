@@ -9,30 +9,11 @@ def main(j, args, params, tags, tasklet):
         client = aysactor.get_client(ctx=ctx)
 
         run = client.getRun(runid, reponame).json()
-        # import ipdb; ipdb.set_trace()
         runstate = run['state']
         runkey = run['key']
-        beakercookie = ctx.env['HTTP_COOKIE']
-
-        headers = ""
-
-        # production = False
-        # authheader = ""
-        # cfg = j.application.instanceconfig
-        # if isinstance(cfg, dict):
-        #     # need to upgrade config
-        #     production = cfg.get('production', False)
-        # if production:
-        #     jwt = ctx.env['beaker.session'].get('oauth', None)
-        #     authheader = '"Authorization": "Bearer: {jwt}"'.format(jwt) if jwt else ""
-        #     headers = """
-        #       headers: {{
-        #         {authheader}
-        #       }},
-        #     """.format(authheader)
 
         if run:
-            args.doc.applyTemplate({'run': run, 'bearercookie': beakercookie, 'reponame': reponame, 'runkey': runkey, 'runstate': runstate, 'headers': headers})
+            args.doc.applyTemplate({'run': run, 'reponame': reponame, 'runkey': runkey, 'runstate': runstate})
         else:
             args.doc.applyTemplate({'error': 'No run found'})
     except Exception as e:

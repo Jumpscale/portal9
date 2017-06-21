@@ -35,43 +35,43 @@ h3. Run $$runid:
 {{jscript:
 $(document).ready(function (){
 
-var donestates = ["error", "ok"];
-var runstate=$('#td-run-${runkey}-state').text().toLowerCase();
+  var donestates = ["error", "ok"];
+  var runstate=$('#td-run-${runkey}-state').text().toLowerCase();
 
 
-function getRunState(){
-    runstate=$('#td-run-${runkey}-state').text().toLowerCase();
-    $.ajax
-    ({
-      type: "POST",
-      url: "/restmachine/system/atyourservice/getRun",
-      data: 'repository='+'${reponame}'+'&runid='+'$$runid',
-      dataType: 'json',
-      async: true,
-      ${headers}
-      success: function (data){
-        if (! donestates.includes(runstate)){
-          setTimeout(getRunState, 3000);
-        }
-        runstate = data['state'];
-        if (donestates.includes(runstate)){
-          if (runstate == "ok"){
-            $('#td-run-${runkey}-state').css("color", "green");
-          }else{
-            $('#td-run-${runkey}-state').css("color", "red");
+  function getRunState(){
+      runstate=$('#td-run-${runkey}-state').text().toLowerCase();
+      $.ajax
+      ({
+        type: "POST",
+        url: "/restmachine/system/atyourservice/getRun",
+        data: 'repository='+'${reponame}'+'&runid='+'$$runid',
+        dataType: 'json',
+        async: true,
+        success: function (data){
+          if (! donestates.includes(runstate)){
+            setTimeout(getRunState, 3000);
           }
-          $('#td-run-${runkey}-state').text(data['state'].toUpperCase());
+          runstate = data['state'];
+          if (donestates.includes(runstate)){
+            if (runstate == "ok"){
+              $('#td-run-${runkey}-state').css("color", "green");
+            }else{
+              $('#td-run-${runkey}-state').css("color", "red");
+            }
+            $('#td-run-${runkey}-state').text(data['state'].toUpperCase());
+          }
+          data['steps'].forEach(function(el){
+              $('#td-step-'+el['number']+'-state').text(el['state'].toUpperCase());
+          });
         }
-        data['steps'].forEach(function(el){
-            $('#td-step-'+el['number']+'-state').text(el['state'].toUpperCase());
-        });
-      }
-    });
+      });
 
-}
-});
+  }
+  setTimeout(getRunState, 3000);
+  });
 
-setTimeout(getRunState, 3000);
+
 }}
 
 
