@@ -21,7 +21,7 @@ class system_oauth(j.tools.code.classGetBase()):
         if not self._client:
             self._client = j.clients.oauth.get(addr=self.cfg.get('oauth.client_url'), accesstokenaddr=self.cfg.get('oauth.token_url'), id=self.cfg.get('oauth.client_id'),
                                                secret=self.cfg.get('oauth.client_secret'), scope=self.cfg.get('oauth.client_scope'), redirect_url=self.cfg.get('oauth.redirect_url'),
-                                               user_info_url=self.cfg.get('oauth.client_user_info_url'), logout_url='', instance=self.cfg.get('oauth.force_oauth_instance'))
+                                               user_info_url=self.cfg.get('oauth.client_user_info_url'), logout_url='', instance=self.cfg.get('force_oauth_instance'))
         return self._client
 
     def authenticate(self, type='', **kwargs):
