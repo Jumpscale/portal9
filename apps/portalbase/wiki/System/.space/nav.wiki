@@ -10,6 +10,5 @@ Groups:/system/groups
 #Code:/system/code
 API:/system/actorsdocs
 #Stats:/system/stats
-Portal Logs:/system/PortalLogs
 Access Overview:/system/overviewaccess
 Server Info:/system/serverinfo
