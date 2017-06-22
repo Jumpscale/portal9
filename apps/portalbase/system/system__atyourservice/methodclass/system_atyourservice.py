@@ -36,6 +36,18 @@ class system_atyourservice(j.tools.code.classGetBase()):
         return cl.ays
 
     @exceptions.catcherrors()
+    def getRun(self, repository=None, runid=None, **kwargs):
+        """
+        get run
+        param:repository
+        param: runid
+        result json of runinfo
+        """
+        cl = self.get_client(**kwargs)
+        aysrun = cl.getRun(repository=repository, runid=runid).json()
+        return aysrun
+
+    @exceptions.catcherrors()
     def createRun(self, repository=None, **kwargs):
         """
         get run
@@ -56,8 +68,8 @@ class system_atyourservice(j.tools.code.classGetBase()):
                     base, provider, account, repo, dest, url = j.do.getGitRepoArgs(domain_info.get('url'),
                                                                                    codeDir=j.dirs.CODEDIR)
                     self.cuisine.development.git.pullRepo(domain_info.get('url'),
-                                                           branch=domain_info.get('branch', 'master'),
-                                                           dest=dest)
+                                                          branch=domain_info.get('branch', 'master'),
+                                                          dest=dest)
                     updated.append(domain)
                 return "template repos [" + ', '.join(updated) + "] are updated"
             else:
@@ -190,6 +202,7 @@ class system_atyourservice(j.tools.code.classGetBase()):
         result json
         """
         cl = self.get_client(**kwargs)
+
         cl.archiveBlueprint(data=None, blueprint=blueprint, repository=repository)
         return "blueprint archived."
 
@@ -200,6 +213,7 @@ class system_atyourservice(j.tools.code.classGetBase()):
         param:name blueprints in that base name will only be returned otherwise all names
         result json
         """
+
         cl = self.get_client(**kwargs)
         cl.restoreBlueprint(data=None, blueprint=blueprint, repository=repository)
 

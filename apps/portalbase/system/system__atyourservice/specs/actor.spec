@@ -136,3 +136,11 @@
         """
         """
         var:repository str,, repository name
+
+
+    method:getRun
+        """
+        """
+        var:repository str,, repository name
+        var:runid str,, run id
+        result:json

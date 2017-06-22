@@ -26,6 +26,55 @@ h4. Actions
   reload: True
 }}
 
+
+{{jscript:
+$(document).ready(function (){
+
+  function updateRunsStates(){
+    var runids = $('.runkey');
+
+    var donestates = ['ok', 'error'];
+    runids.each(function(idx, el){
+
+      var runid = $(el).text();
+      var stateval = $('#td-run-'+runid+'-state').text();
+      if (! donestates.includes(stateval)){
+          $.ajax
+          ({
+            type: "POST",
+            url: "/restmachine/system/atyourservice/getRun",
+            data: 'repository='+'$$reponame'+'&runid='+runid,
+            dataType: 'json',
+            async: false,
+            success: function (data){
+                runstate = data['state'];
+                $('#td-run-'+runid+'-state').text(data['state'].toLowerCase());
+              }
+            });
+          }
+      });
+
+      var runids = $('.runkey');
+      var shouldreschedule = false;
+      runids.each(function(idx, el){
+
+        var runid = $(el).text();
+        var stateval = $('#td-run-'+runid+'-state').text();
+        if (! donestates.includes(stateval)){
+          // need to reschedule it again.
+          shouldreschedule = true;
+          return false;
+        }
+      });
+      if (shouldreschedule === true){
+        setTimeout(updateRunsStates, 5000);
+      }
+
+  }
+  setTimeout(updateRunsStates, 3000);
+});
+
+}}
 {% if error is defined %}
     Error : ${error}
 {% else %}
@@ -36,9 +85,9 @@ h4. Actions
         </thead>
         {% for run in runs -%}
         <tr>
-          <td><a data-dummy="${run.key}" href="AYS/RunModel?reponame=$$reponame&runid=${run.key}">${run.key}</a></td>
+          <td><a data-dummy="${run.key}" href="AYS/RunModel?reponame=$$reponame&runid=${run.key}"><span class="runkey">${run.key}</span></a></td>
           <td><span class="jstimestamp" data-ts="${run.epoch}"></span></td>
-          <td>${run.state}</td>
+          <td id="td-run-${run.key}-state">${run.state}</td>
         </tr>
 
         {% else %}

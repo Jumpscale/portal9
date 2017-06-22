@@ -16,6 +16,9 @@
         left: 7%;
     }
 }}
+
+
+
 {% if error is defined %}
 Error : ${error}
 {% else %}
@@ -23,12 +26,54 @@ h3. Run $$runid:
 
 *Repo*: [${reponame}|/AYS/Repo?reponame=${reponame}]
 {% if run['state'] in ['error'] %}
-    *State*: {{html: <red style='color:red'>ERROR</red> }}
-{% elif run['state'] in 'ok' %}
-    *State*: {{html: <green style='color:green'>OK</green> }}
+    *State*: {{html: <span style='color:red' id="td-run-${runkey}-state">ERROR</span> }}
+{% elif run['state'] in ['ok'] %}
+    *State*: {{html: <span style='color:green' id="td-run-${runkey}-state">OK</span> }}
 {% else %}
-    *State*: ${run['state']}
+    *State*: {{html: <span id="td-run-${runkey}-state">${run['state']}</span> }}
 {% endif -%}
+{{jscript:
+$(document).ready(function (){
+
+  var donestates = ["error", "ok"];
+  var runstate=$('#td-run-${runkey}-state').text().toLowerCase();
+
+
+  function getRunState(){
+      runstate=$('#td-run-${runkey}-state').text().toLowerCase();
+      $.ajax
+      ({
+        type: "POST",
+        url: "/restmachine/system/atyourservice/getRun",
+        data: 'repository='+'${reponame}'+'&runid='+'$$runid',
+        dataType: 'json',
+        async: true,
+        success: function (data){
+          if (! donestates.includes(runstate)){
+            setTimeout(getRunState, 3000);
+          }
+          runstate = data['state'];
+          if (donestates.includes(runstate)){
+            if (runstate == "ok"){
+              $('#td-run-${runkey}-state').css("color", "green");
+            }else{
+              $('#td-run-${runkey}-state').css("color", "red");
+            }
+            $('#td-run-${runkey}-state').text(data['state'].toUpperCase());
+          }
+          data['steps'].forEach(function(el){
+              $('#td-step-'+el['number']+'-state').text(el['state'].toUpperCase());
+          });
+        }
+      });
+
+  }
+  setTimeout(getRunState, 3000);
+  });
+
+
+}}
+
 
 *Time*: ${run.epoch}
 
@@ -42,7 +87,7 @@ h4. Steps:
 
     {{html:
         <div>
-           <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#step${step.number}">+</button> <b> Step ${step.number} (${step.state})</b>
+           <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#step${step.number}">+</button> <b> Step ${step.number} <span id="td-step-${step.number}-state">(${step.state})</b>
           <div id="step${step.number}" class="collapse">
      }}
         ** Jobs:

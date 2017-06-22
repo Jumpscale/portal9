@@ -1,4 +1,3 @@
-from collections import OrderedDict
 
 
 def main(j, args, params, tags, tasklet):

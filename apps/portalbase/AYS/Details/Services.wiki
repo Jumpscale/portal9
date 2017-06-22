@@ -11,6 +11,10 @@ h2. test
     {% endif %}
     - Services: /AYS/services
 }}
+
+{{css:/jslib/bootstrap/css/bootstrap-treeview.min.css}}
+{{html:<script src="/jslib/bootstrap/js/bootstrap-treeview.min.js"></script>}}
+
 {% if error is defined %}
 Error : ${error}
 
@@ -22,11 +26,25 @@ Error : ${error}
   showresponse: True
   hide: True
 }}
-|| Actor Name || Name || Actions ||
-    {% for service in services -%}
-      | ${service.role} | [${service.name}|Service?aysrole=${service.role}&aysname=${service.name}&reponame=${reponame}] | {{action label:'Delete' deleterow:true id:'action-DeleteService' class:'glyphicon glyphicon-trash' data-repository:'$$reponame' data-role:'${service.role}' data-instance:'${service.name}'}} |
-    {% else %}
-    This repository doesn't contain any service instance yet.
-    {% endfor %}
+{{html:
+  <div id="servicestree"></div>
+}}
+
+{{jscript:
+
+$(document).ready(function (){
+
+  var tree = ${servicestree};
+  $('#servicestree').treeview({data: tree, enableLinks:true,  });
+});
+
+}}
+
+# || Actor Name || Name || Actions ||
+#     {% for service in services -%}
+#       | ${service.role} | [${service.name}|Service?aysrole=${service.role}&aysname=${service.name}&reponame=${reponame}] | {{action label:'Delete' deleterow:true id:'action-DeleteService' class:'glyphicon glyphicon-trash' data-repository:'$$reponame' data-role:'${service.role}' data-instance:'${service.name}'}} |
+#     {% else %}
+#     This repository doesn't contain any service instance yet.
+#     {% endfor %}
 
 {%endif%}
