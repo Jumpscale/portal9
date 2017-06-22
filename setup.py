@@ -46,7 +46,7 @@ setup(
     license='Apache',
     packages=['JumpScale9Portal'],
     install_requires=[
-        'JumpScale9>=9.0.1',
+        'JumpScale9>=9.0.2',
         'redis',
         'colorlog',
         'pytoml',
