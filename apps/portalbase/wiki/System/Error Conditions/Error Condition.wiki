@@ -1,0 +1,52 @@
+@usedefaults
+
+{{timestamp}}
+
+{{eco: id:$$id}}
+
+{% if eco %}
+{{actions:
+
+- display: Delete
+  action: /restmachine/system/errorconditionhandler/delete
+  navigateback: true
+  reload: false
+  data:
+   eco: '$$id'
+}}
+
+h3. Details
+
+*Error Message*
+{{code: template:text nolinenr theme:neat
+${eco.errormessage}
+}}
+
+|*Application Name*|${eco.appname}|
+|*Category*|${eco.category}|
+|*Job*|${eco.jid}|
+|*Type*|${eco.type}|
+|*Level*|${eco.levelname}|
+|*Creation Time*|{{ts:${eco.epoch}}}|
+|*Last Time*|{{ts:${eco.lasttime}}}|
+|*Occurrences*|${eco.occurrences}|
+|*Error Message Pub*|${eco.errormessagepub}|
+|*Function Name*|${eco.funcname}|
+|*Function Line Number*|${eco.funclinenr}|
+|*Function File Name*|${eco.funcfilename}|
+|*Node*|${eco.nid}|
+|*Grid*|${eco.gid}|
+|*Tags*|${eco.tags}|
+
+*Code*
+{{code:
+${eco.code}
+}}
+
+*BackTrace*
+{{code:
+${eco.backtrace|replace('}}', '\}\}')}
+}}
+{% else %}
+Error Condition not found.
+{% endif %}
