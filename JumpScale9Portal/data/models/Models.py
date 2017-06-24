@@ -160,7 +160,7 @@ class Errorcondition(ModelBase):
     gid = IntField(required=True)
     aid = IntField(default=0)
     pid = IntField(default=0)
-    jid = StringField(default='')  # TODO: *2 is this right, string???
+    jid = IntField(default=0)
     masterjid = IntField(default=0)
     appname = StringField(default="")
     level = IntField(default=1, required=True)

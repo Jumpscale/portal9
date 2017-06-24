@@ -6,6 +6,7 @@ import inspect
 
 from beaker.middleware import SessionMiddleware
 from .MacroExecutor import MacroExecutorPage, MacroExecutorWiki, MacroExecutorPreprocess, MacroexecutorMarkDown
+from .ErrorHandler import ErrorHandler
 from .RequestContext import RequestContext
 from .PortalRest import PortalRest
 from .MongoEngineBeaker import MongoEngineBeaker
@@ -144,6 +145,7 @@ class PortalServer:
         self.macroexecutorPage = MacroExecutorPage(macroPathsPage)
         self.macroexecutorMarkDown = MacroexecutorMarkDown(macroPathsMarkDown)
         self.macroexecutorWiki = MacroExecutorWiki(macroPathsWiki)
+        self.errorhandler = ErrorHandler()
         templatedirs = [self.portaldir.joinpath('templates'), self.appdir.joinpath('templates')]
         for contentdir in self.contentdirs:
             templatedirs.append(j.sal.fs.joinPaths(contentdir, 'templates'))
@@ -152,9 +154,7 @@ class PortalServer:
 
         self._router = SessionMiddleware(AuditMiddleWare(self.router), session_opts)
 
-        # self._megarouter = DispatcherMiddleware(self._router, {'/eve': eve_app})
         self._megarouter = DispatcherMiddleware(self._router)
-
         self._webserver = WSGIServer((self.listenip, self.port), self._megarouter)
 
         self.confluence2htmlconvertor = j.portal.tools.docgenerator.docgeneratorfactory.getConfluence2htmlConvertor()
@@ -941,6 +941,7 @@ class PortalServer:
 
         S3 = gevent.greenlet.Greenlet(self._60minRepeat)
         S3.start()
+        gevent.spawn(self.errorhandler.start)
 
         j.tools.console.echo("webserver started on port %s" % self.port)
         self._webserver.serve_forever()
