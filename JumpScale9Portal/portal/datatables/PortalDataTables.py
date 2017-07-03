@@ -101,7 +101,7 @@ class PortalDataTables():
 
         # pagin
         start = int(kwargs['iDisplayStart']) if "iDisplayStart" in kwargs else 0
-        size = int(kwargs['iDisplayLength']) if "isDisplayLength" in kwargs else 200
+        size = int(kwargs['iDisplayLength']) if "iDisplayLength" in kwargs else 200
 
         qs = client.find(nativequery)
         qs = qs.limit(size)
@@ -155,7 +155,7 @@ class PortalDataTables():
             qs = qs.skip(start)
 
         total = qs.count()
-        inn = qs.all()
+        inn = qs
         result = {}
         result["sEcho"] = int(kwargs.get('sEcho', 1))
         result["iTotalRecords"] = total
