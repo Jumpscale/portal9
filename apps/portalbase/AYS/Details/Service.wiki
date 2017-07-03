@@ -134,7 +134,7 @@ Error : ${error}
              ** state: ${action.state}
              ** code:
  {{code:
- ${action['code']}
+${action['code']}
  }}
            {% endfor %}
 
