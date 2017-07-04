@@ -2,7 +2,7 @@
 
 JumpScale Portal is a hybrid application server + wiki engine.
 
-- [version & roadmap infp](../master/releases.md)
+- [version & roadmap info](../master/releases.md)
 
 ## Features
 
@@ -11,11 +11,23 @@ JumpScale Portal is a hybrid application server + wiki engine.
 * Supports our own macros
 * Supports actors/webservices
 
-For documentation please see the [JumpScale 8 Portal GitBook](https://www.gitbook.com/book/gig/jumpscale-portal8/details).
-
 
 ## Installation
+* By choosing to install the portal when installing JumpScale9:
 
-JumpScale Portal installs as part of JumpScale Core.
-
-Read more about how to install JumpScale Core: https://gig.gitbooks.io/jumpscale-core8/content/docs/GettingStarted/Install.html
+  ```bash
+  js9_build -p
+  ```
+* Or by using prefab inside a js9 docker(Portal repo need to be on the system):
+  First navigate to portal9 repo and execute:
+  ```bash
+  pip3 install -e .
+  ```
+  Then in a js9 shell:
+  ```py
+  j.tools.prefab.local.apps.portal.install()
+  ```
+  Alternatively navigating to portal9 repo and executing:
+  ```bash
+  bash install.sh
+  ```
