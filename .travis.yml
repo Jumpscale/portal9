@@ -18,3 +18,5 @@ before_install:
 install: ./.travis_ci/prepare.sh
 
 script: ./run_tests.sh
+
+after_success: /bin/bash upload_image.sh
