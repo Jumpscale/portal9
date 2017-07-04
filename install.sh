@@ -2,5 +2,9 @@
 apt-get install -y  libsnappy-dev
 pip3 install -e .
 
-# install portal
-js9 'j.tools.prefab.get().apps.portal.install()'
+
+GIGBRANCH=${GIGBRANCH:-master}
+# install portal:
+cmd="j.tools.prefab.get().apps.portal.install(branch='${GIGBRANCH}')"
+echo "INSTALLING PORTAL: $cmd" 
+js9 "j.tools.prefab.get().apps.portal.install(branch='${GIGBRANCH}')"
