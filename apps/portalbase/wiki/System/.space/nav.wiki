@@ -6,6 +6,7 @@ System Macros:/system/systemmacros
 Users:/system/userlist
 Audits:/system/audits
 Groups:/system/groups
+Error Conditions:/system/error conditions
 #Actors:/system/actors
 #Code:/system/code
 API:/system/actorsdocs
