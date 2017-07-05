@@ -303,7 +303,7 @@ function copyText$id() {
                 },
                 error: function(response, statusText, xhr, $form) {
                     if (response) {
-                        var responsetext = response.statusText || response.responseText;
+                        var responsetext = response.responseJSON || response.responseText;
                         this.form.find('#form_response').text(responsetext).addClass("alert alert-danger");
                     }
                     if (response && (response.status == 400 || response.status == 409)){
