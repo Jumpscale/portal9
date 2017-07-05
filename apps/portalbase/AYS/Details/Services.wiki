@@ -1,6 +1,5 @@
 @usedefaults
 h3. Services
-h2. test
 
 {{datatables_use}}
 {{aysservices reponame:$$reponame}}
