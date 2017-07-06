@@ -131,7 +131,20 @@ class system_atyourservice(j.tools.code.classGetBase()):
         cl = self.get_client(**kwargs)
         return cl.deleteBlueprint(repository, blueprint)
 
-    @exceptions.catcherrors()
+
+    @exceptions.catcherrors(debug=True)
+    def updateBlueprint(self, repository, blueprint, contents, **kwargs):
+        """
+        delete a blueprint
+        param:repository where blueprint will be created
+        param:blueprint blueprint name
+        param:contents blueprint contents
+        result json
+        """
+        cl = self.get_client(**kwargs)
+        return cl.updateBlueprint(data={'name': blueprint, 'content': contents}, repository=repository, blueprint=blueprint)
+
+    @exceptions.catcherrors(debug=True)
     def executeBlueprint(self, repository, blueprint='', **kwargs):
         """
         execute blueprint
@@ -143,7 +156,7 @@ class system_atyourservice(j.tools.code.classGetBase()):
         msg = "blueprint executed"
         return msg
 
-    @exceptions.catcherrors()
+    @exceptions.catcherrors(debug=True)
     def executeBlueprints(self, repository, **kwargs):
         """
         execute all blueprints in the repo

@@ -1,3 +1,6 @@
+from JumpScale9Portal.portal.docgenerator.form import Form
+
+
 def main(j, args, params, tags, tasklet):
     page = args.page
     macrostr = args.macrostr.strip()
@@ -52,8 +55,20 @@ def main(j, args, params, tags, tasklet):
             active = panel_data['label_content'] == 'active'
             bpname = panel_data['title'] if active else '_' + panel_data['title']
             reponame = args.requestContext.params['reponame']
-            bppath = '{vardir}/cockpit_repos/{reponame}/blueprints/{bpname}'.format(vardir=j.dirs.VARDIR, reponame=reponame, bpname=bpname)
-            page.addCodeBlock(panel_data['content'], path=bppath, edit=True, exitpage=True, spacename='AYS', pagename='Blueprints', querystr="reponame={}".format(reponame), linenr=False, autorefresh=False)
+            # bppath = '{vardir}/cockpit_repos/{reponame}/blueprints/{bpname}'.format(vardir=j.dirs.VARDIR, reponame=reponame, bpname=bpname)
+            ctx = args.requestContext
+            aysactor = j.apps.actorsloader.getActor('system', 'atyourservice')
+            client = aysactor.get_client(ctx=ctx)
+
+
+            form = Form(id="frmbb_{}".format(bpname), submit_url="/restmachine/system/atyourservice/updateBlueprint", action_button="Update", showresponse=True, reload_on_success=False)
+            form.addCodeBlock(code=panel_data['content'], template="yaml", page=page)
+            form.addHiddenField("repository", reponame)
+            form.addHiddenField("blueprint", bpname)
+            form.addButton(type='submit', value="Update")
+
+            form.write_html(page)
+            # page.addCodeBlock(panel_data['content'], path=bppath, edit=True, exitpage=True, spacename='AYS', pagename='Blueprints', querystr="reponame={}".format(reponame), linenr=False, autorefresh=False, beforesave=beforesave)
 
         else:
             page.addMessage(panel_data['content'])
