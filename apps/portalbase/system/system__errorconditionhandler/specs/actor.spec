@@ -21,3 +21,11 @@
 		"""
 		var:eco str,,eco ID
         result:bool
+
+    method:purge
+        """
+        Remove ecos
+        By default the logs en eco's older than than 1 week but this can be overriden
+        """
+        var:age str,, age of the records
+        result: bool
