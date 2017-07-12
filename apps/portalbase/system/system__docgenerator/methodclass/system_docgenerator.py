@@ -1,4 +1,5 @@
 from js9 import j
+from JumpScale9Portal.portal import exceptions
 
 INMAP = {'post': 'formData', 'get': 'query'}
 
@@ -83,22 +84,30 @@ class system_docgenerator(j.tools.code.classGetBase()):
                            'title': 'JumpScale Actors',
                            }
         catalog['definitions'] = {'strarray': {'type': 'array', 'items': {'type': 'string'}},
+                                  'intarray': {'type': 'array', 'items': {'type': 'integer'}},
                                   'object': {"type": "object",
-                                             "additionalProperties": {
-                                                 "type": "string"
-                                             }
-                                             }
-                                  }
+                                             "additionalProperties": {"type": "string"}}}
         hide_private_api = args.get('skip_private')
         if 'actors' in args and args['actors']:
             actors = args['actors'].split(',')
         else:
             actors = j.portal.tools.server.active.getActors()
 
+        if 'group' in args and args['group']:
+            group = args['group']
+            groups = dict()
+            for actor in actors:
+                group_name = actor.split('__')[0]
+                groups.setdefault(group_name, []).append(actor)
+
+            if group in groups.keys():
+                actors = groups[group]
+            else:
+                raise exceptions.BadRequest("invalid actor group")
+
         for actor in sorted(actors):
             try:
                 self.getDocForActor(actor, catalog, hide_private_api)
             except Exception as e:
-                catalog['info'][
-                    'description'] += "<p class='alert alert-danger'>Failed to load actor %s error was %s</p>" % (actor, e)
+                catalog['info']['description'] += "<p class='alert alert-danger'>Failed to load actor %s error was %s</p>" % (actor, e)
         return catalog
