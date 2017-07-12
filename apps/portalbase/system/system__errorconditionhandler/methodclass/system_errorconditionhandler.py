@@ -1,5 +1,5 @@
 from js9 import j
-
+from JumpScale9Portal.portal.auth import auth
 
 class system_errorconditionhandler(j.tools.code.classGetBase()):
 
@@ -39,3 +39,9 @@ class system_errorconditionhandler(j.tools.code.classGetBase()):
             eco_obj.delete()
             return True
         return False
+
+
+    @auth(['level1', 'level2', 'level3'])
+    def purge(self, age, **kwargs):
+        start = int(j.data.time.getEpochAgo(age))
+        return j.portal.tools.models.system.Errorcondition.objects(epoch__lt=start).delete()
