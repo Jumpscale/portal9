@@ -135,7 +135,7 @@ class system_atyourservice(j.tools.code.classGetBase()):
     @exceptions.catcherrors(debug=True)
     def updateBlueprint(self, repository, blueprint, contents, **kwargs):
         """
-        delete a blueprint
+        update a blueprint
         param:repository where blueprint will be created
         param:blueprint blueprint name
         param:contents blueprint contents
