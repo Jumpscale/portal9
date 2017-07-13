@@ -1,4 +1,4 @@
-from setuptools import setup
+from setuptools import setup, find_packages
 from setuptools.command.install import install as _install
 from setuptools.command.develop import develop as _develop
 import os
@@ -36,15 +36,25 @@ class develop(_develop):
         libpath = os.path.join(os.path.dirname(os.path.abspath(__file__)), libname)
         self.execute(_post_install, (libname, libpath), msg="Running post install task")
 
+
+long_description = ""
+try:
+    from pypandoc import convert
+    long_description = convert("README.md", 'rst')
+except ImportError:
+    long_description = ""
+
+
 setup(
     name='JumpScale9Portal',
-    version='9.0.0a1',
+    version='9.0.6',
     description='Automation framework for cloud workloads portal',
+    long_description=long_description,
     url='https://github.com/Jumpscale/portal9',
     author='GreenItGlobe',
     author_email='info@gig.tech',
     license='Apache',
-    packages=['JumpScale9Portal'],
+    packages=find_packages(),
     install_requires=[
         'JumpScale9>=9.0.3',
         'redis',

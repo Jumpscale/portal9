@@ -444,7 +444,7 @@ class User(ModelBase):
     domain = StringField(default='')
     passwd = StringField(default='')  # stored hashed
     roles = ListField(StringField())
-    active = BooleanField()
+    active = BooleanField(default=True)
     description = StringField(default='')
     emails = ListField(StringField())
     xmpp = ListField(StringField())
