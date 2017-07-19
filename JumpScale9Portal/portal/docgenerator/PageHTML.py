@@ -1044,10 +1044,11 @@ function copyText$id() {
     def addHTMLBody(self, body):
         self.body += body
 
-
     def addAccordion(self, panels):
         self.addJS('/jslib/codemirror/autorefresh.js', header=False)
         self.addMessage('<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">')
+
+        panels.sort(key=lambda x: x['title'])
 
         for panel_data in panels:
             if panel_data is None:
