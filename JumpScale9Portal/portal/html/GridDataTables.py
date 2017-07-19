@@ -67,11 +67,11 @@ class GridDataTables:
 
         C = """
 $(document).ready(function() {
+
     $('#$tableid').dataTable( {
         "sDom": "<'row'<'col-md-6'l><'col-md-6'f>r>t<'row'<'col-md-6'i><'col-md-6'p>>",
         "bServerSide": false,
         "bDestroy": true,
-        "sPaginationType": "bootstrap",
         "render" : {
             "_": "plain",
             "filter": "filter",
@@ -82,6 +82,7 @@ $(document).ready(function() {
     $.extend( $.fn.dataTableExt.oStdClasses, {
         "sWrapper": "dataTables_wrapper form-inline"
     } );
+
 } );""" % j.data.serializer.json.dumps(data)
         C = C.replace("$tableid", tableid)
         self.page.addJS(jsContent=C, header=False)
