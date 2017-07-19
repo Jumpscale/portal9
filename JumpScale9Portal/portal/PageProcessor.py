@@ -298,11 +298,15 @@ class PageProcessor():
         headers = {}
         for name, value in ctx.env.items():
             if name.startswith('HTTP_'):
-                headers[name[5:].replace('_', '-')] = value
+                if name == 'HTTP_HOST':
+                    headers['Host'] = value
+                else:
+                    headers[name[5:].replace('_', '-')] = value
         desturl = proxy['dest'] + path[len(proxy['path']):]
         if query:
             desturl += "?%s" % query
         req = requests.Request(method, desturl, data=ctx.env['wsgi.input'], headers=headers).prepare()
+        j.logger.logging.debug('[PageProcessor:process_proxy] Connecting to proxy with method: %s desturl: %s and headers: %s' % (method, desturl, headers))
         session = requests.Session()
         resp = session.send(req, stream=True)
         ctx.start_response('%s %s' % (resp.status_code, resp.reason), headers=list(resp.headers.items()))
