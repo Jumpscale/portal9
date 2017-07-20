@@ -1,3 +1,5 @@
+![](https://travis-ci.org/Jumpscale/portal9.svg?branch=master)
+
 # JumpScale Portal
 
 JumpScale Portal is a hybrid application server + wiki engine.
