@@ -47,7 +47,7 @@ except ImportError:
 
 setup(
     name='JumpScale9Portal',
-    version='9.0.3',
+    version='9.1.0',
     description='Automation framework for cloud workloads portal',
     long_description=long_description,
     url='https://github.com/Jumpscale/portal9',
