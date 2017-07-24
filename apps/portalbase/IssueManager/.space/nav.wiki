@@ -1,7 +1,0 @@
-Kanban:/issuemanager/kanban
-User Reports:/issuemanager/userreports
-Milestones:/issuemanager/milestones
-Time Lapsed:/issuemanager/TimeLapsed
-Users:/issuemanager/Users
-Issues:/issuemanager/Issues
-Assigned to me:/issuemanager/IssuesAssigned

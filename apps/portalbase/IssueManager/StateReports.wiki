@@ -1,3 +1,0 @@
-@usedefaults
-
-{{issue_reports groupon:state}}
