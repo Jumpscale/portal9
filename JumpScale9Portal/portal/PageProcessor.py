@@ -299,7 +299,7 @@ class PageProcessor():
         for name, value in ctx.env.items():
             if name.startswith('HTTP_'):
                 if name == 'HTTP_HOST':
-                    headers['Host'] = value
+                    continue
                 else:
                     headers[name[5:].replace('_', '-')] = value
         desturl = proxy['dest'] + path[len(proxy['path']):]
