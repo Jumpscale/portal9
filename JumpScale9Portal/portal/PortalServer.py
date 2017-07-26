@@ -47,6 +47,8 @@ def exhaustgenerator(func):
             return [e.msg.encode('utf-8')]
         if isinstance(result, str):
             return [j.data.text.toStr(result).encode('utf-8')]
+        if isinstance(result, bytes):
+            return [result]
         elif isinstance(result, collections.Iterable):
             def exhaust():
                 for value in result:
@@ -643,18 +645,19 @@ class PortalServer:
             if path.startswith(item):
                 rest_found = True
                 break
-        if rest_found:
-            ctx.params = self._getParamsFromEnv(environ, ctx, escape=False)
-        else:
-            ctx.params = self._getParamsFromEnv(environ, ctx, escape=True)
-
-        self.logger.info("[router]: params are %s" % ctx.params)
+        ctx.params = {}
         ctx.env['JS_CTX'] = ctx
 
         for proxypath, proxy in self.proxies.items():
             if path.startswith(proxypath.lstrip('/')):
                 return self.pageprocessor.process_proxy(ctx, proxy)
 
+        if rest_found:
+            ctx.params = self._getParamsFromEnv(environ, ctx, escape=False)
+        else:
+            ctx.params = self._getParamsFromEnv(environ, ctx, escape=True)
+
+        self.logger.info("[router]: params are %s" % ctx.params)
         if path.find("jslib/") == 0:
             path = path[6:]
             user = "None"

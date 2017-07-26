@@ -301,17 +301,23 @@ class PageProcessor():
                 if name == 'HTTP_HOST':
                     continue
                 else:
-                    headers[name[5:].replace('_', '-')] = value
+                    headers[name[5:].replace('_', '-').title()] = value
+        for key in ('CONTENT_TYPE', 'CONTENT_LENGTH'):
+            if key in ctx.env:
+                headers[key.replace('_', '-').title()] = ctx.env[key]
         desturl = proxy['dest'] + path[len(proxy['path']):]
         if query:
             desturl += "?%s" % query
-        req = requests.Request(method, desturl, data=ctx.env['wsgi.input'], headers=headers).prepare()
+        headers.pop('Connection', None)
+        data = ctx.env['wsgi.input'].read()
+        req = requests.Request(method, desturl, data=data, headers=headers).prepare()
         j.logger.logging.debug('[PageProcessor:process_proxy] Connecting to proxy with method: %s desturl: %s and headers: %s' % (method, desturl, headers))
         session = requests.Session()
-        resp = session.send(req, stream=True)
+        resp = session.send(req, stream=True, allow_redirects=False)
+        resp.headers.pop("transfer-encoding", None)
         ctx.start_response('%s %s' % (resp.status_code, resp.reason), headers=list(resp.headers.items()))
-        for chunk in resp.raw:
-            yield chunk
+        rawdata = resp.raw.read()
+        return rawdata
 
     def path2spacePagename(self, path):
 
