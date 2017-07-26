@@ -576,7 +576,7 @@ class PortalServer:
                 contentype, ('application/json', 'www-form-urlencoded', 'multipart/form-data', '')):
             if contentype.find("application/json") != -1:
                 postData = env["wsgi.input"].read()
-                if postData.strip() == "":
+                if postData.strip() == b"":
                     return params
                 postParams = j.data.serializer.getSerializerType('j').loads(postData)
                 if postParams:
