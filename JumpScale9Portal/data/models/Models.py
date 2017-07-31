@@ -158,6 +158,7 @@ class ModelBase(Base):
 class Errorcondition(ModelBase):
     nid = IntField(required=True)
     gid = IntField(required=True)
+    uniquekey = StringField(required=True)
     aid = IntField(default=0)
     pid = IntField(default=0)
     jid = IntField(default=0)
