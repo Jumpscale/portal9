@@ -65,7 +65,7 @@ class Events(object):
                     except:
                         pass
                 print(eco)
-                errormsg = error + "</br> For more info check <a href='/system/error condition?id=%s'>error</a> details" % eco.guid
+                errormsg = error + "</br> For more info check <a href='/system/error condition?ukey=%s'>error</a> details" % eco.key
                 self.sendMessage(title, errormsg, 'error', hide=False)
                 return
             refreshhint = self.ctx.env.get('HTTP_REFERER')

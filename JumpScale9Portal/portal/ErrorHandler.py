@@ -18,27 +18,32 @@ class ErrorHandler:
                     self.logger.error(e)
                     # don't escalate cause we might get in error loop
                     continue
-                j.portal.tools.models.system.Errorcondition(
-                    gid=eco['gid'],
-                    nid=eco['nid'],
-                    pid=eco['pid'],
-                    jid=eco['jid'],
-                    masterjid=eco['masterjid'],
-                    appname=eco['appname'],
-                    level=eco['level'],
-                    type=eco['type'],
-                    state=eco['state'],
-                    errormessage=eco['errormessage'],
-                    errormessagePub=eco['errormessagePub'],
-                    category=eco['category'],
-                    tags=eco['tags'],
-                    code=eco['code'],
-                    funcname=eco['funcname'],
-                    funcfilename=eco['funcfilename'],
-                    funclinenr=eco['funclinenr'],
-                    backtrace=eco['_traceback'],
-                    lasttime=eco['lasttime'],
-                    closetime=eco['closetime'],
-                    occurrences=eco['occurrences']
-                ).save()
+                ecoobj = j.portal.tools.models.system.Errorcondition.objects(uniquekey=eco['uniquekey']).first()
+                if ecoobj:
+                    ecoobj.update(inc__occurrences=1, errormessage=eco['errormessage'], lasttime=eco['lasttime'])
+                else:
+                    j.portal.tools.models.system.Errorcondition(
+                        gid=eco['gid'],
+                        nid=eco['nid'],
+                        pid=eco['pid'],
+                        uniquekey=eco['uniquekey'],
+                        jid=eco['jid'],
+                        masterjid=eco['masterjid'],
+                        appname=eco['appname'],
+                        level=eco['level'],
+                        type=eco['type'],
+                        state=eco['state'],
+                        errormessage=eco['errormessage'],
+                        errormessagePub=eco['errormessagePub'],
+                        category=eco['category'],
+                        tags=eco['tags'],
+                        code=eco['code'],
+                        funcname=eco['funcname'],
+                        funcfilename=eco['funcfilename'],
+                        funclinenr=eco['funclinenr'],
+                        backtrace=eco['_traceback'],
+                        lasttime=eco['lasttime'],
+                        closetime=eco['closetime'],
+                        occurrences=eco['occurrences']
+                    ).save()
 
