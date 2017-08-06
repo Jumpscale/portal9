@@ -19,11 +19,57 @@ class MacroExecutorBase(object):
         self.taskletsgroup[spacename] = taskletsgroup
 
     def getMacroCandidates(self, txt):
-        txt = '\n%s' % txt
-        reg = re.compile("\\n[^#\{]*\{\{[^\}]*\}\}")
-        matches = reg.findall(txt)
-        matches = ['{{%s' % ''.join(match.split('{{')[1]) for match in matches]
-        return matches
+        """
+        >>> getMacroCandidates(None, "{{asdf asdf}}")
+        ['{{asdf asdf}}']
+        >>> getMacroCandidates(None, "asddf{{asdf asdf}}")
+        ['{{asdf asdf}}']
+        >>> getMacroCandidates(None, "{{asdf asdf}}asddf")
+        ['{{asdf asdf}}']
+        >>> getMacroCandidates(None, "asddf{{asdf asdf}}asddf")
+        ['{{asdf asdf}}']
+        >>> getMacroCandidates(None, "asd{{d}}f{{asdf asdf}}asddf")
+        ['{{d}}', '{{asdf asdf}}']
+        >>> getMacroCandidates(None, "asd{{d}}{{asdf asdf}}asddf")
+        ['{{d}}', '{{asdf asdf}}']
+        >>> getMacroCandidates(None, "asd{{d}}{{as{{df a}}sdf}}asddf")
+        ['{{d}}', '{{as{{df a}}sdf}}']
+        >>> getMacroCandidates(None, "asd{{d}}{{as{{d{{f}} a}}sdf}}asddf")
+        ['{{d}}', '{{as{{d{{f}} a}}sdf}}']
+        >>> getMacroCandidates(None, "asd{{d}}{{as{{d}}f{{ a}}sdf}}asddf")
+        ['{{d}}', '{{as{{d}}f{{ a}}sdf}}']
+        >>> getMacroCandidates(None, "asd{{{{asd}}}}sdf")
+        ['{{{{asd}}}}']
+        >>> getMacroCandidates(None, "asd{{s{{asd}}}}sdf")
+        ['{{s{{asd}}}}']
+        >>> getMacroCandidates(None, "asd{{s{{asd}}a}}sdf")
+        ['{{s{{asd}}a}}']
+        >>> getMacroCandidates(None, "asd{{%s{{asd}}a%}}sdf")
+        ['{{asd}}', '{{%s{{asd}}a%}}']
+        """
+        s = 0
+        n = 0
+        ss = [0]*100
+        items = list()
+        lc = None
+        for i in range(1,len(txt)):
+            if txt[i-1] == txt[i] == '{' != lc and (i < 1 or txt[i-2]!='\\'):
+                if s == n:
+                    ss[n] = i-1
+                s += 1
+                if txt[i+1] == '%':
+                    n += 1
+                lc = '{'
+            elif txt[i-1] == txt[i] == '}' != lc and (i < 1 or txt[i-2]!='\\'):
+                s -= 1
+                if txt[i-2] == '%':
+                    n -= 1
+                if s == n:
+                    items.append(txt[ss[n]:i+1])
+                lc = '}'
+            else:
+                lc = None
+        return items
 
     def _getTaskletGroup(self, doc, macrospace, macro):
         # if macrospace specified check there first
