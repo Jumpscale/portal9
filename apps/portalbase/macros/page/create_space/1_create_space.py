@@ -10,7 +10,7 @@ def main(j, args, params, tags, tasklet):
     space_type = args.paramsExtra.get('space_type')
 
     if contentdir and space_path:
-        portal.spacesloader = j.portal.tools.portalloaders.portalloaderfactory.getSpacesLoader()
+        portal.spacesloader = j.portal.tools.portalloaders.loaderfactory.getSpacesLoader()
 
         if os.path.exists(space_path):
             page.addMessage('***ERROR***: The space path "{}" already exists'.format(space_path))
