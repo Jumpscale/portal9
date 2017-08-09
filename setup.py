@@ -56,7 +56,7 @@ setup(
     license='Apache',
     packages=find_packages(),
     install_requires=[
-        'JumpScale9>=9.0.3',
+        'JumpScale9>=9.1.0',
         'redis==2.10.5',
         'colorlog==2.10.0',
         'pytoml==0.1.14',
