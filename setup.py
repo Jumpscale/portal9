@@ -47,7 +47,7 @@ except ImportError:
 
 setup(
     name='JumpScale9Portal',
-    version='9.1.0',
+    version='9.1.1',
     description='Automation framework for cloud workloads portal',
     long_description=long_description,
     url='https://github.com/Jumpscale/portal9',
@@ -56,7 +56,7 @@ setup(
     license='Apache',
     packages=find_packages(),
     install_requires=[
-        'JumpScale9>=9.1.0',
+        'JumpScale9>=9.1.1',
         'redis==2.10.5',
         'colorlog==2.10.0',
         'pytoml==0.1.14',
