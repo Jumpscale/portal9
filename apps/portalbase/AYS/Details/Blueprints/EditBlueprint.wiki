@@ -1,3 +1,0 @@
-@usedefaults
-{{edit: path:$$path page:$$edit_page}}
-
