@@ -57,11 +57,11 @@ def main(j, args, params, tags, tasklet):
             reponame = args.requestContext.params['reponame']
             # bppath = '{vardir}/cockpit_repos/{reponame}/blueprints/{bpname}'.format(vardir=j.dirs.VARDIR, reponame=reponame, bpname=bpname)
             ctx = args.requestContext
-            aysactor = j.apps.actorsloader.getActor('system', 'atyourservice')
+            aysactor = j.apps.actorsloader.getActor('ays', 'tools')
             client = aysactor.get_client(ctx=ctx)
 
 
-            form = Form(id="frmbb_{}".format(bpname), submit_url="/restmachine/system/atyourservice/updateBlueprint", action_button="Update", showresponse=True, reload_on_success=False)
+            form = Form(id="frmbb_{}".format(bpname), submit_url="/restmachine/ays/tools/updateBlueprint", action_button="Update", showresponse=True, reload_on_success=False)
             form.addCodeBlock(code=panel_data['content'], template="yaml", page=page)
             form.addHiddenField("repository", reponame)
             form.addHiddenField("blueprint", bpname)
