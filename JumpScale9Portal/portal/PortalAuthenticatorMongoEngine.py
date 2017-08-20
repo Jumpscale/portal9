@@ -1,5 +1,5 @@
 from js9 import j
-
+from JumpScale9Portal.portal import exceptions
 
 class PortalAuthenticatorMongoEngine(object):
 
@@ -36,6 +36,8 @@ class PortalAuthenticatorMongoEngine(object):
         return j.portal.tools.models.system.User.get(self._getkey(self.usermodel, user))
 
     def createUser(self, username, password, email, groups, domain):
+        if self.userExists(username):
+            raise exceptions.Conflict("Username with name {} already exists".format(username))
         user = self.usermodel()
         user.name = username
         if isinstance(groups, str):
