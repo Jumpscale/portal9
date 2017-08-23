@@ -122,11 +122,11 @@ class system_usermanager(j.tools.code.classGetBase()):
 
     @auth(['admin'])
     def delete(self, username, **kwargs):
-        ctx = kwargs['ctx']
-        session = ctx.env['session']
-        session.delete()
-
-        user = j.portal.tools.models.system.User.find({"name": username})[0]
+        models = j.portal.tools.models
+        user = models.system.User.objects.get(name=username)
+        sessions = models.system.SessionCache.objects(user=username)
+        for session in sessions:
+            session.delete()
         user.delete()
         return True
 

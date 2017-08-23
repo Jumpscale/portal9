@@ -47,24 +47,29 @@ def main(j, args, params, tags, tasklet):
     head = """
 <title>Login</title>
     """
+    title = ''
+    if not j.portal.tools.server.active.cfg.get('force_oauth_instance'):
+        title = '<h4>Access Denied Please Login</h4>'
     body = """
     <form id="loginform" class="form-signin container" method="post" action="/$$path$$querystr">
-       <h4>Access Denied Please Login</h4>
+       {}
        <div class="col-sm-offset-3 col-md-6 login-screen">
-        <div class="login-form">
-          <div class="form-group">
-            <input type="text" class="form-control login-field" value="" name="user_login_" placeholder="Enter your username" id="login-name">
-            <label class="login-field-icon fui-user" for="login-name"></label>
-          </div>
+        <div class="login-form">""".format(title)
+    if not j.portal.tools.server.active.cfg.get('production'):
+        body += """
+        <div class="form-group">
+          <input type="text" class="form-control login-field" value="" name="user_login_" placeholder="Enter your username" id="login-name">
+          <label class="login-field-icon fui-user" for="login-name"></label>
+        </div>
 
-          <div class="form-group">
-            <input type="password" class="form-control login-field" value="" name="passwd" placeholder="Password" id="login-pass">
-            <label class="login-field-icon fui-lock" for="login-pass"></label>
-          </div>
+        <div class="form-group">
+          <input type="password" class="form-control login-field" value="" name="passwd" placeholder="Password" id="login-pass">
+          <label class="login-field-icon fui-lock" for="login-pass"></label>
+        </div>
 
-          <button class="btn btn-primary btn-lg btn-block mbm" type="submit">Sign in</button>"""
+        <button class="btn btn-primary btn-lg btn-block mbm" type="submit">Sign in</button>"""
     name = j.portal.tools.server.active.cfg.get('force_oauth_instance')
-    if name:
+    if name and j.portal.tools.server.active.cfg.get('production'):
         body += '''
         <a class="btn btn-block btn-social btn-%s" href=/restmachine/system/oauth/authenticate?type=%s>
           <i class="fa fa-%s"></i> <span>Login with %s</span>

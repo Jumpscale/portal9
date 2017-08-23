@@ -9,7 +9,7 @@
 
 @col 12
 
-h4. Access Denied.
+h4. Access Denied Please Login
 {{accessdeniedmsg}}
 
 @divend
