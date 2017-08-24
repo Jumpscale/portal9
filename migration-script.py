@@ -6,10 +6,8 @@ def migrate_model_data(model):
     mongo_client = j.clients.mongodb.get()
     database = mongo_client.get_database('jumpscale_system')
     user_collection = database.get_collection(model)
-    user_info = user_collection.find()[0]
-    for key, value in user_info.items():
-        if key in ['domain', 'roles', 'xmpp', 'mobile']:
-            user_collection.update_many({}, {'$unset': {key: 1}})
+    keys = {'domain': 1, 'roles': 1, 'xmpp': 1, 'mobile': 1}
+    user_collection.update_many({}, {'$unset': keys})
 
 
 def main():
