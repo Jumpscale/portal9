@@ -23,7 +23,6 @@ h1. Group ${name}
 {{group_edit: id:$$id}}
 
 * *Name*: ${name}
-* *Domain*: ${domain}
 * *Description*: ${description}
 
 h2. Users:

@@ -14,7 +14,6 @@ def main(j, args, params, tags, tasklet):
                   submit_url='/restmachine/system/usermanager/editGroup')
 
     options = list()
-    popup.addText('Enter domain', 'domain', value=group.domain)
     popup.addText('Enter description', 'description', value=group.description)
     for user in j.portal.tools.models.system.User.find({}):
         available = user['id'] in [u['id'] for u in j.portal.tools.models.system.User.find({'groups': group['name']})]

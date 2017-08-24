@@ -12,7 +12,7 @@ class PortalAuthenticatorMongoEngine(object):
             # Only to create a default admin user to login with.
             # Should be done in AYS
             if not j.portal.tools.models.system.User.find(query={'name': 'admin'}):
-                self.createUser('admin', 'admin', 'demo@1234.com', ['admin'], 'domain.com')
+                self.createUser('admin', 'admin', 'demo@1234.com', ['admin'])
 
     def getUserFromKey(self, key):
         if key not in self.key2user:
@@ -33,9 +33,11 @@ class PortalAuthenticatorMongoEngine(object):
         return j.portal.tools.models.system.Group.get(self._getkey(self.groupmodel, groupname))
 
     def userExists(self, user):
-        return j.portal.tools.models.system.User.get(self._getkey(self.usermodel, user))
+        user = j.portal.tools.models.system.User.find({"name": user})
+        if user:
+            return True
 
-    def createUser(self, username, password, email, groups, domain):
+    def createUser(self, username, password, email, groups):
         if self.userExists(username):
             raise exceptions.Conflict("Username with name {} already exists".format(username))
         user = self.usermodel()
@@ -53,7 +55,6 @@ class PortalAuthenticatorMongoEngine(object):
         if isinstance(email, str):
             email = [email]
         user.emails = email
-        user.domain = domain
         user.passwd = password
         return user.save()
 

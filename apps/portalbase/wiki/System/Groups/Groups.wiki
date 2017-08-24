@@ -7,9 +7,6 @@ h2. Group List
   - name: name
     type: text
     label: Name
-  - name: domain
-    type: text
-    label: Domain
   - name: description
     type: text
     label: Description
