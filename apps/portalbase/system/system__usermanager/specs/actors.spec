@@ -18,7 +18,7 @@
         get a user
         """
         var:name str,,name of user
-        result:dict 
+        result:dict
 
     method:getuserwithid
         """
@@ -36,7 +36,7 @@
 
     method:listusers
         """
-        list all users 
+        list all users
         """
         result:list
 
@@ -49,7 +49,6 @@
         var:groups list,,name of groups @optional
         var:password str,,password for user @optional
 		var:emails str,,comma seperated list of emails or list @optional
-		var:domain str,,Domain of user @optional
 
 	method:delete
 		"""
@@ -65,7 +64,6 @@
 		var:password str,,passwd
 		var:groups str,,comma separated list of groups this user belongs to @optional
 		var:emails str,,comma separated list of email addresses
-		var:domain str,,domain of user
         result:bool    #True if successful, False otherwise
 
     method:authenticate @noauth
@@ -90,7 +88,6 @@
 		create a group
 		"""
         var:name str,,name of group
-        var:domain str,,domain of group
         var:description str,,description of group
         result:bool    #True if successful, False otherwise
 
@@ -99,7 +96,6 @@
 		edit a group
 		"""
         var:name str,,name of group
-        var:domain str,,domain of group
         var:description str,,description of group
         var:users str,,list or comma seperate string of users @optional
         result:bool    #True if successful, False otherwise

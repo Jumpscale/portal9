@@ -211,9 +211,7 @@ class Grid(ModelBase):
 
 class Group(ModelBase):
     name = StringField(default='')
-    domain = StringField(default='')
     gid = IntField(default=1)
-    roles = ListField(StringField())
     active = BooleanField(default=True)
     description = StringField(default='master')
     lastcheck = IntField(default=j.data.time.getTimeEpoch())
@@ -442,14 +440,10 @@ class Test(ModelBase):
 
 class User(ModelBase):
     name = StringField(default='')
-    domain = StringField(default='')
     passwd = StringField(default='')  # stored hashed
-    roles = ListField(StringField())
     active = BooleanField(default=True)
     description = StringField(default='')
     emails = ListField(StringField())
-    xmpp = ListField(StringField())
-    mobile = ListField(StringField())
     # epoch of last time the info updated
     lastcheck = IntField(default=j.data.time.getTimeEpoch())
     groups = ListField(StringField())
