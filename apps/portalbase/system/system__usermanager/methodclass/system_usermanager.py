@@ -108,7 +108,7 @@ class system_usermanager(j.tools.code.classGetBase()):
             if isinstance(emails, str):
                 emails = [x.strip() for x in emails.split(',')]
             elif not isinstance(emails, list):
-                ctx.start_resonpnse('400 Bad Request', [('Content-Type', 'text/plain')])
+                ctx.start_response('400 Bad Request', [('Content-Type', 'text/plain')])
                 return "Emails should be a list or a comma seperated string"
             user.emails = emails
         if password:
@@ -170,6 +170,8 @@ class system_usermanager(j.tools.code.classGetBase()):
             group = groups[0]
         if users and isinstance(users, str):
             users = users.split(',')
+        elif not users:
+            users = []
         users_old = [u['name'] for u in j.portal.tools.models.system.User.find({'groups': name})]
         users_remove = [x for x in users_old if x not in users]
         for user_name in users_remove:
