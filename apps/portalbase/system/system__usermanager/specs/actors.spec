@@ -62,7 +62,7 @@
 		"""
         var:username str,,name of user
 		var:password str,,passwd
-		var:groups str,,comma separated list of groups this user belongs to @optional
+		var:groups list,,comma separated list of groups this user belongs to @optional
 		var:emails str,,comma separated list of email addresses
         result:bool    #True if successful, False otherwise
 
@@ -97,7 +97,7 @@
 		"""
         var:name str,,name of group
         var:description str,,description of group
-        var:users str,,list or comma seperate string of users @optional
+        var:users list,,list or comma seperate string of users @optional
         result:bool    #True if successful, False otherwise
 
     method:deleteGroup
