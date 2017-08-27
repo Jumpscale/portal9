@@ -24,3 +24,6 @@ JumpScale Portal is a hybrid application server + wiki engine.
   ```bash
   bash install.sh
   ```
+
+
+  > To update database models for existing portal installation, use the script `migration-script.py`

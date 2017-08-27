@@ -14,7 +14,6 @@ def main(j, args, params, tags, tasklet):
 
     options = list()
     popup.addText('Enter emails (comma seperated)', 'emails', value=', '.join(user.emails))
-    popup.addHiddenField('domain', user.domain)
     popup.addText('Enter Password (leave empty to unchange)', 'password', type='password')
     for group in j.portal.tools.models.system.Group.find({}):
         available = group['name'] in user.groups

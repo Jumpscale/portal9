@@ -90,7 +90,7 @@ class system_usermanager(j.tools.code.classGetBase()):
         return users[0]
 
     @auth(['admin'])
-    def editUser(self, username, groups, emails, domain, password, **kwargs):
+    def editUser(self, username, groups, emails, password, **kwargs):
         ctx = kwargs['ctx']
         user = self._getUser(username)
         if not user:
@@ -108,11 +108,9 @@ class system_usermanager(j.tools.code.classGetBase()):
             if isinstance(emails, str):
                 emails = [x.strip() for x in emails.split(',')]
             elif not isinstance(emails, list):
-                ctx.start_resonpnse('400 Bad Request', [('Content-Type', 'text/plain')])
+                ctx.start_response('400 Bad Request', [('Content-Type', 'text/plain')])
                 return "Emails should be a list or a comma seperated string"
             user.emails = emails
-        if domain:
-            user.domain = domain
         if password:
             user.passwd = password
 
@@ -139,11 +137,10 @@ class system_usermanager(j.tools.code.classGetBase()):
         group.delete()
 
     @auth(['admin'])
-    def createGroup(self, name, domain, description, **args):
+    def createGroup(self, name, description, **args):
         """
         create a group
         param:name name of group
-        param:domain of group
         param:description of group
         result bool
 
@@ -152,17 +149,15 @@ class system_usermanager(j.tools.code.classGetBase()):
             raise exceptions.Conflict("Group with name %s already exists" % name)
         group = j.portal.tools.models.system.Group()
         group.name = name.strip()
-        group.domain = domain
         group.description = description
         group.save()
         return True
 
     @auth(['admin'])
-    def editGroup(self, name, domain, description, users, **args):
+    def editGroup(self, name, description, users, **args):
         """
         edit a group
         param:name name of group
-        param:domain of group
         param:description of group
         result bool
 
@@ -175,6 +170,8 @@ class system_usermanager(j.tools.code.classGetBase()):
             group = groups[0]
         if users and isinstance(users, str):
             users = users.split(',')
+        elif not users:
+            users = []
         users_old = [u['name'] for u in j.portal.tools.models.system.User.find({'groups': name})]
         users_remove = [x for x in users_old if x not in users]
         for user_name in users_remove:
@@ -189,7 +186,6 @@ class system_usermanager(j.tools.code.classGetBase()):
             user.save()
 
         group['name'] = name
-        group['domain'] = domain
         group['description'] = description
         group.save()
         return True
@@ -199,7 +195,7 @@ class system_usermanager(j.tools.code.classGetBase()):
         return r.match(username) is not None
 
     @auth(['admin'])
-    def create(self, username, emails, password, groups, domain, **kwargs):
+    def create(self, username, emails, password, groups, **kwargs):
         ctx = kwargs['ctx']
         headers = [('Content-Type', 'text/plain'), ]
 
@@ -212,7 +208,7 @@ class system_usermanager(j.tools.code.classGetBase()):
             ctx.start_response('409', headers)
             return "Username %s already exists" % username
         groups = groups or []
-        return j.portal.tools.server.active.auth.createUser(username, password, emails, groups, None)
+        return j.portal.tools.server.active.auth.createUser(username, password, emails, groups)
 
     def _checkUser(self, username):
 
