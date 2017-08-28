@@ -18,41 +18,40 @@ class MacroExecutorBase(object):
                 taskletsgroup.addTasklets(macrodir)
         self.taskletsgroup[spacename] = taskletsgroup
 
-    # def getMacroCandidates(self, txt):
-    #     txt = '\n%s' % txt
-    #     reg = re.compile("\\n[^#\{]*\{\{[^\}]*\}\}")
-    #     matches = reg.findall(txt)
-    #     matches = ['{{%s' % ''.join(match.split('{{')[1]) for match in matches]
-    #     return matches
-
     def getMacroCandidates(self, txt):
         """
-        >>> getMacroCandidates("{{asdf asdf}}")
-        ['{{asdf asdf}}']
-        >>> getMacroCandidates("asddf{{asdf asdf}}")
-        ['{{asdf asdf}}']
-        >>> getMacroCandidates("{{asdf asdf}}asddf")
-        ['{{asdf asdf}}']
-        >>> getMacroCandidates("asddf{{asdf asdf}}asddf")
-        ['{{asdf asdf}}']
-        >>> getMacroCandidates("asd{{d}}f{{asdf asdf}}asddf")
-        ['{{d}}', '{{asdf asdf}}']
-        >>> getMacroCandidates("asd{{d}}{{asdf asdf}}asddf")
-        ['{{d}}', '{{asdf asdf}}']
-        >>> getMacroCandidates("asd{{d}}{{as{{df a}}sdf}}asddf")
-        ['{{d}}', '{{as{{df a}}sdf}}']
-        >>> getMacroCandidates("asd{{d}}{{as{{d{{f}} a}}sdf}}asddf")
-        ['{{d}}', '{{as{{d{{f}} a}}sdf}}']
-        >>> getMacroCandidates("asd{{d}}{{as{{d}}f{{ a}}sdf}}asddf")
-        ['{{d}}', '{{as{{d}}f{{ a}}sdf}}']
-        >>> getMacroCandidates("asd{{{{asd}}}}sdf")
-        ['{{{{asd}}}}']
-        >>> getMacroCandidates("asd{{s{{asd}}}}sdf")
-        ['{{s{{asd}}}}']
-        >>> getMacroCandidates("asd{{s{{asd}}a}}sdf")
-        ['{{s{{asd}}a}}']
-        >>> getMacroCandidates("asd{{%s{{asd}}a%}}sdf")
-        ['{{asd}}', '{{%s{{asd}}a%}}']
+        Gets macro candidates in a text
+
+        @param txt str: string to search for macro candidates.
+
+        For a text to be considered a macro candidate it must be enclosed between '{{' and '}}'. 
+        Macro candidate can be nested using `{{%` and `%}}` 
+
+
+        >>> getMacroCandidates("{{listusers}}")
+        ['{{listusers}}']
+        >>> getMacroCandidates("users are {{listusers}}")
+        ['{{listusers}}']
+        >>> getMacroCandidates("{{listusers}}some extra text")
+        ['{{listusers}}']
+        >>> getMacroCandidates("{{include:spaces}}")
+        ['{{include:spaces}}']
+        >>> getMacroCandidates("Action:{{showaction}}Code:{{showcode}}")
+        ['{{showaction}}', '{{showcode}}']
+        >>> getMacroCandidates("{{userinfo}}{{rightsidebar}}copyright text")
+        ['{{userinfo}}', '{{rightsidebar}}']
+        >>> getMacroCandidates("User Details {{userinfo}} Followed by {{followers: - user: {{currentuser}}}}")
+        ['{{userinfo}}', '{{followers: - user: {{currentuser}}}}']
+        >>> getMacroCandidates("Site title {{separator}}User Details {{userinfo}} Followed by {{followers: - user: {{currentuser}}}}copyrights")
+        ['{{separator}}', '{{userinfo}}', '{{followers: - user: {{currentuser}}}}']
+        >>> getMacroCandidates("{{{{showlevel}}}}")
+        ['{{{{showlevel}}}}']
+        >>> getMacroCandidates("welcome {{current_user {{today}}}}")
+        ['{{current_user {{today}}}}']
+        >>> getMacroCandidates("welcome {{current_user {{today}}}} Enjoy!")
+        ['{{current_user {{today}}}}']
+        >>> getMacroCandidates("this is a test for nested {{%s{{inner}}a%}}macros")
+        ['{{inner}}', '{{%s{{inner}}a%}}']
         """
 
         def flat(txt):
