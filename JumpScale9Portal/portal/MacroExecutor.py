@@ -19,11 +19,91 @@ class MacroExecutorBase(object):
         self.taskletsgroup[spacename] = taskletsgroup
 
     def getMacroCandidates(self, txt):
-        txt = '\n%s' % txt
-        reg = re.compile("\\n[^#\{]*\{\{[^\}]*\}\}")
-        matches = reg.findall(txt)
-        matches = ['{{%s' % ''.join(match.split('{{')[1]) for match in matches]
-        return matches
+        """
+        Gets macro candidates in a text
+
+        @param txt str: string to search for macro candidates.
+
+        For a text to be considered a macro candidate it must be enclosed between '{{' and '}}'. 
+        Macro candidate can be nested using `{{%` and `%}}` 
+
+
+        >>> getMacroCandidates("{{listusers}}")
+        ['{{listusers}}']
+        >>> getMacroCandidates("users are {{listusers}}")
+        ['{{listusers}}']
+        >>> getMacroCandidates("{{listusers}}some extra text")
+        ['{{listusers}}']
+        >>> getMacroCandidates("{{include:spaces}}")
+        ['{{include:spaces}}']
+        >>> getMacroCandidates("Action:{{showaction}}Code:{{showcode}}")
+        ['{{showaction}}', '{{showcode}}']
+        >>> getMacroCandidates("{{userinfo}}{{rightsidebar}}copyright text")
+        ['{{userinfo}}', '{{rightsidebar}}']
+        >>> getMacroCandidates("User Details {{userinfo}} Followed by {{followers: - user: {{currentuser}}}}")
+        ['{{userinfo}}', '{{followers: - user: {{currentuser}}}}']
+        >>> getMacroCandidates("Site title {{separator}}User Details {{userinfo}} Followed by {{followers: - user: {{currentuser}}}}copyrights")
+        ['{{separator}}', '{{userinfo}}', '{{followers: - user: {{currentuser}}}}']
+        >>> getMacroCandidates("{{{{showlevel}}}}")
+        ['{{{{showlevel}}}}']
+        >>> getMacroCandidates("welcome {{current_user {{today}}}}")
+        ['{{current_user {{today}}}}']
+        >>> getMacroCandidates("welcome {{current_user {{today}}}} Enjoy!")
+        ['{{current_user {{today}}}}']
+        >>> getMacroCandidates("this is a test for nested {{%s{{inner}}a%}}macros")
+        ['{{inner}}', '{{%s{{inner}}a%}}']
+        """
+
+        def flat(txt):
+            def state():
+                print(txt, len(txt))
+                print("" + "^" if idx == 0 else " " * (idx) + "^", "IDX: ", idx)
+                print("LBCOUNT: ", lbcount, "RBCOUNT: ", rbcount)
+                print("MACROSTARTIDX: ", macrostartidx)
+            lbcount = 0
+            rbcount = 0
+            macros = []
+            macrostartidx = None
+
+            # We go char by char if we encounter {{ for the first time we remember that starting index
+            # and keep remembering the count of  {  and } and if they match we
+            # are done reading the macro
+
+            for idx in range(1, len(txt)):
+                cur = txt[idx]
+                next = txt[idx + 1] if len(txt) - 1 > idx else ""
+
+                prev = txt[idx - 1]
+                if cur == prev == "}":
+                    # in case of next char is } we don't add 2 we add 1 "not to
+                    # double adding the value of }"
+                    if cur == next:
+                        rbcount += 1
+                    else:
+                        rbcount += 2
+                if lbcount == rbcount and macrostartidx is not None:
+                    macros.append(txt[macrostartidx:idx + 1])
+                    lbcount = rbcount = 0
+                    macrostartidx = None
+                if cur == prev == "{":
+                    # in case of next char is { we don't add 2 we add 1 "not to
+                    # double adding the value of {"
+                    if cur == next:
+                        lbcount += 1
+                    else:
+                        lbcount += 2
+                    if macrostartidx is None:
+                        macrostartidx = idx - 1
+
+            return macros
+
+        candidates = flat(txt)
+        for c in candidates:
+            if c.startswith("{{%") and c.endswith("%}}"):
+                c = c.replace("{{%", "", 1)
+                c = c.replace("%}}", "", 1)
+                candidates = self.getMacroCandidates(c) + candidates
+        return candidates
 
     def _getTaskletGroup(self, doc, macrospace, macro):
         # if macrospace specified check there first
@@ -31,7 +111,8 @@ class MacroExecutorBase(object):
         if macrospace is not None:
             macrospace = macrospace or None
             if macrospace and macrospace in j.portal.tools.server.active.spacesloader.spaces:
-                j.portal.tools.server.active.spacesloader.spaces[macrospace].loadDocProcessor()
+                j.portal.tools.server.active.spacesloader.spaces[
+                    macrospace].loadDocProcessor()
             if macrospace in self.taskletsgroup and self.taskletsgroup[macrospace].hasGroup(macro):
                 return self.taskletsgroup[macrospace]
         # else check in document space
@@ -163,15 +244,18 @@ class MacroExecutorPreprocess(MacroExecutorBase):
                 macro = macro.lower().strip()
                 # check which macro's are params
                 if macro in paramsExtra:
-                    doc.content = doc.content.replace(macrostr, paramsExtra[macro])
+                    doc.content = doc.content.replace(
+                        macrostr, paramsExtra[macro])
                     macros.remove(macroitem)
                     continue
                 if macro in doc.preprocessor.params:
-                    doc.content = doc.content.replace(macrostr, self.params[macro])
+                    doc.content = doc.content.replace(
+                        macrostr, self.params[macro])
                     macros.remove(macroitem)
                     continue
                 if macro == "author":
-                    doc.content = doc.content.replace(macrostr, ','.join(doc.author))
+                    doc.content = doc.content.replace(
+                        macrostr, ','.join(doc.author))
                     macros.remove(macroitem)
                     continue
                 if macro == "docpathshort":
@@ -199,7 +283,8 @@ class MacroExecutorPage(MacroExecutorBase):
         a doc is a document in final phase whichere the final result is generated
         """
         if not isinstance(page, Page):
-            raise RuntimeError("Page was no page object. Was for macro:%s on doc:%s" % (macrostr, doc.name))
+            raise RuntimeError(
+                "Page was no page object. Was for macro:%s on doc:%s" % (macrostr, doc.name))
 
         macrospace, macro, tags, cmdstr = self.parseMacroStr(macrostr)
 
@@ -227,7 +312,8 @@ class MacroExecutorPage(MacroExecutorBase):
                                               paramsExtra=paramsExtra, cmdstr=cmdstr, page=page, requestContext=requestContext)
             except:
                 e = traceback.format_exc()
-                result = "***ERROR***: Could not execute macro %s on %s, error in macro." % (macro, doc.name)
+                result = "***ERROR***: Could not execute macro %s on %s, error in macro." % (
+                    macro, doc.name)
                 if j.application.debug:
                     result += " Error was:\n%s " % (e)
                 page.addMessage(j.portal.tools.html.htmlfactory.escape(result))
@@ -251,7 +337,8 @@ class MacroExecutorPage(MacroExecutorBase):
         page0 = j.portal.tools.server.active.pageprocessor.getpage()
         if pagemirror4jscss is not None:
             page0.pagemirror4jscss = pagemirror4jscss
-        page0 = self.executeMacroAdd2Page(macrostr, page0, doc, requestContext, paramsExtra)
+        page0 = self.executeMacroAdd2Page(
+            macrostr, page0, doc, requestContext, paramsExtra)
         return page0.body
 
     def execMacrosOnContent(self, content, doc, paramsExtra={}, ctx=None, page=None, markdown=False):
@@ -262,9 +349,11 @@ class MacroExecutorPage(MacroExecutorBase):
 
         def process(content):
             if ctx is not None:
-                content = doc.applyParams(ctx.params, findfresh=True, content=content)
+                content = doc.applyParams(
+                    ctx.params, findfresh=True, content=content)
             if paramsExtra != {}:
-                content = doc.applyParams(paramsExtra, findfresh=True, content=content)
+                content = doc.applyParams(
+                    paramsExtra, findfresh=True, content=content)
             return content, self.findMacros(doc, content)
 
         content, macros = process(content)
@@ -300,7 +389,8 @@ class MacroExecutorPage(MacroExecutorBase):
                     content = content.replace(macrostr, page.body, 1)
                     page.body = ""
                 else:
-                    doc.preprocessor.macroexecutorPage.executeMacroAdd2Page(macrostr, page, doc, ctx, paramsExtra)
+                    doc.preprocessor.macroexecutorPage.executeMacroAdd2Page(
+                        macrostr, page, doc, ctx, paramsExtra)
 
             content, macros = process(content)
         content = page.head + content
@@ -314,9 +404,11 @@ class MacroExecutorWiki(MacroExecutorBase):
 
         def process(content):
             if ctx is not None:
-                content = doc.applyParams(ctx.params, findfresh=True, content=content)
+                content = doc.applyParams(
+                    ctx.params, findfresh=True, content=content)
             if paramsExtra != {}:
-                content = doc.applyParams(paramsExtra, findfresh=True, content=content)
+                content = doc.applyParams(
+                    paramsExtra, findfresh=True, content=content)
             return content, self.findMacros(doc, content)
 
         content, macros = process(content)
@@ -327,7 +419,8 @@ class MacroExecutorWiki(MacroExecutorBase):
                 return content, doc
 
             for macroitem in macros:
-                content, doc = self.executeMacroOnContent(content, macroitem, doc, paramsExtra, ctx=ctx, page=page)
+                content, doc = self.executeMacroOnContent(
+                    content, macroitem, doc, paramsExtra, ctx=ctx, page=page)
 
             content, macros = process(content)
         return content, doc
@@ -349,7 +442,8 @@ class MacroExecutorWiki(MacroExecutorBase):
                     result = "***ERROR***: Could not execute macro %s on %s, did not return (out,doc)." % (
                         macro, doc.name)
                 else:
-                    result = "***ERROR***: Could not execute macro %s on %s, error in macro." % (macro, doc.name)
+                    result = "***ERROR***: Could not execute macro %s on %s, error in macro." % (
+                        macro, doc.name)
                     if j.application.debug:
                         result += " Error was:\n%s " % (e)
                 result = j.portal.tools.html.htmlfactory.escape(result)
@@ -379,9 +473,11 @@ class MacroexecutorMarkDown(MacroExecutorWiki):
 
         def process(content):
             if ctx is not None:
-                content = doc.applyParams(ctx.params, findfresh=True, content=content)
+                content = doc.applyParams(
+                    ctx.params, findfresh=True, content=content)
             if paramsExtra != {}:
-                content = doc.applyParams(paramsExtra, findfresh=True, content=content)
+                content = doc.applyParams(
+                    paramsExtra, findfresh=True, content=content)
             return content, self.findMacros(doc, content)
 
         content, macros = process(content)
@@ -392,7 +488,8 @@ class MacroexecutorMarkDown(MacroExecutorWiki):
                 return content, doc
 
             for macroitem in macros:
-                content, doc = self.executeMacroOnContent(content, macroitem, doc, paramsExtra, ctx=ctx, page=page)
+                content, doc = self.executeMacroOnContent(
+                    content, macroitem, doc, paramsExtra, ctx=ctx, page=page)
 
             content, macros = process(content)
         return content, doc
