@@ -37,9 +37,18 @@ class PortalAuthenticatorMongoEngine(object):
         if user:
             return True
 
+    def emailExists(self, emails):
+        user = j.portal.tools.models.system.User.find({"emails": {"$in": emails}})
+        if user:
+            return True
+
     def createUser(self, username, password, email, groups):
         if self.userExists(username):
             raise exceptions.Conflict("Username with name {} already exists".format(username))
+        if isinstance(email, str):
+            email = [email]
+        if self.emailExists(email):
+            raise exceptions.Conflict("User with email {} already exists".format(" or ".join(email)))
         user = self.usermodel()
         user.name = username
         if isinstance(groups, str):
@@ -52,8 +61,6 @@ class PortalAuthenticatorMongoEngine(object):
             g = self.groupmodel()
             g.name = group
             g.save()
-        if isinstance(email, str):
-            email = [email]
         user.emails = email
         user.passwd = password
         return user.save()
