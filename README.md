@@ -15,7 +15,7 @@ JumpScale Portal is a hybrid application server + wiki engine.
 
 
 ## Installation
-* By choosing to install the portal when installing JumpScale9(See [js9 installation](https://github.com/Jumpscale/developer/blob/master/README.md)):
+* By choosing to install the portal when installing JumpScale9(See [js9 installation](https://github.com/Jumpscale/bash/blob/master/README.md)):
 
   ```bash
   js9_build -p
