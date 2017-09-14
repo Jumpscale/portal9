@@ -2,6 +2,8 @@
 from gevent import monkey
 monkey.patch_socket()
 monkey.patch_ssl()
+monkey.patch_dns()
+monkey.patch_select()
 monkey.patch_thread()
 monkey.patch_time()
 
