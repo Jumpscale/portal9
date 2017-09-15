@@ -12,5 +12,5 @@ h2. Group List
     label: Description
 
 }}
-
+{{datatables_use}}
 {{groups}}

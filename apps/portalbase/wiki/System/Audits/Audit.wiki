@@ -1,30 +1,30 @@
 @usedefaults
 {{audit: id:$$id}}
 
-{% if id %}
+{% if audit %}
 h2. Audit:
 
-|*Time*|${time}|
-|*User*|${user}|
-|*Call*|${call}|
-|*Status Code*|${statuscode}|
-|*Response Time*|${'%0.2f' % ((responsetime or 0) * 1000)} ms|
+|*Time*| {{ts:${audit.timestamp}}}|
+|*User*|${audit.user}|
+|*Call*|${audit.call}|
+|*Status Code*|${audit.status_code}|
+|*Response Time*|${'%0.2f' % ((audit.responsetime or 0) * 1000)} ms|
 |*Tags*|${tags}|
-|*Link to Error Condition*|{% if link %}[${link}|/system/error condition?id=${link}]{% else %} N/A{% endif %}|
+|*Link to Error Condition*|{% if ecolink %}[${ecolink}|/system/error condition?id=${link}]{% else %} N/A{% endif %}|
 h3. Arguments:
 
 {{code:
-${args}
+${audit.args}
 }}
 
 h3. Keyword Arguments:
 {{code:
-${kwargs}
+${audit.kwargs}
 }}
 
 h3. Result:
 {{code:
-${result}
+${audit.result}
 }}
 
 {% else %}

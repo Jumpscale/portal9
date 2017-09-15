@@ -15,7 +15,7 @@ def main(j, args, params, tags, tasklet):
 
     def makeTime(row, field):
         time = modifier.makeTime(row, field)
-        link = "[%s|/grid/audit?id=%s]" % (time, row.id)
+        link = "[%s|/system/audit?id=%s]" % (time, row.id)
         return link
 
     fields = [
