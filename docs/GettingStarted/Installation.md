@@ -10,7 +10,7 @@
   - In order to install a MongoDB instance locally:
 
 ```py
-    j.tools.prefab.local.apps.mongo.install()
+    j.tools.prefab.local.db.mongo.install()
 ```
 
   - In order to install a MongoDB instance on a remote node:
@@ -18,7 +18,7 @@
 ```py
     executor = j.tools.executor.getSSHBased(addr="<IP address of remote machine>", port="SSH port of remote machine", login="username", passwd= "password")
     prefab = j.tools.prefab.get(executor)
-    prefab.apps.mongo.install()
+    prefab.db.mongo.install()
 ```
 
 
@@ -27,7 +27,7 @@
 Using Cuisine:
 
 ```py
-j.tools.prefab.local.portal.install()
+j.tools.prefab.local.web.portal.install()
 ```
 
 Your portal content and code can now be placed in the `$JSBASEDIR/apps/portal/main` directory.
@@ -38,5 +38,5 @@ Your portal content and code can now be placed in the `$JSBASEDIR/apps/portal/ma
 Using Cuisine:
 
 ```py
-    j.tools.prefab.local.apps.portal.install(mongodbip="<IP address of machine with MongoDB>", mongoport="<MondoDB port>")
+    j.tools.prefab.local.web.portal.install(mongodbip="<IP address of machine with MongoDB>", mongoport="<MondoDB port>")
 ```
