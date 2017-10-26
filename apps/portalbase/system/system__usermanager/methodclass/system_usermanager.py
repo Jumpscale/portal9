@@ -182,6 +182,8 @@ class system_usermanager(j.tools.code.classGetBase()):
         users_add = [x for x in users if x not in users_old]
         for user_name in users_add:
             user = self._getUser(user_name)
+            if not user:
+                raise exceptions.BadRequest("user with name %s does not exists" % user)
             user['groups'].append(group.name)
             user.save()
 
