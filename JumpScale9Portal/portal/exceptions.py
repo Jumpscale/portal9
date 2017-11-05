@@ -1,5 +1,6 @@
 from js9 import j
 import requests
+import json
 from functools import wraps
 import http.client
 
@@ -21,9 +22,10 @@ class BaseError(BaseException):
 class Error(BaseError):
     CODE = 500
 
-    def __init__(self, msg):
-        msg = j.data.serializer.json.dumps(msg)
-        BaseError.__init__(self, self.CODE, [('Content-Type', 'application/json')], msg)
+    def __init__(self, msg, content_type='application/json'):
+        if content_type == 'application/json':
+            msg = json.dumps(msg)
+        BaseError.__init__(self, self.CODE, [('Content-Type', content_type)], msg)
 
 
 class Redirect(BaseError):
@@ -59,6 +61,10 @@ class Conflict(Error):
 
 class PreconditionFailed(Error):
     CODE = 412
+
+
+class AuthenticationTimeout(Error):
+    CODE = 419
 
 
 class ServiceUnavailable(Error):

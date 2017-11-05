@@ -6,7 +6,7 @@ class PortalAuthenticatorMongoEngine(object):
     def __init__(self):
         self.usermodel = j.portal.tools.models.system.User
         self.groupmodel = j.portal.tools.models.system.Group
-        self.key2user = {user['authkey']: user['id']
+        self.key2user = {user['authkey']: user['name']
                          for user in j.portal.tools.models.system.User.find(query={'authkey': {'$ne': ''}})}
         if not self.key2user:
             # Only to create a default admin user to login with.
