@@ -1,6 +1,7 @@
 import urllib.parse
 import collections
 import os
+import json
 import sys
 import inspect
 
@@ -198,6 +199,7 @@ class PortalServer:
         self.port = int(self.cfg.get("port", 82))
         self.addr = self.cfg.get("pubipaddr", '127.0.0.1')
         self.secret = self.cfg.get("secret")
+        self.jwtcfg = self.cfg.get("jwt", dict())
         self.admingroups = [item.strip() for item in self.cfg.get("admingroups", []) if item.strip() != ""]
 
         self.filesroot = j.tools.path.get(replaceVar(self.cfg.get("filesroot")))
@@ -456,27 +458,55 @@ class PortalServer:
             ctx.start_response('204', [])
             return False, []
 
-        if "authkey" in ctx.params:
-            # user is authenticated by a special key
-            key = ctx.params["authkey"]
-
+        def process_authkey(key):
             # check if authkey is a session
             newsession = session.get_by_id(key)
             if newsession:
-                session = newsession
-                ctx.env['beaker.session'] = session
+                ctx.env['beaker.session'] = newsession
+                return True, session
             elif key == self.secret:
                 session['user'] = 'admin'
                 session.save()
+                return True, session
             else:
                 username = self.auth.getUserFromKey(key)
                 if username != "guest":
                     session['user'] = username
                     session.save()
+                    return True, session
                 else:
-                    ctx.start_response('419 Authentication Timeout', [])
-                    return False, [self.pageprocessor.returnDoc(
-                        ctx, ctx.start_response, "system", "accessdenied", extraParams={"path": path})]
+                    raise exceptions.Unauthorized("Invalid authkey given")
+
+        if "authkey" in ctx.params:
+            # user is authenticated by a special key
+            return process_authkey(ctx.params['authkey'])
+
+        # validate JWT token
+        if 'HTTP_AUTHORIZATION' in ctx.env:
+            authorization = ctx.env['HTTP_AUTHORIZATION']
+            type, _, token = authorization.partition(' ')
+            if type.lower() == 'bearer':
+                import jose.jwt
+                try:
+                    payload = jose.jwt.get_unverified_claims(token)
+                    headers = jose.jwt.get_unverified_headers(token)
+                except jose.JWTError:
+                    raise exceptions.Unauthorized("Failed to load JWT")
+                issuer = payload.get('iss', 'main')
+                payload['iss'] = issuer
+                for issuer, publickey in self.jwtcfg.items():
+                    try:
+                        jose.jws.verify(token, publickey, algorithms=[headers['alg']])
+                    except jose.JWSError as e:
+                        raise exceptions.Unauthorized("Failed to verify JWT {}".format(e))
+                    break
+                else:
+                    raise exceptions.Unauthorized("Public JWT for issuer {} is not configured".format(issuer))
+
+                session['user'] = '{username}@{iss}'.format(**payload)
+                session.save()
+            elif type.lower() == 'authkey':
+                return process_authkey(token)
 
         oauth_logout_url = ''
         if "user_logoff_" in ctx.params and "user_login_" not in ctx.params:
