@@ -6,7 +6,7 @@ class PortalAuthenticatorMongoEngine(object):
     def __init__(self):
         self.usermodel = j.portal.tools.models.system.User
         self.groupmodel = j.portal.tools.models.system.Group
-        self.key2user = {user['authkey']: user['id']
+        self.key2user = {user['authkey']: user['name']
                          for user in j.portal.tools.models.system.User.find(query={'authkey': {'$ne': ''}})}
         if not self.key2user:
             # Only to create a default admin user to login with.
@@ -42,7 +42,7 @@ class PortalAuthenticatorMongoEngine(object):
         if user:
             return True
 
-    def createUser(self, username, password, email, groups):
+    def createUser(self, username, password, email, groups, authkey=None):
         if self.userExists(username):
             raise exceptions.Conflict("Username with name {} already exists".format(username))
         if isinstance(email, str):
@@ -61,6 +61,9 @@ class PortalAuthenticatorMongoEngine(object):
             g = self.groupmodel()
             g.name = group
             g.save()
+        if authkey:
+            user.authkey = authkey
+            self.key2user[authkey] = username
         user.emails = email
         user.passwd = password
         return user.save()
