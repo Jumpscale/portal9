@@ -42,7 +42,7 @@ class PortalAuthenticatorMongoEngine(object):
         if user:
             return True
 
-    def createUser(self, username, password, email, groups):
+    def createUser(self, username, password, email, groups, authkey=None):
         if self.userExists(username):
             raise exceptions.Conflict("Username with name {} already exists".format(username))
         if isinstance(email, str):
@@ -61,6 +61,9 @@ class PortalAuthenticatorMongoEngine(object):
             g = self.groupmodel()
             g.name = group
             g.save()
+        if authkey:
+            user.authkey = authkey
+            self.key2user[authkey] = username
         user.emails = email
         user.passwd = password
         return user.save()
