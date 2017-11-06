@@ -43,6 +43,15 @@ class PortalAuthenticatorMongoEngine(object):
             return True
 
     def createUser(self, username, password, email, groups, authkey=None):
+        """
+        Creates a new user and returns the result of the creation.
+        :param username: user's name
+        :param password: user's password
+        :param email: user's email
+        :param groups: list of groups the user belongs
+        :param authkey: user's auth key
+        :return: mongodb WriteResult object
+        """
         if self.userExists(username):
             raise exceptions.Conflict("Username with name {} already exists".format(username))
         if isinstance(email, str):
