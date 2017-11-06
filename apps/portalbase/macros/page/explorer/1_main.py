@@ -17,7 +17,7 @@ def main(j, args, params, tags, tasklet):
     if args.tags.tagExists("ppath"):
         path = args.tags.tagGet("ppath").replace("+", ":").replace("___", ":").replace("\\", "/")
         origpath = path
-        path = j.dirs.replaceTxtDirVars(path)
+        path = j.dirs.replace_txt_dir_vars(path)
         if not j.sal.fs.exists(path):
             page.addMessage("ERROR:could not find file %s" % path)
         apppath = j.portal.tools.server.active.basepath
