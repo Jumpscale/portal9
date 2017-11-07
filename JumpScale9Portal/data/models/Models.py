@@ -149,15 +149,9 @@ class ModelBase(Base):
     meta = extend(default_meta, {'abstract': True})
     epoch = IntField(default=j.data.time.getTimeEpoch)
     DoesNotExist = DoesNotExist
-    gid = IntField(
-        default=lambda: j.application.whoAmI.gid if j.application.whoAmI else 0)
-    nid = IntField(
-        default=lambda: j.application.whoAmI.nid if j.application.whoAmI else 0)
 
 
 class Errorcondition(ModelBase):
-    nid = IntField(required=True)
-    gid = IntField(required=True)
     uniquekey = StringField(required=True)
     aid = IntField(default=0)
     pid = IntField(default=0)
@@ -211,15 +205,12 @@ class Grid(ModelBase):
 
 class Group(ModelBase):
     name = StringField(default='')
-    gid = IntField(default=1)
     active = BooleanField(default=True)
     description = StringField(default='master')
     lastcheck = IntField(default=j.data.time.getTimeEpoch())
 
 
 class Job(EmbeddedDocument):
-    nid = IntField(required=True)
-    gid = IntField(required=True)
     data = StringField(default='')
     streams = ListField(StringField())
     level = IntField()
@@ -239,8 +230,6 @@ class Job(EmbeddedDocument):
 
 class Command(ModelBase):
     guid = StringField(unique=True, required=True)
-    gid = IntField(default=0)
-    nid = IntField(default=0)
     cmd = StringField()
     roles = ListField(StringField())
     fanout = BooleanField(default=False)

@@ -28,7 +28,7 @@ def start(ctx, instance):
     if not j.core.db:
         j.clients.redis.start4core()
     instance = instance or ctx.obj.get('INSTANCE')
-    cfg = j.data.serializer.yaml.load('%s/portals/%s/config.yaml' % (j.dirs.CFGDIR, instance))
+    cfg = j.core.state.configGet("portal")
     j.application.instanceconfig = cfg
 
     j.application.start("portal")
