@@ -183,7 +183,7 @@ class PortalServer:
             txt = txt.replace("$APPSDIR", j.sal.fs.getcwd())
             txt = txt.replace("$APPDIR", j.sal.fs.getcwd())
             txt = txt.replace("\\", "/")
-            txt = j.dirs.replaceTxtDirVars(txt)
+            txt = j.dirs.replace_txt_dir_vars(txt)
             return txt
 
         # INIT FILE
