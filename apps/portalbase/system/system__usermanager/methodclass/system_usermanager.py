@@ -42,7 +42,7 @@ class system_usermanager(j.tools.code.classGetBase()):
         get a user
         param:name name of user
         """
-        user = j.portal.tools.models.system.User.find({"name": name, "gid": j.application.whoAmI.gid})
+        user = j.portal.tools.models.system.User.find({"name": name})
         return user[0].to_dict()
 
     def getuserwithid(self, id, **kwargs):
@@ -84,7 +84,7 @@ class system_usermanager(j.tools.code.classGetBase()):
             return user.groups
 
     def _getUser(self, user):
-        users = j.portal.tools.models.system.User.find({"name": user, "gid": j.application.whoAmI.gid})
+        users = j.portal.tools.models.system.User.find({"name": user})
         if not users:
             return None
         return users[0]
@@ -223,7 +223,7 @@ class system_usermanager(j.tools.code.classGetBase()):
         result bool
 
         """
-        user = j.portal.tools.models.system.User.find({"name": name, "gid": j.application.whoAmI.gid})[0]
+        user = j.portal.tools.models.system.User.find({"name": name})[0]
         if user:
             return True
 
