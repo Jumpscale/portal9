@@ -75,13 +75,6 @@ In the above file `[portal.main]` means that this the main instance of the porta
 |organization|str|oauth organization|
 |default_groups|list of str| groups auto created for logged in users|
 
-
-## Navigationlinks
-
-`instance.navigationlinks.example` will show a new column in the Navigations menu.
-The values of the mapping will be shown underneed eachother.
-It is possible to use this to overwrite the visibles spaces by defining `instance.navigationlinks.spaces`.
-
 ## OAuth
 
 [See](Oauth-Support.md)
