@@ -1,85 +1,79 @@
 # Portal Configuration
 
-The configuration of the portal is stored in the ays `service.hrd file` eg. at `/optvar/cfg/jumpscale/portals/main/config.yaml
+The configuration of the portal is stored in the main jumpscale configuration file, located at `~/js9host/cfg/jumpscale9.toml`. It will be added to the configuration after portal is installed.
+
+An examlpe configuration for an instance of portal called main:
 `
 
 ```python
 
-mongoengine.connection:
-    host: 'localhost'
-    port: 27017
+[portal.main]
+rootpasswd = "admin"
 
-rootpasswd: 'admin'
+ipaddr = "127.0.0.1"
+port = "8200"
+appdir = "$JSAPPSDIR/portals/portalbase"
+filesroot = "$VARDIR/portal/files"
+defaultspace = "system"
+admingroups = ["admin"]
+authentication_method = "me"
+gitlab_connection = "main"
+contentdirs =  ""
+production = false
 
-ipaddr: '127.0.0.1'
-port: '8200'
-appdir: '$JSAPPSDIR/portals/portalbase'
-filesroot: '$VARDIR/portal/files'
-defaultspace: 'system'
-admingroups:
-    - 'admin'
-authentication.method: 'me'
-gitlab.connection: 'main'
-force_oauth_instance: ''  # set to use oauth
-contentdirs:  ''
+[portal.main.mongo]
+host = "localhost"
+port = 27017
 
-production:  False
-
-oauth.client_url:  'https://itsyou.online/v1/oauth/authorize'
-oauth.token_url:  'https://itsyou.online/v1/oauth/access_token'
-oauth.redirect_url:  'http://ae5d255c.ngrok.io/restmachine/system/oauth/authorize'
-oauth.client_scope:  'user:email:main,user:memberof:JSPortal'
-oauth.client_id:  'JSPortal'
-oauth.client_secret:  '8plUHNtpaQp8NExkRa-3MYa1SWkOr1mgEqRxGBm25DD78tHXiIlS'
-oauth.client_user_info_url:  'https://itsyou.online/api/users/'
-oauth.client_logout_url:  ''
-oauth.organization: testOrg
-oauth.default_groups:
-    - admin
-    - user
-
-# instance.proxy:
-#     - 1:
-#         dest:'http://localhost:8086'
-#         path:'/proxy/influxdb'
-#
-#     - 2:
-#         dest:'http://localhost:5000'
-#         path:'/proxy/eve'
-
-# instance.navigationlinks.ExtraMenu:
-#     - My Website:'https://example.com'
-#     - Another Webiste:'https://example.com'
-#     - Contact US:'mailto:contactus@exammple.com'
+[portal.main.oauth]
+force_oauth_instance = ""  # set to use oauth
+client_url = "https://itsyou.online/v1/oauth/authorize"
+token_url = "https://itsyou.online/v1/oauth/access_token"
+redirect_url = "{portal url}/restmachine/system/oauth/authorize" 
+client_scope = "user:email:main,user:memberof:JSPortal"
+client_id = "JSPortal"
+client_secret = "8plUHNtpaQp8NExkRa-3MYa1SWkOr1mgEqRxGBm25DD78tHXiIlS"
+client_user_info_url = "https://itsyou.online/api/users/"
+client_logout_url = ""
+organization =  "testOrg"
+default_groups = ["admin", "user"]
 
 ```
+
+In the above file `[portal.main]` means that this the main instance of the portal. For each instance there is three sections:
+
+- The main section where general configurations are defined
+
+- '[portal.{instance name}.mongo]': The configuration for the portal mongo connection
+
+- '[portal.{instance name}.mongo]': Configuration for oauth when portal is in production mode
+
 
 |Key|Type|Description|
 |---|----|-----------|
 |admingroups|list of str| Groups a user needs to be part of to be considered admin|
 |appdir|str|path to base portal|
-|authentication.method|str|Currently portal supports two authentication methods `mongoengine` and `oauth`|
+|authentication_method|str|Currently portal supports two authentication methods `mongoengine` and `oauth`|
 |contentdirs|str|Comma seperated list of dirs which should be considerd as basedirs, directories which can contain spaces and actors|
 |defaultspace|str|The space to use when navigation to the root of the application|
 |filesroot|str|Place where static files are used (not used in current version)|
 |force_oauth_instance|str|When this option is set authentication will be forced over this specified oauth providerd|
-|gitlab.connection|str|Connection used when `authentication.method` = `gitlab`|
+|gitlab_connection|str|Connection used when `authentication_method` = `gitlab`|
 |ipaddr|str|Not used currently (we always listen on 0.0.0.0)|
 |port|int|Port the portalserver will listen on|
-|mongoengine.connection|dict|host and ip of mongod|
-|portal.name|str|portal instance name|
-|portal.rootpasswd|str| ??|
+|mongo|dict|host and port of mongod|
+|rootpasswd|str| Password of the default admin user|
 |production|bool|false if development (disables oauth)|
-|oauth.client_url|str|oauth provider authorization url|
-|oauth.token_url|str|oauth provider token url|
-|oauth.redirect_url|str|redirect url to authorize|
-|oauth.client_scope|str|oauth scope|
-|oauth.client_id|str|oauth client id|
-|oauth.client_secret|str|oauth client secret|
-|oauth.client_user_info_url|str|oauth provider user info url|
-|oauth.client_logout_url|str|oauth provider logout url|
-|oauth.organization|str|oauth organization|
-|oauth.default_groups|list of str| groups auto created for logged in users|
+|client_url|str|oauth provider authorization url|
+|token_url|str|oauth provider token url|
+|redirect_url|str|redirect url to authorize|
+|client_scope|str|oauth scope|
+|client_id|str|oauth client id|
+|client_secret|str|oauth client secret|
+|client_user_info_url|str|oauth provider user info url|
+|client_logout_url|str|oauth provider logout url|
+|organization|str|oauth organization|
+|default_groups|list of str| groups auto created for logged in users|
 
 
 ## Navigationlinks
@@ -95,4 +89,4 @@ It is possible to use this to overwrite the visibles spaces by defining `instanc
 ## Gitlab Authentication
 
 When specifying gitlab as authentication we need to know which gitlab_client is currently used.
-This fields need to be provided in `gitlab.connection`
+This fields need to be provided in `gitlab_connection`

@@ -55,7 +55,7 @@ def main(j, args, params, tags, tasklet):
        {}
        <div class="col-sm-offset-3 col-md-6 login-screen">
         <div class="login-form">""".format(title)
-    if not j.portal.tools.server.active.oauth_cfg.get('production'):
+    if not j.portal.tools.server.active.cfg.get('production'):
         body += """
         <div class="form-group">
           <input type="text" class="form-control login-field" value="" name="user_login_" placeholder="Enter your username" id="login-name">
@@ -69,7 +69,7 @@ def main(j, args, params, tags, tasklet):
 
         <button class="btn btn-primary btn-lg btn-block mbm" type="submit">Sign in</button>"""
     name = j.portal.tools.server.active.oauth_cfg.get('force_oauth_instance')
-    if name and j.portal.tools.server.active.oauth_cfg.get('production'):
+    if name and j.portal.tools.server.active.cfg.get('production'):
         body += '''
         <a class="btn btn-block btn-social btn-%s" href=/restmachine/system/oauth/authenticate?type=%s>
           <i class="fa fa-%s"></i> <span>Login with %s</span>
