@@ -40,7 +40,7 @@ default_groups = ["admin", "user"]
 
 ```
 
-In the above file `[portal.main]` means that this the main instance of the portal. For each instance there is three sections:
+In the above file `[portal.main]` means that this is an instance of portal called "main". For each instance there is three sections:
 
 - The main section where general configurations are defined
 
