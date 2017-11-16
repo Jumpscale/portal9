@@ -12,7 +12,7 @@ gitlab_connection = "main"
 contentdirs =  ""
 production = false
 
-[portal.main.mongo]
+[portal.main.mongoengine]
 host = "localhost"
 port = 27017
 

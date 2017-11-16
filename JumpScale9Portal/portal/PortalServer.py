@@ -111,7 +111,7 @@ class PortalServer:
         }
 
         # TODO change that to work with ays instance config instead of connection string
-        connection = self.cfg.get('mongo', {})
+        connection = self.cfg.get('mongoengine', {})
         self.port = connection.get('port', None)
 
         if not self.authentication_method:

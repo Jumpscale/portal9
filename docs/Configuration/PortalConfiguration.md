@@ -21,7 +21,7 @@ gitlab_connection = "main"
 contentdirs =  ""
 production = false
 
-[portal.main.mongo]
+[portal.main.mongoengine]
 host = "localhost"
 port = 27017
 
@@ -44,9 +44,9 @@ In the above file `[portal.main]` means that this the main instance of the porta
 
 - The main section where general configurations are defined
 
-- '[portal.{instance name}.mongo]': The configuration for the portal mongo connection
+- '[portal.{instance name}.mongoengine]': The configuration for the portal mongo connection
 
-- '[portal.{instance name}.mongo]': Configuration for oauth when portal is in production mode
+- '[portal.{instance name}.oauth]': Configuration for oauth when portal is in production mode
 
 
 |Key|Type|Description|
@@ -61,7 +61,7 @@ In the above file `[portal.main]` means that this the main instance of the porta
 |gitlab_connection|str|Connection used when `authentication_method` = `gitlab`|
 |ipaddr|str|Not used currently (we always listen on 0.0.0.0)|
 |port|int|Port the portalserver will listen on|
-|mongo|dict|host and port of mongod|
+|mongoengine|dict|host and port of mongod|
 |rootpasswd|str| Password of the default admin user|
 |production|bool|false if development (disables oauth)|
 |client_url|str|oauth provider authorization url|
