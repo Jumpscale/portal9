@@ -69,6 +69,7 @@ class PortalServer:
     # INIT
     def __init__(self):
         self.cfg = j.application.instanceconfig
+        self.oauth_cfg = self.cfg.get('oauth', None)
         if not isinstance(self.cfg, dict):
             # need to upgrade config
             hrd = self.cfg.getDictFromPrefix('param.cfg')
@@ -84,7 +85,8 @@ class PortalServer:
             j.tools.cuisine.local.core.file_copy(j.sal.fs.joinPaths(j.dirs.CODEDIR, 'github/jumpscale/jumpscale_portal8/apps/portalbase/config.yaml'),
                                                  '$TEMPLATEDIR/cfg/portal/config.yaml')
             j.tools.cuisine.local.apps.portal.configure(production=production, client_id=client_id, client_secret=client_secret, organization=organization, redirect_address=redirect_address)
-            j.application.instanceconfig = j.data.serializer.yaml.load('%s/portals/main/config.yaml' % (j.dirs.JSCFGDIR))
+            cfg = j.core.state.configGet("portal")['main']
+            j.application.instanceconfig = cfg
             self.cfg = j.application.instanceconfig
         self.logger = j.logger.get('j.portal.tools.server')
 
@@ -93,7 +95,7 @@ class PortalServer:
         self.started = False
         self.epoch = time.time()
         self.force_oauth_url = None
-        self.force_oauth_instance = self.cfg.get('force_oauth_instance', "")
+        self.force_oauth_instance = self.oauth_cfg.get('force_oauth_instance', "")
         j.application.debug = self.cfg.get("debug", False)
         j.portal.tools.server.active = self
 
@@ -102,14 +104,14 @@ class PortalServer:
         self.routes = {}
         self.proxies = {}
 
-        self.authentication_method = self.cfg.get("authentication.method")
+        self.authentication_method = self.cfg.get("authentication_method")
         session_opts = {
             'session.cookie_expires': False,
             'session.data_dir': '%s' % j.sal.fs.joinPaths(j.dirs.VARDIR, "beakercache")
         }
 
         # TODO change that to work with ays instance config instead of connection string
-        connection = self.cfg.get('mongoengine.connection', {})
+        connection = self.cfg.get('mongoengine', {})
         self.port = connection.get('port', None)
 
         if not self.authentication_method:
@@ -207,7 +209,7 @@ class PortalServer:
         self.pageprocessor.defaultspace = self.cfg.get('defaultspace', 'welcome')
         self.pageprocessor.defaultpage = self.cfg.get('defaultpage', '')
 
-        self.gitlabinstance = self.cfg.get("gitlab.connection")
+        self.gitlabinstance = self.cfg.get("gitlab_connection")
 
         self.getContentDirs()
 

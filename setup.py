@@ -69,6 +69,7 @@ setup(
         'peewee==2.10.1',
         'uvloop==0.8.0',
         'paramiko==2.2.1',
+        'python-jose==1.3.2',
         'watchdog==0.8.3',
         'pymux==0.13',
         'pyyaml',

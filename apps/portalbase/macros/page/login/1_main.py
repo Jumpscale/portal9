@@ -48,7 +48,7 @@ def main(j, args, params, tags, tasklet):
 <title>Login</title>
     """
     title = ''
-    if not j.portal.tools.server.active.cfg.get('force_oauth_instance'):
+    if not j.portal.tools.server.active.oauth_cfg.get('force_oauth_instance'):
         title = '<h4>Access Denied Please Login</h4>'
     body = """
     <form id="loginform" class="form-signin container" method="post" action="/$$path$$querystr">
@@ -68,7 +68,7 @@ def main(j, args, params, tags, tasklet):
         </div>
 
         <button class="btn btn-primary btn-lg btn-block mbm" type="submit">Sign in</button>"""
-    name = j.portal.tools.server.active.cfg.get('force_oauth_instance')
+    name = j.portal.tools.server.active.oauth_cfg.get('force_oauth_instance')
     if name and j.portal.tools.server.active.cfg.get('production'):
         body += '''
         <a class="btn btn-block btn-social btn-%s" href=/restmachine/system/oauth/authenticate?type=%s>

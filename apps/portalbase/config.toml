@@ -1,0 +1,30 @@
+[portal.main]
+rootpasswd = "admin"
+
+ipaddr = "127.0.0.1"
+port = "8200"
+appdir = "$JSAPPSDIR/portals/portalbase"
+filesroot = "$VARDIR/portal/files"
+defaultspace = "system"
+admingroups = ["admin"]
+authentication_method = "me"
+gitlab_connection = "main"
+contentdirs =  ""
+production = false
+
+[portal.main.mongoengine]
+host = "localhost"
+port = 27017
+
+[portal.main.oauth]
+force_oauth_instance = ""  # set to use oauth
+client_url = "https://itsyou.online/v1/oauth/authorize"
+token_url = "https://itsyou.online/v1/oauth/access_token"
+redirect_url = "http://ae5d255c.ngrok.io/restmachine/system/oauth/authorize"
+client_scope = "user:email:main,user:memberof:JSPortal"
+client_id = "JSPortal"
+client_secret = "8plUHNtpaQp8NExkRa-3MYa1SWkOr1mgEqRxGBm25DD78tHXiIlS"
+client_user_info_url = "https://itsyou.online/api/users/"
+client_logout_url = ""
+organization =  "testOrg"
+default_groups = ["admin", "user"]
