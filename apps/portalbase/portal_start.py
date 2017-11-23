@@ -28,11 +28,10 @@ def start(ctx, instance):
     if not j.core.db:
         j.clients.redis.start4core()
     instance = instance or ctx.obj.get('INSTANCE')
-    cfg = j.core.state.configGet("portal")['main']
+    instance = instance or "main"
+    cfg = j.core.state.configGet("portal")[instance]
     j.application.instanceconfig = cfg
-
     j.application.start("portal")
-
     server = j.portal.tools.server.get()
     server.start()
 

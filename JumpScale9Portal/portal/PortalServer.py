@@ -70,24 +70,6 @@ class PortalServer:
     def __init__(self):
         self.cfg = j.application.instanceconfig
         self.oauth_cfg = self.cfg.get('oauth', None)
-        if not isinstance(self.cfg, dict):
-            # need to upgrade config
-            hrd = self.cfg.getDictFromPrefix('param.cfg')
-            production = hrd.get('production', False)
-            client_id = hrd.get('client_id', '')
-            client_secret = hrd.get('client_secret', '')
-            organization = hrd.get('organization', '')
-            redirect_address = hrd.get('redirect_url', '')
-            if redirect_address:
-                redirect_address = redirect_address.split('//')[1].split('/restmachine')[0]
-
-            j.tools.cuisine.local.core.dir_ensure('$TEMPLATEDIR/cfg/portal')
-            j.tools.cuisine.local.core.file_copy(j.sal.fs.joinPaths(j.dirs.CODEDIR, 'github/jumpscale/jumpscale_portal8/apps/portalbase/config.yaml'),
-                                                 '$TEMPLATEDIR/cfg/portal/config.yaml')
-            j.tools.cuisine.local.apps.portal.configure(production=production, client_id=client_id, client_secret=client_secret, organization=organization, redirect_address=redirect_address)
-            cfg = j.core.state.configGet("portal")['main']
-            j.application.instanceconfig = cfg
-            self.cfg = j.application.instanceconfig
         self.logger = j.logger.get('j.portal.tools.server')
 
         self.contentdirs = list()
