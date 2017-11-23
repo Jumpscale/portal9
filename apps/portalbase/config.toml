@@ -1,8 +1,8 @@
-[portal.main]
+[portal.{name}]
 rootpasswd = "admin"
 
-ipaddr = "127.0.0.1"
-port = "8200"
+ipaddr = "{ip}"
+port = "{port}"
 appdir = "$JSAPPSDIR/portals/portalbase"
 filesroot = "$VARDIR/portal/files"
 defaultspace = "system"
@@ -12,11 +12,11 @@ gitlab_connection = "main"
 contentdirs =  ""
 production = false
 
-[portal.main.mongoengine]
+[portal.{name}.mongoengine]
 host = "localhost"
 port = 27017
 
-[portal.main.oauth]
+[portal.{name}.oauth]
 force_oauth_instance = ""  # set to use oauth
 client_url = "https://itsyou.online/v1/oauth/authorize"
 token_url = "https://itsyou.online/v1/oauth/access_token"
