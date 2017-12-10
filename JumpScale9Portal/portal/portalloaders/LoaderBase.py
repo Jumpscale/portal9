@@ -57,9 +57,9 @@ class LoaderBase(object):
             paths = [path]
 
         for path in paths:
-            items = [j.sal.fs.pathNormalize(item.replace(".%s" % self.type, "") + "/") for
+            items = [j.sal.fs.pathNormalize(item.replace(".%s" % self.type, "")) for
                      item in j.sal.fs.listDirsInDir(path, True, False, True)
-                     if j.sal.fs.getDirName(item + "/", True) == ".%s" % self.type]
+                     if j.sal.fs.getBaseName(item) == ".%s" % self.type]
 
             if items and str(path) not in _INITEDCONTENTDIRS:
                 _INITEDCONTENTDIRS.add(str(path))
@@ -118,7 +118,6 @@ class LoaderBaseObject():
     def _loadFromDisk(self, path, reset=False):
         # path=path.replace("\\","/")
         # print "loadfromdisk:%s" % path
-
         # remove old cfg and write new one with only id
         cfgpath = j.sal.fs.joinPaths(path, ".%s" % self.type, "main.cfg")
 
@@ -130,7 +129,7 @@ class LoaderBaseObject():
         else:
             ini = j.tools.inifile.new(cfgpath)
         ini.addSection("main")
-        name = j.sal.fs.getDirName(path, True)
+        name = j.sal.fs.getBaseName(path)
         ini.setParam("main", "id", name)
         ini.write()
 

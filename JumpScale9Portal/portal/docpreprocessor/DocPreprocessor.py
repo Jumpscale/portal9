@@ -192,7 +192,7 @@ class DocPreprocessor():
         print(("DOCPREPROCESSOR SCAN space:%s" % path))
         self.space_path = path
 
-        spaceconfigdir = fs.getDirName(path + "/" + ".space" + "/")
+        spaceconfigdir = fs.joinPaths(path, ".space")
         if fs.exists(spaceconfigdir):
             lastDefaultPath = ""
             if fs.exists(spaceconfigdir + "/default.wiki"):
@@ -224,7 +224,7 @@ class DocPreprocessor():
             doc.loadFromDisk()
 
         self.findChildren()
-        self.spacename = fs.getDirName(path, True).lower()
+        self.spacename = fs.getBaseName(path).lower()
 
     def parseHtmlDoc(self, path):
         subject = fs.fileGetTextContents(path)
@@ -252,12 +252,12 @@ class DocPreprocessor():
                 self.add_image(image)
 
         files = fs.listFilesInDir(path, False)
-        parent2 = fs.getDirName(path + "/", True).lower()
+        parent2 = fs.getBaseName(path).lower()
         files.sort()
 
         def isRootDir(path):
             "check if dir is a bucket, actor or space dir, if yes should not descend"
-            dirname = fs.getDirName(path + "/", True).lower()
+            dirname = fs.getBaseName(path).lower()
             if dirname[0] == ".":
                 return True
             # check if .space or .bucket or .actor in directory (subdir) if so return False
@@ -286,7 +286,7 @@ class DocPreprocessor():
             dirpath = fs.getDirName(path)
             return fs.exists(fs.joinPaths(dirpath, ".usedefault"))
 
-        parent2 = fs.getDirName(path + "/", True).lower()
+        parent2 = fs.getBaseName(path).lower()
 
         if self._pathIgnoreCheck(pathItem):
             return defaultdir, lastDefaultPath, lastparams, lastparamsdir, lastnav, lastnavdir, lastBaseNameHtmlLower

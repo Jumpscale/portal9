@@ -55,7 +55,7 @@ class Space(LoaderBaseObject):
     def createDefaultDir(self):
 
         def callbackForMatchDir(path, arg):
-            dirname = j.sal.fs.getDirName(path + "/", lastOnly=True)
+            dirname = j.sal.fs.getBaseName(path)
             if dirname.find(".") == 0:
                 return False
             # l = len(j.sal.fs.listFilesInDir(path))
@@ -64,15 +64,14 @@ class Space(LoaderBaseObject):
             return True
 
         def callbackFunctionDir(path, arg):
-            dirname = j.sal.fs.getDirName(path + "/", lastOnly=True)
-            dirname = j.sal.fs.getDirName(path + "/", lastOnly=True)
+            dirname = j.sal.fs.getBaseName(path)
 
             wikipath = j.sal.fs.joinPaths(path, "%s.wiki" % dirname)
             mdpath = j.sal.fs.joinPaths(path, "%s.md" % dirname)
             if not j.sal.fs.exists(wikipath) and not j.sal.fs.exists(mdpath):
                 dirnamel = dirname.lower()
                 for item in j.sal.fs.listFilesInDir(path):
-                    item = j.sal.fs.getDirName(item + "/", lastOnly=True)
+                    item = j.sal.fs.getBaseName(item)
                     extension = j.sal.fs.getFileExtension(item)
                     item = item.lower()
                     item = item.rstrip(".%s" % extension)
