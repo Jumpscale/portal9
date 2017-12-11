@@ -163,7 +163,7 @@ class ActorLoader(LoaderBaseObject):
 
     def loadFromDisk(self, path, reset=False):
         # the name is $appname__actorname all in lowercase
-        name = j.sal.fs.getDirName(path, True)
+        name = j.sal.fs.getBaseName(path)
         # print "load actor dir:%s"%path
         if name.find("__") != -1:
             app, actor = name.split("__", 1)
