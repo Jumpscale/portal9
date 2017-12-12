@@ -1,4 +1,5 @@
 from js9 import j
+
 from JumpScale9Portal.PortalBase import *
 
 
@@ -23,8 +24,8 @@ class PortalRootClassFactory:
         self._swaggerGen = None
         self._taskletengine = None
         self._server = None
+        self._usermanager = None
         # self._portal = None
-
 
     @property
     def codegentools(self):
@@ -32,6 +33,13 @@ class PortalRootClassFactory:
         if self._codegentools is None:
             self._codegentools = codegentools()
         return self._codegentools
+
+    @property
+    def usermanager(self):
+        from JumpScale9Portal.tools.usermanager.UserManager import UserManager
+        if self._usermanager is None:
+            self._usermanager = UserManager()
+        return self._usermanager
 
     @property
     def specparser(self):
