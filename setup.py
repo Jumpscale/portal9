@@ -57,7 +57,7 @@ setup(
     packages=find_packages(),
     install_requires=[
         'JumpScale9>=9.2.0',
-        'redis==2.10.5',
+        'redis>=2.10.5',
         'colorlog==2.10.0',
         'pytoml==0.1.14',
         'ipython==6.1.0',
