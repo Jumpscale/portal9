@@ -67,11 +67,19 @@ class system_usermanager(j.tools.code.classGetBase()):
             return group.to_dict()
 
     def _getgroup(self,name):
+        """
+        get a group by name
+        this is just for abstracting getting a group by name logic
+        param:name name of group
+        result group or none
+
+        """
         groups = j.portal.tools.models.system.Group.find({"name":name})
         if not groups:
             return None
         else:
             return groups[0]
+        
     def listusers(self, **kwargs):
         dict_users = list()
         users = j.portal.tools.models.system.User.find({})
