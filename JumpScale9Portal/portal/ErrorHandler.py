@@ -23,8 +23,6 @@ class ErrorHandler:
                     ecoobj.update(inc__occurrences=1, errormessage=eco['errormessage'], lasttime=eco['lasttime'])
                 else:
                     j.portal.tools.models.system.Errorcondition(
-                        gid=eco['gid'],
-                        nid=eco['nid'],
                         pid=eco['pid'],
                         uniquekey=eco['uniquekey'],
                         jid=eco['jid'],

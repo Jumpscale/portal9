@@ -55,7 +55,7 @@ def main(j, args, params, tags, tasklet):
             active = panel_data['label_content'] == 'active'
             bpname = panel_data['title'] if active else '_' + panel_data['title']
             reponame = args.requestContext.params['reponame']
-            # bppath = '{vardir}/cockpit_repos/{reponame}/blueprints/{bpname}'.format(vardir=j.dirs.VARDIR, reponame=reponame, bpname=bpname)
+            # bppath = '{vardir}/ays_repos/{reponame}/blueprints/{bpname}'.format(vardir=j.dirs.VARDIR, reponame=reponame, bpname=bpname)
             ctx = args.requestContext
             aysactor = j.apps.actorsloader.getActor('ays', 'tools')
             client = aysactor.get_client(ctx=ctx)

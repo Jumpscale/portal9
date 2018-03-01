@@ -19,5 +19,5 @@ function js_action_button() {
 $(document).ready(
 function(){
     js_action_button();
-    $('.dataTables_paginate li').click(js_action_button);
+    $('.dataTables_paginate li').on("click", js_action_button);
 });

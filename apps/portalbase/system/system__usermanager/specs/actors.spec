@@ -29,9 +29,9 @@
 
     method:getgroup
         """
-        get a group with id
+        get a group with name
         """
-        var:id str,,id of group
+        var:name str,,name of group
         result:dict
 
     method:listusers
@@ -104,7 +104,7 @@
 		"""
 		delete a group
 		"""
-        var:id str,,id of group
+        var:name str,,name of group
         result:bool    #True if successful, False otherwise
 
 	method:usergroupsget

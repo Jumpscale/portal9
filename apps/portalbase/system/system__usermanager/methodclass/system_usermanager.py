@@ -52,13 +52,34 @@ class system_usermanager(j.tools.code.classGetBase()):
         """
         return j.portal.tools.models.system.User.get(id).to_dict()
 
-    def getgroup(self, id, **kwargs):
+    def getgroup(self,name, **kwargs):
         """
-        get a user
-        param:id id of user
+        get a group
+        param:name name of group
+        result group
         """
-        return j.portal.tools.models.system.Group.get(id).to_dict()
+        ctx = kwargs["ctx"]
+        group = self._getgroup(name)
+        if not group:
+            ctx.start_response('404 Not Found', [('Content-Type', 'text/plain')])
+            return "Group %s not found" % name
+        else:
+            return group.to_dict()
 
+    def _getgroup(self,name):
+        """
+        get a group by name
+        this is just for abstracting getting a group by name logic
+        param:name name of group
+        result group or none
+
+        """
+        groups = j.portal.tools.models.system.Group.find({"name":name})
+        if not groups:
+            return None
+        else:
+            return groups[0]
+        
     def listusers(self, **kwargs):
         dict_users = list()
         users = j.portal.tools.models.system.User.find({})
@@ -129,12 +150,24 @@ class system_usermanager(j.tools.code.classGetBase()):
         return True
 
     @auth(['admin'])
-    def deleteGroup(self, id, **kwargs):
-        group = j.portal.tools.models.system.Group.get(id)
-        for user in j.portal.tools.models.system.User.find({"groups": group['name']}):
-            user['groups'].remove(group.name)
-            user.save()
-        group.delete()
+    def deleteGroup(self, name, **kwargs):
+        """
+        delete a group
+        param:name name of group
+        result bool
+
+        """
+        ctx = kwargs["ctx"]
+        group = self._getgroup(name)
+        if not group:
+            ctx.start_response('404 Not Found', [('Content-Type', 'text/plain')])
+            return "Group %s not found" % name
+        else:
+            for user in j.portal.tools.models.system.User.find({"groups": group['name']}):
+                user['groups'].remove(group.name)
+                user.save()
+            group.delete()
+            return True
 
     @auth(['admin'])
     def createGroup(self, name, description, **args):

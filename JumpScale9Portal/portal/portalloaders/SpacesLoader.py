@@ -79,7 +79,7 @@ class Space(LoaderBaseObject):
                     if item == dirnamel:
                         return
                 spacepath = j.sal.fs.joinPaths(self.model.path, '.space/')
-                templates = j.sal.fs.walk(spacepath, recurse=0, pattern='template[.]*')
+                templates = j.sal.fswalker.walk(spacepath, recurse=0, pattern='template[.]*')
                 if not templates:
                     self.createTemplate(self.model.path)
                     source = j.sal.fs.joinPaths(spacepath, 'template.wiki')
