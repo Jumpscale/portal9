@@ -7,6 +7,7 @@ import collections
 # zlib1g-dev/zesty
 # libjpeg-dev/zesty
 
+
 def _post_install(libname, libpath):
     from js9 import j
 
@@ -68,7 +69,7 @@ setup(
         'netaddr==0.7.19',
         'peewee==2.10.1',
         'uvloop==0.8.0',
-        'paramiko==2.2.1',
+        'paramiko>=1.15.3,<2.2',  # for parallel-ssh
         'python-jose==1.3.2',
         'watchdog==0.8.3',
         'pymux==0.13',
