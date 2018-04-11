@@ -23,9 +23,9 @@ class ErrorHandler:
                     ecoobj.update(inc__occurrences=1, errormessage=eco['errormessage'], lasttime=eco['lasttime'])
                 else:
                     j.portal.tools.models.system.Errorcondition(
-                        gid=eco['gid'],
-                        nid=eco['nid'],
-                        pid=eco['pid'],
+                        gid=eco.get('gid', 0),
+                        nid=eco.get('nid', 0),
+                        pid=eco.get('pid', 0),
                         uniquekey=eco['uniquekey'],
                         jid=eco['jid'],
                         masterjid=eco['masterjid'],
@@ -44,6 +44,6 @@ class ErrorHandler:
                         backtrace=eco['_traceback'],
                         lasttime=eco['lasttime'],
                         closetime=eco['closetime'],
-                        occurrences=eco['occurrences']
+                        occurrences=eco.get('occurrences'),
                     ).save()
 
