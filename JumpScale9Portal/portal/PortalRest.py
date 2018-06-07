@@ -1,7 +1,6 @@
 from js9 import j
 from . import exceptions
 from . import Validators
-from JumpScale9Lib.servers.serverbase.Exceptions import RemoteException
 import urllib.request
 import urllib.parse
 import urllib.error
