@@ -239,12 +239,6 @@ class PortalRest():
             method = routes[routekey]['func']
             result = method(ctx=ctx, **ctx.params)
             return (True, result)
-        except RemoteException as error:
-            if error.eco.get('exceptionclassname') == 'KeyError':
-                data = error.eco['data'] or {'categoryname': 'unknown', 'key': '-1'}
-                raise exceptions.NotFound("Could not find %(key)s of type %(categoryname)s" % data)
-            raise
-
         except requests.exceptions.ConnectionError as error:
             message = error.args[0]
             raise exceptions.Error(message)
