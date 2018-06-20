@@ -69,9 +69,9 @@ class PageHTML(Page):
         self._chartTemplateContent = j.sal.fs.fileGetContents(chartTemplatePath)
         self._chartId = 44
 
-        #pieTemplatePath = j.sal.fs.joinPaths(j.sal.fs.getDirName(__file__),"templates", "pie.js")
-        #self._pieTemplateContent = j.sal.fs.fileGetContents(pieTemplatePath)
-        #self._pieId = 100
+        pieTemplatePath = j.sal.fs.joinPaths(j.sal.fs.getDirName(__file__), "templates", "pie.js")
+        self._pieTemplateContent = j.sal.fs.fileGetContents(pieTemplatePath)
+        self._pieId = 100
 
         #lineTemplatePath = j.sal.fs.joinPaths(j.sal.fs.getDirName(__file__),"templates", "line.js")
         #self._lineTemplateContent = j.sal.fs.fileGetContents(lineTemplatePath)
@@ -490,7 +490,7 @@ function copyText$id() {
         if headers == "":
             headers = []
 
-        te = j.tools.code.templateengine.new()
+        te = j.tools.code.template_engine_get()
         te.add('lineId', lineId)
         te.add('lineTitle', title)
         te.add('lineData', data)
@@ -570,7 +570,7 @@ function copyText$id() {
         self._chartId += 1
         chartId = 'chart-%s' % (self._chartId)
 
-        te = j.tools.code.templateengine.new()
+        te = j.tools.code.template_engine_get()
         te.add('chartId', chartId)
         te.add('chartTitle', title)
         te.add('chartData', str(data))
@@ -599,7 +599,7 @@ function copyText$id() {
         self._pieId += 1
         pieId = 'pie-%s' % (self._pieId)
 
-        te = j.tools.code.templateengine.new()
+        te = j.tools.code.template_engine_get()
         te.add('pieId', pieId)
         te.add('pieTitle', title)
         te.add('pieData', str(data))

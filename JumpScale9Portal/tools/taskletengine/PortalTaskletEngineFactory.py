@@ -18,7 +18,7 @@ class InvalidTaskletFunction(RuntimeError):
                               'argument specification' % (name, path))
 
 
-class TaskletEngineFactory:
+class PortalTaskletEngineFactory:
 
     # def __init__(self):
     #     self.__jslocation__ = "j.tools.taskletengine"
