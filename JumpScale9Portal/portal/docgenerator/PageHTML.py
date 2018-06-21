@@ -608,6 +608,13 @@ function copyText$id() {
         donut = 'donut' if donut else 'pie'
         te.add('donut', donut)
 
+        tooltips = []
+        total = sum(data)
+        for idx, d in enumerate(data):
+            percentage = int(d/total*100)
+            tooltips.append('<strong>{}</strong> {}%'.format(legend[idx-1], percentage))
+        te.add('tooltips', str(tooltips))
+
         jsContent = te.replace(self._pieTemplateContent)
 
         self.addScriptBodyJS(jsContent)
@@ -760,6 +767,7 @@ function copyText$id() {
 
         self.addJS("%s/old/rgraph/RGraph.common.core.js" % self.liblocation)
         self.addJS("%s/old/rgraph/RGraph.bar.js" % self.liblocation)
+        self.addJS("%s/old/rgraph/RGraph.common.tooltips.js" % self.liblocation)
         self.addJS("%s/old/rgraph/RGraph.pie.js" % self.liblocation)
         self.addJS("%s/old/rgraph/RGraph.line.js" % self.liblocation)
         self.addJS("%s/old/rgraph/RGraph.common.key.js" % self.liblocation)
