@@ -8,6 +8,8 @@ def main(j, args, params, *other_args):
     title = input.get('title')
     data = input.get('data')
     legends = input.get('legends')
-    page.addPieChart(title=title, data=data, legend=legends)
+    width = input.get('width', 1000)
+    height = input.get('hight', 600)
+    page.addPieChart(title=title, data=data, legend=legends,width=width, height=height)
 
     return params
