@@ -712,9 +712,12 @@ function copyText$id() {
             var updateTime = function () {
                 $(".%s").each(function() {
                     var $this = $(this);
-                    var timestmp = parseFloat($this.data('ts'));
-                    if (timestmp > 0)
-                        var time = new Date(timestmp * 1000).toLocaleString();
+                    if ($this.data('ts').endsWith('Z')){
+                        var time = new Date($this.data('ts')).toLocaleString();
+                    }
+                    else if (parseFloat($this.data('ts')) > 0){
+                        var time = new Date(parseFloat($this.data('ts')) * 1000).toLocaleString();
+                    }
                     else var time = "";
                     $this.html(time);
                 });
