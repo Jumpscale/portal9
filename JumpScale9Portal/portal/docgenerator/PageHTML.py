@@ -589,7 +589,7 @@ function copyText$id() {
             chartId, width, height)
         self.addMessage(chartContainer, isElement=True, newline=True)
 
-    def addPieChart(self, title, data, legend, width=1000, height=600):
+    def addPieChart(self, title, data, legend, width=1000, height=600, donut=False):
         """
         Add pie chart as the HTML element
         @param data is array of data points
@@ -604,6 +604,9 @@ function copyText$id() {
         te.add('pieTitle', title)
         te.add('pieData', str(data))
         te.add('pieLegend', str(legend))
+
+        donut = 'donut' if donut else 'pie'
+        te.add('donut', donut)
 
         jsContent = te.replace(self._pieTemplateContent)
 
