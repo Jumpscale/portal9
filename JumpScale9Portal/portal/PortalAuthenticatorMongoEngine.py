@@ -1,13 +1,14 @@
 from js9 import j
 from JumpScale9Portal.portal import exceptions
+import uuid
 
 class PortalAuthenticatorMongoEngine(object):
 
     def __init__(self):
         self.usermodel = j.portal.tools.models.system.User
         self.groupmodel = j.portal.tools.models.system.Group
-        self.key2user = {user['authkey']: user['name']
-                         for user in j.portal.tools.models.system.User.find(query={'authkey': {'$ne': ''}})}
+        self.key2user = {}
+        self._get_key2user()
         if not self.key2user:
             # Only to create a default admin user to login with.
             # Should be done in AYS
@@ -26,6 +27,11 @@ class PortalAuthenticatorMongoEngine(object):
         else:
             return name
 
+    def _get_key2user(self):
+        for user in j.portal.tools.models.system.User.find(query={'authkeys': {'$ne': ''}}):
+            for authkey in user.authkeys:
+                self.key2user[authkey] = user.name
+
     def getUserInfo(self, user):
         return j.portal.tools.models.system.User.get(self._getkey(self.usermodel, user))
 
@@ -41,6 +47,13 @@ class PortalAuthenticatorMongoEngine(object):
         user = j.portal.tools.models.system.User.find({"emails": {"$in": emails}})
         if user:
             return True
+
+    def addAuthkey(self, username):
+        authkey = str(uuid.uuid4())
+        user = self.getUserInfo(username)
+        user.authkeys.append(authkey)
+        user.save()
+        self.key2user[authkey] = username
 
     def createUser(self, username, password, email, groups, authkey=None):
         """
@@ -71,7 +84,7 @@ class PortalAuthenticatorMongoEngine(object):
             g.name = group
             g.save()
         if authkey:
-            user.authkey = authkey
+            user.authkeys = [authkey]
             self.key2user[authkey] = username
         user.emails = email
         user.passwd = password

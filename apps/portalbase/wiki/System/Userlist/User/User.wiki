@@ -11,10 +11,28 @@ h2. User: ${name}
 - display: Delete
   action: /restmachine/system/usermanager/delete?username=${name}
   navigateback: true
+
+- display: Add auth key
+  action: /restmachine/system/usermanager/addAuthkey?username=${name}
+  navigateback: true
 }}
 
-|*Groups*|${", ".join(groups)} |
-|*Emails*|${", ".join(emails)} |
-|*Authkey*|${authkey} |
+h5. Groups
+
+{% for key in groups %}
+* ${key}
+{% endfor %}
+
+h5. Emails
+
+{% for key in emails %}
+* ${key}
+{% endfor %}
+
+h5. Authkeys
+
+{% for key in authkeys %}
+* *${key}*
+{% endfor %}
 
 {{user_edit: id:$$id}}

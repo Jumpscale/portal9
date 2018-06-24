@@ -139,6 +139,22 @@ class system_usermanager(j.tools.code.classGetBase()):
         user.save()
         return True
 
+    def _check_auth(self, username, ctx):
+        is_admin = j.portal.tools.server.active.isAdminFromCTX(ctx)
+        current_user = ctx.env['beaker.session']['user']
+        if current_user != username and not is_admin:
+            raise exceptions.Unauthorized("Unauthorized")
+
+    def addAuthkey(self, username, **kwargs):
+        self._check_auth(username, kwargs['ctx'])
+        j.portal.tools.server.active.auth.addAuthkey(username)
+        return True
+
+    def listAuthkeys(self, username, **kwargs):
+        self._check_auth(username, kwargs['ctx'])
+        user = self.userget(username, **kwargs)
+        return user['authkeys']
+
     @auth(['admin'])
     def delete(self, username, **kwargs):
         models = j.portal.tools.models

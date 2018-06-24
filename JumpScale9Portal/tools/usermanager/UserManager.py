@@ -38,7 +38,7 @@ class UserManager:
             g.name = group
             g.save()
         if authkey:
-            user.authkey = authkey
+            user.authkeys = [authkey]
         user.emails = email
         user.passwd = password
         return user.save()

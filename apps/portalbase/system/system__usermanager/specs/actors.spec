@@ -20,6 +20,19 @@
         var:name str,,name of user
         result:dict
 
+    method:addAuthkey
+        """
+        Adds an auth key for the user
+        """
+        var:username str,,name of user
+
+    method:listAuthkeys
+        """
+        Lists auth keys for a user
+        """
+        var:username str,,name of user
+        result:list
+
     method:getuserwithid
         """
         get a user with id
