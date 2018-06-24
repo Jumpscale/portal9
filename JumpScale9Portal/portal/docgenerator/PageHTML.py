@@ -608,11 +608,6 @@ function copyText$id() {
         donut = 'donut' if donut else 'pie'
         te.add('donut', donut)
 
-        smaller = min([width, height])
-        radius = smaller*85/100 # set the radius of the pie to be 85% of the cavas size
-        te.add('radius', str(radius/2)) # radius is diameter/2
-        te.add('gutterPosition', str(height-20)) # to be at bottom
-
         tooltips = []
         total = sum(data)
         for idx, d in enumerate(data):
