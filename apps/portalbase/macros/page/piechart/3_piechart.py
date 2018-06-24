@@ -9,7 +9,7 @@ def main(j, args, params, *other_args):
     data = input.get('data')
     legends = input.get('legends')
     width = input.get('width', 1000)
-    height = input.get('hight', 600)
+    height = input.get('height', 600)
     donut = input.get('donut', False)
     page.addPieChart(title=title, data=data, legend=legends, width=width, height=height, donut=donut)
 
