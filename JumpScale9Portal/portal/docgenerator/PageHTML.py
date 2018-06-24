@@ -612,7 +612,7 @@ function copyText$id() {
         total = sum(data)
         for idx, d in enumerate(data):
             percentage = int(d/total*100)
-            tooltips.append('<strong>{}</strong> {}%'.format(legend[idx-1], percentage))
+            tooltips.append('<strong>{}</strong> {}%'.format(legend[idx], percentage))
         te.add('tooltips', str(tooltips))
 
         jsContent = te.replace(self._pieTemplateContent)
