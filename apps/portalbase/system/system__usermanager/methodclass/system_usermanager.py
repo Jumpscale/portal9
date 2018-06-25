@@ -147,8 +147,7 @@ class system_usermanager(j.tools.code.classGetBase()):
 
     def addAuthkey(self, username, **kwargs):
         self._check_auth(username, kwargs['ctx'])
-        j.portal.tools.server.active.auth.addAuthkey(username)
-        return True
+        return j.portal.tools.server.active.auth.addAuthkey(username)
 
     def listAuthkeys(self, username, **kwargs):
         self._check_auth(username, kwargs['ctx'])

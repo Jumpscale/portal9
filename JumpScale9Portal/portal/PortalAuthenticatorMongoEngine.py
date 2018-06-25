@@ -54,6 +54,7 @@ class PortalAuthenticatorMongoEngine(object):
         user.authkeys.append(authkey)
         user.save()
         self.key2user[authkey] = username
+        return authkey
 
     def createUser(self, username, password, email, groups, authkey=None):
         """

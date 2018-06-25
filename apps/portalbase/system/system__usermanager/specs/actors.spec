@@ -25,6 +25,7 @@
         Adds an auth key for the user
         """
         var:username str,,name of user
+        result:str # the generated authkey
 
     method:listAuthkeys
         """
