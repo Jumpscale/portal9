@@ -82,16 +82,19 @@ def catcherrors(debug=False, msg="Error was {}", ):
             try:
                 res = method(self, *methargs, **methkwargs)
             except requests.exceptions.HTTPError as e:
+                headers = (('content-type', 'text/plain'),)
                 if debug:
                     jsonresp = e.response.json()
                     if 'error' in jsonresp:
-                        raise BadRequest(msg.format(jsonresp['error']))
+                        raise BaseError(e.response.status_code, headers, msg.format(jsonresp['error']))
                     else:
-                        raise BadRequest(msg.format(str(e)))
+                        raise BaseError(e.response.status_code, headers, msg.format(str(e)))
                 else:
-                    raise BadRequest(str(e))
+                    raise BaseError(e.response.status_code, headers, msg.format(str(e)))
+            except (requests.exceptions.ConnectionError, ConnectionError):
+                raise ServiceUnavailable("Can't connect to robot server")
             except Exception as e:
-                raise BadRequest(str(e))
+                raise InternalServer(str(e))
             else:
                 return res
         return mymeth
