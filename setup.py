@@ -13,7 +13,7 @@ def _post_install(libname, libpath):
 
     # add this plugin to the config
     c = j.core.state.configGet('plugins', defval={})
-    c[libname] = libpath
+    c[libname] = "%s/github/jumpscale/portal9/JumpScale9Portal" % j.dirs.CODEDIR
     j.core.state.configSet('plugins', c)
 
     j.tools.jsloader.generate()
