@@ -14,7 +14,17 @@ h2. User: ${name}
 
 - display: Add auth key
   action: /restmachine/system/usermanager/addAuthkey?username=${name}
-  navigateback: true
+  input:
+  - name: authkeyName
+    type: text
+    label: Name of the generated authkey
+
+- display: Delete auth key
+  action: /restmachine/system/usermanager/deleteAuthkey?username=${name}
+  input:
+  - name: authkeyName
+    type: text
+    label: Name of the generated authkey
 }}
 
 h5. Groups
@@ -31,8 +41,8 @@ h5. Emails
 
 h5. Authkeys
 
-{% for key in authkeys %}
-* *${key}*
+{% for name, key in authkeys.items() %}
+*  *${name}*: {{html: <code>${key}</code>}}
 {% endfor %}
 
 {{user_edit: id:$$id}}

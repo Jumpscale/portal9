@@ -145,9 +145,13 @@ class system_usermanager(j.tools.code.classGetBase()):
         if current_user != username and not is_admin:
             raise exceptions.Unauthorized("Unauthorized")
 
-    def addAuthkey(self, username, **kwargs):
+    def addAuthkey(self, username, authkeyName, **kwargs):
         self._check_auth(username, kwargs['ctx'])
-        return j.portal.tools.server.active.auth.addAuthkey(username)
+        return j.portal.tools.server.active.auth.addAuthkey(username, authkeyName)
+
+    def deleteAuthkey(self, username, authkeyName, **kwargs):
+        self._check_auth(username, kwargs['ctx'])
+        return j.portal.tools.server.active.auth.deleteAuthkey(username, authkeyName)
 
     def listAuthkeys(self, username, **kwargs):
         self._check_auth(username, kwargs['ctx'])

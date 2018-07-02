@@ -28,8 +28,8 @@ class PortalAuthenticatorMongoEngine(object):
             return name
 
     def _get_key2user(self):
-        for user in j.portal.tools.models.system.User.find(query={'authkeys': {'$ne': ''}}):
-            for authkey in user.authkeys:
+        for user in j.portal.tools.models.system.User.find(query={'authkeys': {'$ne': {}}}):
+            for authkey in user.authkeys.values():
                 self.key2user[authkey] = user.name
 
     def getUserInfo(self, user):
@@ -48,15 +48,22 @@ class PortalAuthenticatorMongoEngine(object):
         if user:
             return True
 
-    def addAuthkey(self, username):
+    def addAuthkey(self, username, key_name):
         authkey = str(uuid.uuid4())
         user = self.getUserInfo(username)
-        user.authkeys.append(authkey)
+        user.authkeys[key_name] = authkey
         user.save()
         self.key2user[authkey] = username
         return authkey
 
-    def createUser(self, username, password, email, groups, authkey=None):
+    def deleteAuthkey(self, username, key_name):
+        user = self.getUserInfo(username)
+        authkey = user.authkeys.pop(key_name)
+        user.save()
+        self.key2user.pop(authkey)
+        return True
+
+    def createUser(self, username, password, email, groups, authkey=None, authkey_name=None):
         """
         Creates a new user and returns the result of the creation.
         :param username: user's name
@@ -64,6 +71,7 @@ class PortalAuthenticatorMongoEngine(object):
         :param email: user's email
         :param groups: list of groups the user belongs
         :param authkey: user's auth key
+        :param authkey_name: user's auth key's name
         :return: mongodb WriteResult object
         """
         if self.userExists(username):
@@ -85,7 +93,9 @@ class PortalAuthenticatorMongoEngine(object):
             g.name = group
             g.save()
         if authkey:
-            user.authkeys = [authkey]
+            if not authkey_name:
+                raise exceptions.BadRequest("Authkey_name can't be none")
+            user.authkeys[authkey_name] = authkey
             self.key2user[authkey] = username
         user.emails = email
         user.passwd = password
