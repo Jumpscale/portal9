@@ -436,9 +436,8 @@ class User(ModelBase):
     # epoch of last time the info updated
     lastcheck = IntField(default=j.data.time.getTimeEpoch())
     groups = ListField(StringField())
-    authkey = StringField(default='')
     data = StringField(default='')
-    authkeys = ListField(StringField())
+    authkeys = DictField(default={})
 
     def authenticate(username, passwd):
         for user in User.find({'name': username}):
