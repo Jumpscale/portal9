@@ -70,7 +70,7 @@ setup(
         'peewee==2.10.1',
         'uvloop==0.8.0',
         'paramiko>=2.2.3',  # for parallel-ssh
-        'python-jose==1.3.2',
+        'python-jose>=2.0.1',
         'watchdog==0.8.3',
         'pymux==0.13',
         'pyyaml',
