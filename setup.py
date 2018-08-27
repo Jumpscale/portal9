@@ -17,7 +17,6 @@ def _post_install(libname, libpath):
     j.core.state.configSet('plugins', c)
 
     j.tools.jsloader.generate()
-    j.tools.jsloader.copyPyLibs()
 
 
 class install(_install):
