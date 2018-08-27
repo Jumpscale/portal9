@@ -11,6 +11,7 @@ authentication_method = "me"
 gitlab_connection = "main"
 contentdirs =  ""
 production = false
+public_url = ""
 
 [portal.{name}.mongoengine]
 host = "localhost"

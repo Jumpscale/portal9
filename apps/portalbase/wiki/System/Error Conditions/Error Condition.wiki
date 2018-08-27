@@ -26,16 +26,13 @@ ${eco.errormessage}
 |*Category*|${eco.category}|
 |*Job*|${eco.jid}|
 |*Type*|${eco.type}|
-|*Level*|${eco.levelname}|
-|*Creation Time*|{{ts:${eco.epoch}}}|
+|*Level*|${eco.level}|
 |*Last Time*|{{ts:${eco.lasttime}}}|
 |*Occurrences*|${eco.occurrences}|
 |*Error Message Pub*|${eco.errormessagepub}|
 |*Function Name*|${eco.funcname}|
 |*Function Line Number*|${eco.funclinenr}|
 |*Function File Name*|${eco.funcfilename}|
-|*Node*|${eco.nid}|
-|*Grid*|${eco.gid}|
 |*Tags*|${eco.tags}|
 
 *Code*

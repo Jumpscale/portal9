@@ -26,4 +26,4 @@ JumpScale Portal is a hybrid application server + wiki engine.
   ```
 
 
-  > To update database models for existing portal installation, use the script `migration-script.py`
+  > Starting from 9.4.0 if portal is already installed, need to run `9.4.0-user-migration.py` to migrate mongo models.

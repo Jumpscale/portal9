@@ -69,9 +69,9 @@ class PageHTML(Page):
         self._chartTemplateContent = j.sal.fs.fileGetContents(chartTemplatePath)
         self._chartId = 44
 
-        #pieTemplatePath = j.sal.fs.joinPaths(j.sal.fs.getDirName(__file__),"templates", "pie.js")
-        #self._pieTemplateContent = j.sal.fs.fileGetContents(pieTemplatePath)
-        #self._pieId = 100
+        pieTemplatePath = j.sal.fs.joinPaths(j.sal.fs.getDirName(__file__), "templates", "pie.js")
+        self._pieTemplateContent = j.sal.fs.fileGetContents(pieTemplatePath)
+        self._pieId = 100
 
         #lineTemplatePath = j.sal.fs.joinPaths(j.sal.fs.getDirName(__file__),"templates", "line.js")
         #self._lineTemplateContent = j.sal.fs.fileGetContents(lineTemplatePath)
@@ -490,7 +490,7 @@ function copyText$id() {
         if headers == "":
             headers = []
 
-        te = j.tools.code.templateengine.new()
+        te = j.tools.code.template_engine_get()
         te.add('lineId', lineId)
         te.add('lineTitle', title)
         te.add('lineData', data)
@@ -570,7 +570,7 @@ function copyText$id() {
         self._chartId += 1
         chartId = 'chart-%s' % (self._chartId)
 
-        te = j.tools.code.templateengine.new()
+        te = j.tools.code.template_engine_get()
         te.add('chartId', chartId)
         te.add('chartTitle', title)
         te.add('chartData', str(data))
@@ -589,7 +589,7 @@ function copyText$id() {
             chartId, width, height)
         self.addMessage(chartContainer, isElement=True, newline=True)
 
-    def addPieChart(self, title, data, legend, width=1000, height=600):
+    def addPieChart(self, title, data, legend, width=1000, height=600, donut=False):
         """
         Add pie chart as the HTML element
         @param data is array of data points
@@ -599,11 +599,21 @@ function copyText$id() {
         self._pieId += 1
         pieId = 'pie-%s' % (self._pieId)
 
-        te = j.tools.code.templateengine.new()
+        te = j.tools.code.template_engine_get()
         te.add('pieId', pieId)
         te.add('pieTitle', title)
         te.add('pieData', str(data))
         te.add('pieLegend', str(legend))
+
+        donut = 'donut' if donut else 'pie'
+        te.add('donut', donut)
+
+        tooltips = []
+        total = sum(data)
+        for idx, d in enumerate(data):
+            percentage = int(d/total*100)
+            tooltips.append('<strong>{}</strong> {}%'.format(legend[idx], percentage))
+        te.add('tooltips', str(tooltips))
 
         jsContent = te.replace(self._pieTemplateContent)
 
@@ -702,9 +712,12 @@ function copyText$id() {
             var updateTime = function () {
                 $(".%s").each(function() {
                     var $this = $(this);
-                    var timestmp = parseFloat($this.data('ts'));
-                    if (timestmp > 0)
-                        var time = new Date(timestmp * 1000).toLocaleString();
+                    if (typeof $this.data('ts') == 'string' && $this.data('ts').endsWith('Z')){
+                        var time = new Date($this.data('ts')).toLocaleString();
+                    }
+                    else if (parseFloat($this.data('ts')) > 0){
+                        var time = new Date(parseFloat($this.data('ts')) * 1000).toLocaleString();
+                    }
                     else var time = "";
                     $this.html(time);
                 });
@@ -757,6 +770,7 @@ function copyText$id() {
 
         self.addJS("%s/old/rgraph/RGraph.common.core.js" % self.liblocation)
         self.addJS("%s/old/rgraph/RGraph.bar.js" % self.liblocation)
+        self.addJS("%s/old/rgraph/RGraph.common.tooltips.js" % self.liblocation)
         self.addJS("%s/old/rgraph/RGraph.pie.js" % self.liblocation)
         self.addJS("%s/old/rgraph/RGraph.line.js" % self.liblocation)
         self.addJS("%s/old/rgraph/RGraph.common.key.js" % self.liblocation)

@@ -17,6 +17,9 @@ def main(j, args, params, tags, tasklet):
             for name, link in breadcrumb.items():
                 breadcrumbs.insert(0, (link, name, {}))
     else:
+        title_replace = j.data.regex.findOne('\$\$.*', doc.title).strip('$$')
+        title_replace = args.requestContext.params.get(title_replace)
+        doc.title = j.data.regex.replace('.*\$\$.*', '\$\$.*', title_replace, doc.title)
         breadcrumbs.append((doc.original_name, doc.title, {}))
         while doc.parent:
             doc = space.docprocessor.name2doc.get(doc.parent)

@@ -34,15 +34,7 @@ def main(j, args, params, tags, tasklet):
                'id': 'occurrences',
                'type': 'int',
                'value': 'occurrences'},
-              {'name': 'Node ID',
-               'id': 'nid',
-               'type': 'int',
-               'value': nidstr},
-              {'name': 'Grid ID',
-               'id': 'gid',
-               'value': 'gid',
-               'type': 'int'},
-              ]
+            ]
 
     tableid = modifier.addTableFromModel('system', 'Errorcondition', fields, filters)
     modifier.addSearchOptions('#%s' % tableid)

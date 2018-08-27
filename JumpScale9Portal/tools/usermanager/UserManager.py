@@ -9,7 +9,7 @@ class UserManager:
     def __init__(self):
         base.__init__(self)
 
-    def createUser(self, username, password, email, groups, authkey=None):
+    def createUser(self, username, password, email, groups, authkey=None, authkey_name=None):
         """
         Creates a new user and returns the result of the creation.
         :param username: user's name
@@ -38,7 +38,9 @@ class UserManager:
             g.name = group
             g.save()
         if authkey:
-            user.authkey = authkey
+            if not authkey_name:
+                raise exceptions.BadRequest("Authkey_name can't be none")
+            user.authkeys[authkey_name] = authkey
         user.emails = email
         user.passwd = password
         return user.save()
