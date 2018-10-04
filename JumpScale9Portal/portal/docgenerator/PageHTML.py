@@ -611,7 +611,11 @@ function copyText$id() {
         tooltips = []
         total = sum(data)
         for idx, d in enumerate(data):
-            percentage = int(d/total*100)
+            if not total:
+                self.addMessage('N/A')
+                return
+            else:
+                percentage = int(d/total*100)
             tooltips.append('<strong>{}</strong> {}%'.format(legend[idx], percentage))
         te.add('tooltips', str(tooltips))
 
